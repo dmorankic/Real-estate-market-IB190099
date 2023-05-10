@@ -1,0 +1,10 @@
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\bin\Debug\netstandard2.0\Real-estate-market-IB190099.Model.deps.json
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\bin\Debug\netstandard2.0\Real-estate-market-IB190099.Model.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\bin\Debug\netstandard2.0\Real-estate-market-IB190099.Model.pdb
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.csproj.AssemblyReference.cache
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.AssemblyInfoInputs.cache
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.AssemblyInfo.cs
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.csproj.CoreCompileInputs.cache
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.Model\obj\Debug\netstandard2.0\Real-estate-market-IB190099.Model.pdb
