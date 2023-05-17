@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
 using System;
@@ -21,9 +22,16 @@ namespace Real_estate_market_IB190099.Services
             var set = Context.Set<TDb>();
             TDb insertEntity = Mapper.Map<TDb>(insert);
             set.Add(insertEntity);
+            BeforeInsert(insert, insertEntity);
             Context.SaveChanges();
             return Mapper.Map<T>(insertEntity);
         }
+
+        public virtual void BeforeInsert(TInsert insert, TDb entity)
+        {
+            
+        }
+
         public T Update(int id, TUpdate update)
         {
             var set = Context.Set<TDb>();

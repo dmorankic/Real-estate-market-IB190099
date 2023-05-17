@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "QDMaV7ogQqJr745EUy7GvP+/h06v2lnusDz2wW9X74pgrslM2R0Cj8mrEMqgVhEvQzk//zkDh+pe5X8La3ks/g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dmorankic\\source\\repos\\Real-estate-market-IB190099\\Real-estate-market-IB190099.WINUI\\Real-estate-market-IB190099.WINUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dmorankic\\.nuget\\packages\\flurl\\3.0.7\\flurl.3.0.7.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\flurl.http\\3.2.4\\flurl.http.3.2.4.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\system.text.encoding.codepages\\4.5.1\\system.text.encoding.codepages.4.5.1.nupkg.sha512"
+  ],
+  "logs": []
+}

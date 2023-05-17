@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface ICityService : ICRUDService<City, NameSearchObject, NameUpsertRequest, NameUpsertRequest>
+    public interface ICityService : ICRUDService<City, NameSearchObject, NameInsertRequest, NameUpsertRequest>
     {
 
     }

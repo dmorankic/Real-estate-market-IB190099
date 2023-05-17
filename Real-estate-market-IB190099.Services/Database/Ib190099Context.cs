@@ -307,7 +307,10 @@ public partial class Ib190099Context : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Password)
+            entity.Property(e => e.PasswordSalt)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.PasswordHash)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Phone)

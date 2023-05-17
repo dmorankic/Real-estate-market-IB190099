@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Services.Database;
 using System;
@@ -14,20 +15,14 @@ namespace Real_estate_market_IB190099.Services
 
         public MappingProfile()
         {
-            var _counterService = new CounterService(new Ib190099Context());
-
-            CreateMap<NameUpsertRequest, City>().AfterMap((src, dest) =>
-            {
-                dest.Id = _counterService.GetCitiesCount() + 1;
-            });
-            CreateMap<NameUpsertRequest, Role>().AfterMap((src, dest) =>
-            {
-                dest.Id = _counterService.GetRolesCount() + 1;
-            });
-
-
-
-
+            CreateMap<NameInsertRequest, City>();
+            CreateMap<NameInsertRequest, Database.Role>();
+            CreateMap<NameUpsertRequest, City>();
+            CreateMap<NameUpsertRequest, Database.Role>();
+            CreateMap<Database.Role,RoleModel>();
+            CreateMap<UserInsertRequest, Database.User>();
+            CreateMap<UserUpdateRequest, Database.User>();
+            CreateMap<Database.User, UserModel>();
         }
     }
 }
