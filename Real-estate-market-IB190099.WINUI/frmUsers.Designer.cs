@@ -32,12 +32,17 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Details = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtFilterUsers = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,14 +52,19 @@
             this.dgvUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
-            this.LastName});
-            this.dgvUsers.Location = new System.Drawing.Point(21, 154);
+            this.LastName,
+            this.Details,
+            this.Actions});
+            this.dgvUsers.Location = new System.Drawing.Point(21, 127);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.RowHeadersWidth = 51;
             this.dgvUsers.RowTemplate.Height = 29;
-            this.dgvUsers.Size = new System.Drawing.Size(986, 367);
+            this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsers.Size = new System.Drawing.Size(729, 367);
             this.dgvUsers.TabIndex = 4;
+            this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellClick);
             this.dgvUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellContentClick);
+            this.dgvUsers.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvUsers_Paint);
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -62,7 +72,7 @@
             this.dataGridViewTextBoxColumn5.HeaderText = "ID";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 125;
+            this.dataGridViewTextBoxColumn5.Width = 50;
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -80,13 +90,31 @@
             this.LastName.Name = "LastName";
             this.LastName.Width = 125;
             // 
+            // Details
+            // 
+            this.Details.HeaderText = "Details";
+            this.Details.MinimumWidth = 6;
+            this.Details.Name = "Details";
+            this.Details.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Details.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Details.Width = 125;
+            // 
+            // Actions
+            // 
+            this.Actions.HeaderText = "Actions";
+            this.Actions.MinimumWidth = 6;
+            this.Actions.Name = "Actions";
+            this.Actions.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Actions.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Actions.Width = 250;
+            // 
             // ID
             // 
             this.ID.DataPropertyName = "Id";
             this.ID.HeaderText = "ID";
             this.ID.MinimumWidth = 6;
             this.ID.Name = "ID";
-            this.ID.Width = 125;
+            this.ID.Width = 50;
             // 
             // FirstName
             // 
@@ -128,17 +156,49 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.Width = 125;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(304, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 39);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Users";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // txtFilterUsers
+            // 
+            this.txtFilterUsers.Location = new System.Drawing.Point(21, 94);
+            this.txtFilterUsers.Name = "txtFilterUsers";
+            this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
+            this.txtFilterUsers.TabIndex = 6;
+            this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 71);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(219, 20);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Search by first and/or last name";
+            // 
             // frmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 566);
+            this.ClientSize = new System.Drawing.Size(776, 566);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtFilterUsers);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvUsers);
             this.Name = "frmUsers";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.frmUsers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -154,8 +214,13 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private Label label1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn LastName;
+        private DataGridViewButtonColumn Details;
+        private DataGridViewButtonColumn Actions;
+        private TextBox txtFilterUsers;
+        private Label label2;
     }
 }

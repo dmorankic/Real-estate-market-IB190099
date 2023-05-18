@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
@@ -14,9 +15,11 @@ namespace Real_estate_market_IB190099.Services
 {
     public class UserService : BaseCRUDService<Database.User, Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>, IUserService
     {
-        public UserService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
+        public IAddressService _AddresService;
+        public UserService(Ib190099Context Context, IMapper Mapper,
+            IAddressService AddresService) : base(Context, Mapper)
         {
-
+            _AddresService= AddresService;
         }
 
         public override IQueryable<Database.User> AddFilter(IQueryable<Database.User> query, UserSearchObject search = null)
@@ -33,19 +36,38 @@ namespace Real_estate_market_IB190099.Services
         public override void BeforeInsert(UserInsertRequest insert, User entity)
         {
             entity.RoleId = 1;
-            entity.Id = Context.Users.Count() + 1;
+            entity.DateRegistered = DateTime.Now;
             var salt = GenerateSalt();
             entity.PasswordSalt = salt;
             entity.PasswordHash = GenerateHash(salt, insert.Password);
+            var address = Context.Addresses
+                .FirstOrDefault(x => x.NumberStreet == insert.NumberStreet &&
+                x.City.ZipCode==insert.ZipCode);
+            if (address == null) 
+            {
+                address = _AddresService
+                  .Insert(
+                   new AddressInsertRequest()
+                   {
+                       CityName = insert.City,
+                       NumberStreet = insert.NumberStreet,
+                       ZipCode = insert.ZipCode
+                   }
+                   );
+            }
+            entity.AddressId = address.Id;
+
             base.BeforeInsert(insert, entity);
         }
+
         public static string GenerateSalt()
         {
-            return Convert.ToBase64String(new byte[16]);
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            var byteArray = new byte[16];
+            provider.GetBytes(byteArray);
 
-            //var buf = new byte[16];
-            //object p = (new RSACryptoServiceProvider()).GetBytes(buf);
-            //return Convert.ToBase64String(buf);
+
+            return Convert.ToBase64String(byteArray);
         }
         public static string GenerateHash(string salt, string password)
         {
@@ -76,6 +98,14 @@ namespace Real_estate_market_IB190099.Services
 
             return Mapper.Map<UserModel>(entity);
 
+        }
+        public override IQueryable<User> AddInclude(IQueryable<User> query, UserSearchObject search = null)
+        {
+            query=query.Include(x => x.Role)
+                .Include(x=>x.Address)
+                .Include(x => x.Address.City);
+
+            return query;
         }
     }
 }

@@ -9,11 +9,11 @@ public partial class Address
 
     public string? NumberStreet { get; set; }
 
-    public string? ZipCode { get; set; }
-
     public int? CityId { get; set; }
 
     public virtual City? City { get; set; }
 
     public virtual ICollection<Property> Properties { get; set; } = new List<Property>();
+
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

@@ -10,5 +10,8 @@
     <Compile Update="frmUsers.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmUserUpsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

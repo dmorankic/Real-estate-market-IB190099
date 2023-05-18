@@ -15,7 +15,7 @@ namespace Real_estate_market_IB190099.Controllers
         }
 
         [HttpPost]
-        public T Insert([FromBody] TInsert insert)
+        public virtual T Insert([FromBody] TInsert insert)
         {
             return _service.Insert(insert);
         }

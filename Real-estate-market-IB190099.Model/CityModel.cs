@@ -8,5 +8,6 @@ namespace Real_estate_market_IB190099.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ZipCode { get; set; }
     }
 }

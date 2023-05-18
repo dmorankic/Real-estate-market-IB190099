@@ -14,5 +14,8 @@ namespace Real_estate_market_IB190099.Model.Requests
         public string Phone { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Gender { get; set; }
+        public string NumberStreet { get; set; }
+        public string City { get; set; }
+        public string ZipCode { get; set; }
     }
 }

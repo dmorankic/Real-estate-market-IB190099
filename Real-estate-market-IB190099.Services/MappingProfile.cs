@@ -23,6 +23,13 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<UserInsertRequest, Database.User>();
             CreateMap<UserUpdateRequest, Database.User>();
             CreateMap<Database.User, UserModel>();
+            CreateMap<Database.Address, AddressModel>();
+            CreateMap<Database.City, CityModel>();
+            CreateMap<AddressInsertRequest, Database.Address>();
+            CreateMap<Database.Address, Database.Address>();
+            CreateMap<CityInsertRequest, City>();
+
+
         }
     }
 }

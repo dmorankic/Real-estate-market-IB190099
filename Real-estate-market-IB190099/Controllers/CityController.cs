@@ -10,7 +10,7 @@ namespace Real_estate_market_IB190099.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CityController : BaseCRUDController<City, NameSearchObject, NameInsertRequest, NameUpsertRequest>
+    public class CityController : BaseCRUDController<City, NameSearchObject, CityInsertRequest, NameUpsertRequest>
     {
         public CityController(ICityService cityService) : base(cityService)
         {

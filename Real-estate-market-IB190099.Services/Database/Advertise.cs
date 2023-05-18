@@ -17,11 +17,9 @@ public partial class Advertise
 
     public DateTime? DateCreated { get; set; }
 
-    public int? SavedUserId { get; set; }
-
     public virtual Property? Property { get; set; }
 
-    public virtual User? SavedUser { get; set; }
+    public virtual ICollection<SavedAdvertise> SavedAdvertises { get; set; } = new List<SavedAdvertise>();
 
     public virtual User? User { get; set; }
 }

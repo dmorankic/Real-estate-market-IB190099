@@ -11,8 +11,8 @@ namespace Real_estate_market_IB190099.WINUI
     {
         public string _url = "https://localhost:44306/";
         public string _resource = null;
-        public static string username = null;
-        public static string password = null;
+        public static string username = "admin";
+        public static string password = "admin";
 
         public APIService(string resource) 
         {

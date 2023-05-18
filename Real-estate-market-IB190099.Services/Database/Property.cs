@@ -29,11 +29,13 @@ public partial class Property
 
     public int? AddressId { get; set; }
 
-    public double Quadrature { get; set; }
+    public double? Quadrature { get; set; }
+
+    public int? LocationId { get; set; }
 
     public virtual Address? Address { get; set; }
 
     public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public virtual Location? Location { get; set; }
 }

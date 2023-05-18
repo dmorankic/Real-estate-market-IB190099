@@ -5,6 +5,7 @@ using Real_estate_market_IB190099;
 using Real_estate_market_IB190099.Services;
 using Real_estate_market_IB190099.Services.Database;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -37,6 +38,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddTransient<ICityService, CityService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAddressService, AddressService>();
+
 
 
 

@@ -13,7 +13,7 @@ public partial class Message
 
     public int? RecieverId { get; set; }
 
-    public DateTime DateTime { get; set; }
+    public DateTime? Timestamp { get; set; }
 
     public virtual User? Reciever { get; set; }
 

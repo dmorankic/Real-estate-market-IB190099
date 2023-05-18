@@ -30,6 +30,7 @@ namespace Real_estate_market_IB190099.Services
                 dbModelData = dbModelData.Skip((search.Page.Value - 1) * search.PageSize.Value).Take(search.PageSize.Value);
 
             }
+            dbModelData = AddInclude(dbModelData, search);
 
             var list = dbModelData.ToList();
 
@@ -41,6 +42,10 @@ namespace Real_estate_market_IB190099.Services
             return query;
         }
 
+        public virtual IQueryable<TDb> AddInclude(IQueryable<TDb> query, TSearch search = null)
+        {
+            return query;
+        }
         public T GetById(int id)
         {
             var dbModelData = Context.Set<TDb>();

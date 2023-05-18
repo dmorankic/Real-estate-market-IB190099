@@ -19,5 +19,8 @@ namespace Real_estate_market_IB190099.Model
         public string Gender { get; set; }
         public int? RoleId { get; set; }
         public virtual RoleModel Role { get; set; }
+        public virtual AddressModel Address { get; set; }
+
+
     }
 }

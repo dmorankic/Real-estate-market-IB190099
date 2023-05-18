@@ -10,12 +10,17 @@ namespace Real_estate_market_IB190099.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : BaseCRUDController<Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>
     {
         public UserController(IUserService userService) : base(userService)
         {
+       
+        }
 
+        [AllowAnonymous]
+        public override UserModel Insert([FromBody] UserInsertRequest insert)
+        {
+            return base.Insert(insert);
         }
     }
 }

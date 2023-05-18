@@ -11,9 +11,11 @@ public partial class User
 
     public string? Username { get; set; }
 
+    public string? PasswordHash { get; set; }
+
     public string? PasswordSalt { get; set; }
 
-    public string? PasswordHash { get; set; }
+    public int? RoleId { get; set; }
 
     public string? LastName { get; set; }
 
@@ -27,17 +29,17 @@ public partial class User
 
     public string? Gender { get; set; }
 
-    public int? RoleId { get; set; }
+    public int? AddressId { get; set; }
 
-    public virtual ICollection<Advertise> AdvertiseSavedUsers { get; set; } = new List<Advertise>();
+    public virtual Address? Address { get; set; }
 
-    public virtual ICollection<Advertise> AdvertiseUsers { get; set; } = new List<Advertise>();
+    public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
 
     public virtual ICollection<Message> MessageRecievers { get; set; } = new List<Message>();
 
     public virtual ICollection<Message> MessageSenders { get; set; } = new List<Message>();
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
-
     public virtual Role? Role { get; set; }
+
+    public virtual ICollection<SavedAdvertise> SavedAdvertises { get; set; } = new List<SavedAdvertise>();
 }

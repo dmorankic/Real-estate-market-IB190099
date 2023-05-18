@@ -23,3 +23,4 @@ C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-I
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\bin\Debug\net6.0-windows\Real-estate-market-IB190099.Model.pdb
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\obj\Debug\net6.0-windows\Real_estate_market_IB190099.WINUI.frmCity.resources
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\obj\Debug\net6.0-windows\Real_estate_market_IB190099.WINUI.frmLogin.resources
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\obj\Debug\net6.0-windows\Real_estate_market_IB190099.WINUI.frmUserUpsert.resources

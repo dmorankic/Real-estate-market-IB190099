@@ -18,10 +18,6 @@ namespace Real_estate_market_IB190099.Services
         {
 
         }
-        public override void BeforeInsert(NameInsertRequest insert, Role entity)
-        {
-            entity.Id = Context.Roles.Count() + 1;
-            base.BeforeInsert(insert, entity);
-        }
+  
     }
 }
