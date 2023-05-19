@@ -107,5 +107,18 @@ namespace Real_estate_market_IB190099.Services
 
             return query;
         }
+
+        public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
+        {
+            var userQuery = Context.Users.Find(id);
+            if (userQuery == null)
+            {
+                return Mapper.Map<UserModel>(userQuery);
+            }
+            user.ApplyTo(userQuery);
+            Context.SaveChanges();
+
+            return Mapper.Map<UserModel>(userQuery);
+        }
     }
 }

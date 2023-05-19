@@ -42,6 +42,12 @@ namespace Real_estate_market_IB190099.WINUI
 
             return result;
         }
+        public async Task<T> Patch<T>(int id, object request)
+        {
+            var result = await $"{_url}{_resource}/{id}".WithBasicAuth(username, password).PatchJsonAsync(request).ReceiveJson<T>();
+
+            return result;
+        }
 
     }
 }

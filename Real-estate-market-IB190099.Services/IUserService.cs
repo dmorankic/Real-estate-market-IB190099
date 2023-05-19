@@ -1,6 +1,7 @@
 ﻿using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
+using Real_estate_market_IB190099.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Real_estate_market_IB190099.Services
     public interface IUserService : ICRUDService<Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>
     {
         UserModel Login(string username, string password);
+        UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user);
     }
 }

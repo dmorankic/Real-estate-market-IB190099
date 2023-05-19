@@ -91,3 +91,7 @@ C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-I
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Real-estate-market-IB190099.Services.pdb
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Real-estate-market-IB190099.Model.dll
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Real-estate-market-IB190099.Model.pdb
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

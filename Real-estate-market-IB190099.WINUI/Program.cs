@@ -1,3 +1,6 @@
+using AutoMapper;
+using Real_estate_market_IB190099.Services;
+
 namespace Real_estate_market_IB190099.WINUI
 {
     internal static class Program
@@ -11,6 +14,8 @@ namespace Real_estate_market_IB190099.WINUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
+
             Application.Run(new frmUsers());
         }
     }

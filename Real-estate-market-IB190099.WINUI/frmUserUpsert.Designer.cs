@@ -52,6 +52,7 @@
             this.dtBirth = new System.Windows.Forms.DateTimePicker();
             this.label11 = new System.Windows.Forms.Label();
             this.txtRole = new System.Windows.Forms.TextBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -234,6 +235,7 @@
             this.dtBirth.Name = "dtBirth";
             this.dtBirth.Size = new System.Drawing.Size(175, 27);
             this.dtBirth.TabIndex = 23;
+            this.dtBirth.ValueChanged += new System.EventHandler(this.dtBirth_ValueChanged);
             // 
             // label11
             // 
@@ -248,14 +250,26 @@
             // 
             this.txtRole.Location = new System.Drawing.Point(649, 194);
             this.txtRole.Name = "txtRole";
+            this.txtRole.ReadOnly = true;
             this.txtRole.Size = new System.Drawing.Size(175, 27);
             this.txtRole.TabIndex = 24;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(743, 399);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(94, 29);
+            this.btnUpdate.TabIndex = 26;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // frmUserUpsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 450);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtRole);
             this.Controls.Add(this.dtBirth);
@@ -314,5 +328,6 @@
         private DateTimePicker dtBirth;
         private Label label11;
         private TextBox txtRole;
+        private Button btnUpdate;
     }
 }

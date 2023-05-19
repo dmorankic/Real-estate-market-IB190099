@@ -1,4 +1,5 @@
 ﻿using Real_estate_market_IB190099.Model;
+using Real_estate_market_IB190099.Model.Requests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace Real_estate_market_IB190099.WINUI
     public partial class frmUserUpsert : Form
     {
         public UserModel _user = null;
+        public APIService usersService { get; set; } = new APIService("User");
         public frmUserUpsert(UserModel user=null)
         {
             InitializeComponent();
@@ -22,7 +24,12 @@ namespace Real_estate_market_IB190099.WINUI
 
         private void frmUserUpsert_Load(object sender, EventArgs e)
         {
-            if(_user != null ) 
+            loadUserData();
+        }
+
+        private void loadUserData()
+        {
+            if (_user != null)
             {
                 lblHeading.Text = "User ID " + _user.Id + " details";
                 txtFirstName.Text = _user.FirstName;
@@ -35,13 +42,75 @@ namespace Real_estate_market_IB190099.WINUI
                 txtCity.Text = _user.Address.City.Name;
                 txtZip.Text = _user.Address.City.ZipCode;
                 txtStreet.Text = _user.Address.NumberStreet;
-                txtRole.Text=_user.Role.Name;
+                txtRole.Text = _user.Role.Name;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
+        }
+
+        private void dtBirth_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if(_user!= null )
+            {
+                PatchObject[] updateReq = new PatchObject[]
+                {
+                    new PatchObject()
+                    {
+                        path = "/FirstName",
+                        op = "replace",
+                        value = txtFirstName.Text
+                    },
+                      new PatchObject()
+                    {
+                        path = "/LastName",
+                        op = "replace",
+                        value = txtLastName.Text
+                    },
+                      new PatchObject()
+                    {
+                        path = "/Email",
+                        op = "replace",
+                        value = txtEmail.Text
+                    },
+                      new PatchObject()
+                    {
+                        path = "/Phone",
+                        op = "replace",
+                        value = txtPhone.Text
+                    },
+                      new PatchObject()
+                    {
+                        path = "/DateOfBirth",
+                        op = "replace",
+                        value = dtBirth.Value
+                    },
+                      new PatchObject()
+                    {
+                        path = "/Gender",
+                        op = "replace",
+                        value = txtGender.Text
+                    }
+                };
+
+                try
+                {
+                    _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
+                    MessageBox.Show("User data updated");
+                }catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
+                
+            }
         }
     }
 }

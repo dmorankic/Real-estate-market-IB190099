@@ -62,9 +62,8 @@
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.Size = new System.Drawing.Size(729, 367);
             this.dgvUsers.TabIndex = 4;
-            this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellClick);
             this.dgvUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellContentClick);
-            this.dgvUsers.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvUsers_Paint);
+           
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -165,7 +164,6 @@
             this.label1.Size = new System.Drawing.Size(106, 39);
             this.label1.TabIndex = 5;
             this.label1.Text = "Users";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtFilterUsers
             // 
