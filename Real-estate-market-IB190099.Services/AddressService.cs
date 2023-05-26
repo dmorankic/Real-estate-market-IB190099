@@ -23,7 +23,14 @@ namespace Real_estate_market_IB190099.Services
         public override void BeforeInsert(AddressInsertRequest insert, Address entity)
         {
             var city = Context.Cities.FirstOrDefault(x => x.Name == insert.CityName
-            && x.ZipCode==insert.ZipCode);
+            || x.ZipCode==insert.ZipCode);
+            if (city!=null)
+            {
+                if(!(city.Name==insert.CityName && city.ZipCode==insert.ZipCode))
+                {
+                    throw new UserException("City or zip code provided already exists");
+                }
+            }
             if (city == null)
             {
                 city = _cityService

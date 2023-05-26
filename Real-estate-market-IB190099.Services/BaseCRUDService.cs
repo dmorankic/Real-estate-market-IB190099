@@ -32,12 +32,18 @@ namespace Real_estate_market_IB190099.Services
             
         }
 
-        public T Update(int id, TUpdate update)
+        public virtual void BeforeUpdate(TUpdate update, TDb entity)
+        {
+
+        }
+
+        public virtual T Update(int id, TUpdate update)
         {
             var set = Context.Set<TDb>();
             var entity = set.Find(id);
             if (entity != null)
             {
+                //BeforeUpdate(update, entity);
                 Mapper.Map(update, entity);
             }
             else

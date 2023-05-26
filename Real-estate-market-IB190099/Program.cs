@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Real_estate_market_IB190099;
+using Real_estate_market_IB190099.Filters;
 using Real_estate_market_IB190099.Services;
 using Real_estate_market_IB190099.Services.Database;
 
@@ -10,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddNewtonsoftJson(); ;
+builder.Services.AddControllers(
+    x=> x.Filters.Add<ErrorFilter>()
+    )
+    .AddNewtonsoftJson(); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

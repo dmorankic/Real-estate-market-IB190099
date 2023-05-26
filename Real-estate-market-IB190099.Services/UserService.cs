@@ -59,7 +59,34 @@ namespace Real_estate_market_IB190099.Services
 
             base.BeforeInsert(insert, entity);
         }
+        
 
+        public override UserModel Update(int id, UserUpdateRequest update)
+        {
+            var user=Context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return null;
+            }
+            var address = Context.Addresses.FirstOrDefault(x => x.NumberStreet == update.NumberStreet &&
+               x.City.ZipCode == update.ZipCode && x.City.Name==update.CitytName);
+
+            if (address == null)
+            {
+                address = _AddresService
+                  .Insert(
+                   new AddressInsertRequest()
+                   {
+                       CityName = update.CitytName,
+                       NumberStreet = update.NumberStreet,
+                       ZipCode = update.ZipCode
+                   }
+                   );
+            }
+            user.AddressId = address.Id;
+
+            return base.Update(id, update);
+        }
         public static string GenerateSalt()
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();

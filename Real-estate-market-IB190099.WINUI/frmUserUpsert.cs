@@ -99,12 +99,19 @@ namespace Real_estate_market_IB190099.WINUI
                         value = txtGender.Text
                     }
                 };
-
+                var AddressUpdateReq = new UserUpdateRequest()
+                {
+                    CitytName= txtCity.Text,
+                    NumberStreet=txtStreet.Text,
+                    ZipCode=txtZip.Text
+                };
                 try
                 {
                     _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
+                    _user = await usersService.Put<UserModel>(_user.Id, AddressUpdateReq);
                     MessageBox.Show("User data updated");
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
