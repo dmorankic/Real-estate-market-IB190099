@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GGP623D8iplJO15/GVOwQsGNaMN9ch7+rUBeibljp+Zl3OI2CiCKxpue5+1d0FWiswbl6OzWh6KNJopW7PAS2w==",
+  "dgSpecHash": "VZUvTvPa115PzK9WR5c2hYx75hS38Tv0p/sUxUl0PJN2MTfJkUQdo27eA8L0gYg8fVNXu3GfMarU1LCdyLlycA==",
   "success": true,
   "projectFilePath": "C:\\Users\\dmorankic\\source\\repos\\Real-estate-market-IB190099\\Real-estate-market-IB190099.WINUI\\Real-estate-market-IB190099.WINUI.csproj",
   "expectedPackageFiles": [
@@ -54,6 +54,7 @@
     "C:\\Users\\dmorankic\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",

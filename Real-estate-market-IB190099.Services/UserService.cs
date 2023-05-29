@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
@@ -52,8 +53,7 @@ namespace Real_estate_market_IB190099.Services
                        CityName = insert.City,
                        NumberStreet = insert.NumberStreet,
                        ZipCode = insert.ZipCode
-                   }
-                   );
+                   });
             }
             entity.AddressId = address.Id;
 
@@ -80,8 +80,7 @@ namespace Real_estate_market_IB190099.Services
                        CityName = update.CitytName,
                        NumberStreet = update.NumberStreet,
                        ZipCode = update.ZipCode
-                   }
-                   );
+                   } );
             }
             user.AddressId = address.Id;
 

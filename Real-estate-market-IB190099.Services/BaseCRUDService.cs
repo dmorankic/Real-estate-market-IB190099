@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
@@ -43,7 +44,6 @@ namespace Real_estate_market_IB190099.Services
             var entity = set.Find(id);
             if (entity != null)
             {
-                //BeforeUpdate(update, entity);
                 Mapper.Map(update, entity);
             }
             else

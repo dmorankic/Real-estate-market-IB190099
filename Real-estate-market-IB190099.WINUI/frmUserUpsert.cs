@@ -1,5 +1,6 @@
 ﻿using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
+using Real_estate_market_IB190099.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+
 
 namespace Real_estate_market_IB190099.WINUI
 {
@@ -58,10 +61,12 @@ namespace Real_estate_market_IB190099.WINUI
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            if(_user!= null )
+            if (ValidateChildren())
             {
-                PatchObject[] updateReq = new PatchObject[]
+                if (_user != null)
                 {
+                    PatchObject[] updateReq = new PatchObject[]
+                    {
                     new PatchObject()
                     {
                         path = "/FirstName",
@@ -91,6 +96,13 @@ namespace Real_estate_market_IB190099.WINUI
                         path = "/DateOfBirth",
                         op = "replace",
                         value = dtBirth.Value
+                    }
+                      ,
+                      new PatchObject()
+                    {
+                        path = "/DateRegistered",
+                        op = "replace",
+                        value = dtRegistered.Value
                     },
                       new PatchObject()
                     {
@@ -98,26 +110,99 @@ namespace Real_estate_market_IB190099.WINUI
                         op = "replace",
                         value = txtGender.Text
                     }
-                };
-                var AddressUpdateReq = new UserUpdateRequest()
-                {
-                    CitytName= txtCity.Text,
-                    NumberStreet=txtStreet.Text,
-                    ZipCode=txtZip.Text
-                };
-                try
-                {
-                    _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
-                    _user = await usersService.Put<UserModel>(_user.Id, AddressUpdateReq);
-                    MessageBox.Show("User data updated");
+                    };
+                    var AddressUpdateReq = new UserUpdateRequest()
+                    {
+                        CitytName = txtCity.Text,
+                        NumberStreet = txtStreet.Text,
+                        ZipCode = txtZip.Text
+                    };
+                    try
+                    {
+                        _user = await usersService.Put<UserModel>(_user.Id, AddressUpdateReq);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    try
+                    {
+                        if (_user != null)
+                        {
+                            _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
+                            MessageBox.Show("User data updated");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                
-                
             }
+       
+        }
+
+        private void txtZip_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtZip, "Zip code should not be left blank!");
+        }
+
+        private void txtGender_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtGender, "Gender should not be left blank!");
+            if(txtGender.Text!="Male" && txtGender.Text != "Female")
+            {
+
+                e.Cancel = true;
+                txtGender.Focus();
+                err.SetError(txtGender, "Please insert valid gender (Male/Female)");
+            }
+            else
+            {
+                e.Cancel = false;
+                err.SetError(txtGender, "");
+            }
+        }
+        private void ValidateNotEmptyTextField(CancelEventArgs e,TextBox txtBox,string message)
+        {
+            if (string.IsNullOrWhiteSpace(txtBox.Text))
+            {
+                e.Cancel = true;
+                txtBox.Focus();
+                err.SetError(txtBox, message);
+            }
+            else
+            {
+                e.Cancel = false;
+                err.SetError(txtBox, "");
+            }
+        }
+
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtFirstName, "First name should not be left blank!");
+
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtLastName, "Last name should not be left blank!");
+
+        }
+
+        private void txtCity_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtCity, "City should not be left blank!");
+        }
+
+        private void txtStreet_Validating(object sender, CancelEventArgs e)
+        {
+            ValidateNotEmptyTextField(e, txtStreet, "Street should not be left blank!");
+
         }
     }
 }

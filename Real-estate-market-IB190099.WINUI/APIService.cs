@@ -38,9 +38,22 @@ namespace Real_estate_market_IB190099.WINUI
         }
         public async Task<T> Put<T>(int id,object request)
         {
-            var result = await $"{_url}{_resource}/{id}".WithBasicAuth(username, password).PutJsonAsync(request).ReceiveJson<T>();
+            try
+            {
+                var result = await $"{_url}{_resource}/{id}".WithBasicAuth(username, password).PutJsonAsync(request).ReceiveJson<T>();
+                return result;
+            }catch(FlurlHttpException ex)
+            {
+                var errors=await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+                var stringBuilder=new StringBuilder();
 
-            return result;
+                foreach(var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, {string.Join(",",error.Value)}");
+                }
+                MessageBox.Show(stringBuilder.ToString(),"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return default(T);
+            }
         }
         public async Task<T> Patch<T>(int id, object request)
         {

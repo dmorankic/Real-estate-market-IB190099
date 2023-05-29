@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2ykhuAqI9n+OMCtj4I3jm9IFTgSU+4SkuZ97uGHesPzwispJaqU7dgzyv0q16tPa3DI6IQ1+r/hAGjsRn23XHA==",
+  "dgSpecHash": "yA1qhecMxwPzaQvebRQGP8HHxPWdY22DM7SZYeZbA8XlxngxqI1148mFKDmo7q5Q0U5SzGxEH7vAXiw+iI8SYw==",
   "success": true,
   "projectFilePath": "C:\\Users\\dmorankic\\source\\repos\\Real-estate-market-IB190099\\Real-estate-market-IB190099\\Real-estate-market-IB190099.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\dmorankic\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.lblHeading = new System.Windows.Forms.Label();
@@ -53,6 +54,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtRole = new System.Windows.Forms.TextBox();
             this.btnUpdate = new System.Windows.Forms.Button();
+            this.err = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.err)).BeginInit();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -61,6 +64,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(178, 27);
             this.txtFirstName.TabIndex = 0;
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // button1
             // 
@@ -107,6 +111,7 @@
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(178, 27);
             this.txtLastName.TabIndex = 4;
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtLastName_Validating);
             // 
             // label3
             // 
@@ -155,6 +160,7 @@
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(177, 27);
             this.txtCity.TabIndex = 10;
+            this.txtCity.Validating += new System.ComponentModel.CancelEventHandler(this.txtCity_Validating);
             // 
             // label6
             // 
@@ -171,6 +177,7 @@
             this.txtStreet.Name = "txtStreet";
             this.txtStreet.Size = new System.Drawing.Size(177, 27);
             this.txtStreet.TabIndex = 12;
+            this.txtStreet.Validating += new System.ComponentModel.CancelEventHandler(this.txtStreet_Validating);
             // 
             // label7
             // 
@@ -187,6 +194,7 @@
             this.txtZip.Name = "txtZip";
             this.txtZip.Size = new System.Drawing.Size(175, 27);
             this.txtZip.TabIndex = 14;
+            this.txtZip.Validating += new System.ComponentModel.CancelEventHandler(this.txtZip_Validating);
             // 
             // label8
             // 
@@ -212,6 +220,7 @@
             this.txtGender.Name = "txtGender";
             this.txtGender.Size = new System.Drawing.Size(175, 27);
             this.txtGender.TabIndex = 18;
+            this.txtGender.Validating += new System.ComponentModel.CancelEventHandler(this.txtGender_Validating);
             // 
             // label10
             // 
@@ -264,6 +273,10 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
+            // err
+            // 
+            this.err.ContainerControl = this;
+            // 
             // frmUserUpsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -297,6 +310,7 @@
             this.Name = "frmUserUpsert";
             this.Text = "frmUserUpsert";
             this.Load += new System.EventHandler(this.frmUserUpsert_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.err)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -329,5 +343,6 @@
         private Label label11;
         private TextBox txtRole;
         private Button btnUpdate;
+        private ErrorProvider err;
     }
 }
