@@ -12,6 +12,18 @@
 
 bin/
 obj/
+Real-estate-market-IB190099.Services/bin/
+Real-estate-market-IB190099.Services/obj/
+Real-estate-market-IB190099.WINUI/bin/
+Real-estate-market-IB190099.WINUI/obj/
+Real-estate-market-IB190099.Model/bin/
+Real-estate-market-IB190099.Model/obj/
+Real-estate-market-IB190099/bin/
+Real-estate-market-IB190099/obj/
+
+
+
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
