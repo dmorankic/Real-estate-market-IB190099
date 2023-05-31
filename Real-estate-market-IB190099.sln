@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Real-estate-market-IB190099
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Real-estate-market-IB190099.Model", "Real-estate-market-IB190099.Model\Real-estate-market-IB190099.Model.csproj", "{0F610165-EDDA-437B-A77F-95FA6129186D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Real-estate-market-IB190099.WINUI", "Real-estate-market-IB190099.WINUI\Real-estate-market-IB190099.WINUI.csproj", "{DA7FA83D-83D0-43FA-B5B3-17E047F8603A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Real-estate-market-IB190099.WINUI", "Real-estate-market-IB190099.WINUI\Real-estate-market-IB190099.WINUI.csproj", "{DA7FA83D-83D0-43FA-B5B3-17E047F8603A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B8FC695E-1CDD-4FAC-AD37-7FFD1A0A93D3}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

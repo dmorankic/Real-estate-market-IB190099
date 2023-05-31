@@ -78,3 +78,4 @@ C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-I
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\bin\Debug\net6.0-windows\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\bin\Debug\net6.0-windows\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\bin\Debug\net6.0-windows\Newtonsoft.Json.Bson.dll
+C:\Users\dmorankic\source\repos\Real-estate-market-IB190099\Real-estate-market-IB190099.WINUI\bin\Debug\net6.0-windows\FluentValidation.dll

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Real_estate_market_IB190099.Model;
@@ -7,6 +8,7 @@ using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -136,11 +138,13 @@ namespace Real_estate_market_IB190099.Services
 
         public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
         {
+
             var userQuery = Context.Users.Find(id);
             if (userQuery == null)
             {
                 return Mapper.Map<UserModel>(userQuery);
             }
+
             user.ApplyTo(userQuery);
             Context.SaveChanges();
 

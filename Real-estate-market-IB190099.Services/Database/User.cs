@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Real_estate_market_IB190099.Services.Database;
 
 public partial class User
 {
     public int Id { get; set; }
-
-    public string? FirstName { get; set; }
-
+    public string FirstName { get; set; }
     public string? Username { get; set; }
 
     public string? PasswordHash { get; set; }

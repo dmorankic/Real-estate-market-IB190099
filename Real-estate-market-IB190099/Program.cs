@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -5,7 +6,7 @@ using Real_estate_market_IB190099;
 using Real_estate_market_IB190099.Filters;
 using Real_estate_market_IB190099.Services;
 using Real_estate_market_IB190099.Services.Database;
-
+using Real_estate_market_IB190099.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +46,7 @@ builder.Services.AddTransient<ICityService, CityService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAddressService, AddressService>();
-
+builder.Services.AddTransient<IValidator<User>,UserUpdateFluentValidator>();
 
 
 
@@ -73,5 +74,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
+//    dataContext.Database.Migrate();
+//}
 
 app.Run();

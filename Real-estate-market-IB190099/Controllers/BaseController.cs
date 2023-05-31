@@ -15,7 +15,7 @@ namespace Real_estate_market_IB190099.Controllers
         {
             _service = service;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<T> Get([FromQuery] TSearch search = null)
         {

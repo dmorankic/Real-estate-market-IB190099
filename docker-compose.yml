@@ -1,0 +1,38 @@
+version: '3'
+services:
+#mssql docker
+  real-estate-market-ib190099-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    container_name: real-estate-market-ib190099-sql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=QWEdsa123!
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+        - 1433
+    networks:
+      - realestatemarket2022
+
+  real-estate-market-ib190099-api:
+    restart: unless-stopped
+    build:
+      context: .
+    container_name: real-estate-market-ib190099-api
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=real-estate-market-ib190099-sql,1433;Database=IB190099;User=sa;Password=QWEdsa123!;ConnectRetryCount=0;TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 5192:5192
+    networks:
+      - realestatemarket2022
+    links:
+      - real-estate-market-ib190099-sql
+    depends_on:
+      - real-estate-market-ib190099-sql
+      
+networks:
+  realestatemarket2022:
+    driver: bridge      

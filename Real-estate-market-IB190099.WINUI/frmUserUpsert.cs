@@ -1,4 +1,5 @@
-﻿using Real_estate_market_IB190099.Model;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Services.Database;
 using System;
@@ -7,7 +8,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -132,7 +135,10 @@ namespace Real_estate_market_IB190099.WINUI
                         if (_user != null)
                         {
                             _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
-                            MessageBox.Show("User data updated");
+                            if (_user != null)
+                            {
+                                MessageBox.Show("User data updated");
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -202,7 +208,58 @@ namespace Real_estate_market_IB190099.WINUI
         private void txtStreet_Validating(object sender, CancelEventArgs e)
         {
             ValidateNotEmptyTextField(e, txtStreet, "Street should not be left blank!");
+        }
 
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (!isValidEmail())
+            {
+                e.Cancel = true;
+                txtEmail.Focus();
+                err.SetError(txtEmail, "Please provide a valid email address");
+            }
+            else
+            {
+                e.Cancel = false;
+                err.SetError(txtEmail, "");
+            }
+        }
+
+        private bool isValidEmail()
+        {
+            bool result = false;
+
+            try
+            {
+                MailAddress ma = new MailAddress(txtEmail.Text);
+                result = (txtEmail.Text.LastIndexOf(".") > txtEmail.Text.LastIndexOf("@"));
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        private void txtPhone_Validating(object sender, CancelEventArgs e)
+        {
+            if (!isValidPhoneNumber())
+            {
+                e.Cancel = true;
+                txtPhone.Focus();
+                err.SetError(txtPhone, "Please provide a valid phone number");
+            }
+            else
+            {
+                e.Cancel = false;
+                err.SetError(txtPhone, "");
+            }
+        }
+
+       private bool isValidPhoneNumber()
+        {
+            string pattern = @"^\d{9,10}$";
+            return Regex.IsMatch(txtPhone.Text, pattern);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace Real_estate_market_IB190099.WINUI
     {
         public string _url = "https://localhost:44306/";
         public string _resource = null;
-        public static string username = "admin";
-        public static string password = "admin";
+        public static string username ;
+        public static string password;
 
         public APIService(string resource) 
         {
@@ -57,9 +57,23 @@ namespace Real_estate_market_IB190099.WINUI
         }
         public async Task<T> Patch<T>(int id, object request)
         {
-            var result = await $"{_url}{_resource}/{id}".WithBasicAuth(username, password).PatchJsonAsync(request).ReceiveJson<T>();
+            try
+            {
+                var result = await $"{_url}{_resource}/{id}".WithBasicAuth(username, password).PatchJsonAsync(request).ReceiveJson<T>();
+                return result;
+            }catch(FlurlHttpException ex)
+            {
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+                var stringBuilder = new StringBuilder();
 
-            return result;
+                KeyValuePair < string,string[]> error = errors.First();
+                
+                stringBuilder.AppendLine($"{error.Key}, {string.Join(",", error.Value)}");
+                
+
+                MessageBox.Show(stringBuilder.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return default(T);
+            }
         }
 
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yA1qhecMxwPzaQvebRQGP8HHxPWdY22DM7SZYeZbA8XlxngxqI1148mFKDmo7q5Q0U5SzGxEH7vAXiw+iI8SYw==",
+  "dgSpecHash": "hIXgDn0hgUoQx3uCtSnJcB8Z9ndxHMNzMbtplMXyioDaJYgDXZfyVQGmAtSHbj/+PJfcUh+fOlvR0SW1fqAFdQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\dmorankic\\source\\repos\\Real-estate-market-IB190099\\Real-estate-market-IB190099\\Real-estate-market-IB190099.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\dmorankic\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\dmorankic\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.5\\microsoft.aspnetcore.jsonpatch.7.0.5.nupkg.sha512",
     "C:\\Users\\dmorankic\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.0.nupkg.sha512",
