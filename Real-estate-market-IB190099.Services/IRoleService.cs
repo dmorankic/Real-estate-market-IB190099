@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface IRoleService : ICRUDService<Database.Role, NameSearchObject, NameInsertRequest, NameUpsertRequest>
+    public interface IRoleService : ICRUDService<RoleModel, NameSearchObject, NameInsertRequest, NameUpsertRequest>
     {
 
     }

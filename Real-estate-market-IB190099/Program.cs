@@ -46,6 +46,7 @@ builder.Services.AddTransient<ICityService, CityService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAddressService, AddressService>();
+builder.Services.AddTransient<IAdvertiseService, AdvertiseService>();
 builder.Services.AddTransient<IValidator<User>,UserUpdateFluentValidator>();
 
 
@@ -75,10 +76,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
-    dataContext.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
+//    dataContext.Database.Migrate();
+//}
 
 app.Run();

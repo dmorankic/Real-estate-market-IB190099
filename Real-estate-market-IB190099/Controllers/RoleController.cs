@@ -10,7 +10,7 @@ namespace Real_estate_market_IB190099.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RoleController : BaseCRUDController<Services.Database.Role, NameSearchObject, NameInsertRequest, NameUpsertRequest>
+    public class RoleController : BaseCRUDController<RoleModel, NameSearchObject, NameInsertRequest, NameUpsertRequest>
     {
         public RoleController(IRoleService roleService) : base(roleService)
         {

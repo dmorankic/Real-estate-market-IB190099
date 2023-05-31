@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public class RoleService : BaseCRUDService<Database.Role, Database.Role, NameSearchObject, NameInsertRequest, NameUpsertRequest>
+    public class RoleService : BaseCRUDService<Database.Role,RoleModel, NameSearchObject, NameInsertRequest, NameUpsertRequest>
            , IRoleService
     {
         public RoleService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
