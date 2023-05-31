@@ -75,10 +75,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
-//    dataContext.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
+    dataContext.Database.Migrate();
+}
 
 app.Run();
