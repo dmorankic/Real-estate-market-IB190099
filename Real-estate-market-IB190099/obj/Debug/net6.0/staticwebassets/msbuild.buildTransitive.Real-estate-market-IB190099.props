@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Real-estate-market-IB190099.props" />
-</Project>

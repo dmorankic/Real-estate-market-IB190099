@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Real_estate_market_IB190099.WINUI.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Real_estate_market_IB190099.WINUI
 {
     public class APIService
     {
-        public string _url = "https://localhost:44306/";
+        public string _url = Settings.Default.ApiURL;
         public string _resource = null;
         public static string username ;
         public static string password;
