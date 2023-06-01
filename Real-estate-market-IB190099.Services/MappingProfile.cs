@@ -30,6 +30,12 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<CityInsertRequest, City>();
             CreateMap<UserModel, UserUpdateRequest>();
             CreateMap<AdvertiseInsertRequest, Advertise>();
+            CreateMap<Rating, RatingMLModel>().AfterMap((src, dest) =>
+            {
+                dest.Rating = (float)src.Rating1;
+            });
+  
+
 
 
 

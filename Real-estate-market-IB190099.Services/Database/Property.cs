@@ -38,4 +38,6 @@ public partial class Property
     public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
 
     public virtual Location? Location { get; set; }
+
+    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 }

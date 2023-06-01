@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Real_estate_market_IB190099.Services.Database;
 
 public partial class User
 {
     public int Id { get; set; }
-    public string FirstName { get; set; }
+
+    public string? FirstName { get; set; }
+
     public string? Username { get; set; }
 
     public string? PasswordHash { get; set; }
@@ -37,6 +38,8 @@ public partial class User
     public virtual ICollection<Message> MessageRecievers { get; set; } = new List<Message>();
 
     public virtual ICollection<Message> MessageSenders { get; set; } = new List<Message>();
+
+    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
     public virtual Role? Role { get; set; }
 
