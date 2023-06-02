@@ -1,4 +1,5 @@
 ﻿using Real_estate_market_IB190099.Model;
+using Real_estate_market_IB190099.Model.ms;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
@@ -13,5 +14,6 @@ namespace Real_estate_market_IB190099.Services
     public interface IAdvertiseService:ICRUDService<Advertise,BaseSearchObject,AdvertiseInsertRequest, AdvertiseInsertRequest>
     {
         List<PredictionResult> Recommend(int id);
+        public List<PropertyRatingPrediction> RecommendMS();
     }
 }
