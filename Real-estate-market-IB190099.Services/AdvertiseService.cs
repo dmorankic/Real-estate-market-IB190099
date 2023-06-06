@@ -118,7 +118,7 @@ namespace Real_estate_market_IB190099.Services
         
                     IEnumerable<Rating> tmpData = user.Ratings.ToList();
           
-                    var data=new List<RatingMLModel>();
+                    var data=new List<ProductEntry>();
 
                     foreach (var item in tmpData)
                     {
@@ -126,10 +126,10 @@ namespace Real_estate_market_IB190099.Services
                         { 
                             if(secondItem.PropertyId!=item.PropertyId)
                             {
-                                data.Add(new RatingMLModel
+                                data.Add(new ProductEntry
                                 {
-                                    PropertyId = (uint)item.PropertyId,
-                                    CorrelatedPropertyId = (uint)secondItem.PropertyId,
+                                    ProductID = (uint)item.PropertyId,
+                                    CoPurchaseProductID = (uint)secondItem.PropertyId,
 
                                 });
                             }
@@ -143,27 +143,23 @@ namespace Real_estate_market_IB190099.Services
                     var dataView = mlContext.Data.LoadFromEnumerable(data);
 
                     MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
-
-                    options.MatrixColumnIndexColumnName = @"CorrelatedPropertyId";
-                    options.MatrixRowIndexColumnName = @"PropertyId";
-                    options.LabelColumnName = @"Rating1";
-                    options.C = 0.00001;
+                    options.MatrixColumnIndexColumnName = nameof(ProductEntry.ProductID);
+                    options.MatrixRowIndexColumnName = nameof(ProductEntry.CoPurchaseProductID);
+                    options.LabelColumnName = "Label";
+                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
                     options.Alpha = 0.01;
                     options.Lambda = 0.025;
-                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
-                    //options.ApproximationRank = 19;
-                    //options.LearningRate = 1;
-                    options.NumberOfIterations = 127;
-                    //options.Quiet = true;
-                  
-                    
+                    // For better results use the following parameters
+                    options.NumberOfIterations = 100;
+                    options.C = 0.00001;
+
+
 
                     var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
                     model = trainer.Fit(dataView);
                 }
 
             }
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingMLModel, Copurchase_prediction>(model);
 
 
 
@@ -185,7 +181,7 @@ namespace Real_estate_market_IB190099.Services
 
             List<Property> allItems = new List<Property>();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 var tmp = Context.Properties.Where(x => x.Id != propertyId);
                 allItems.AddRange(tmp);
@@ -197,11 +193,12 @@ namespace Real_estate_market_IB190099.Services
 
             foreach (var item in allItems)
             {
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<ProductEntry, Copurchase_prediction>(model);
 
-                var prediction = predictionEngine.Predict(new RatingMLModel()
+                var prediction = predictionEngine.Predict(new ProductEntry()
                 {
-                    CorrelatedPropertyId = (uint)propertyId,
-                    PropertyId = (uint)item.Id
+                    ProductID = (uint)propertyId,
+                    CoPurchaseProductID = (uint)item.Id
                 });
 
                 predictionResult.Add(new Tuple<Property, float>(item, prediction.Score));
@@ -332,6 +329,23 @@ namespace Real_estate_market_IB190099.Services
             var unratedPropertyIds = allPropertyIds.Except(ratedPropertyIds).ToList();
 
             return unratedPropertyIds;
+        }
+
+
+        public class Copurchase_prediction
+        {
+            public float Score { get; set; }
+        }
+
+        public class ProductEntry
+        {
+            [KeyType(count: 13)]
+            public uint ProductID { get; set; }
+
+            [KeyType(count: 13)]
+            public uint CoPurchaseProductID { get; set; }
+
+            public float Label { get; set; }
         }
     }
 }
