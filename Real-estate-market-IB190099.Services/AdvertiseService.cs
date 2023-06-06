@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Real_estate_market_IB190099.Model.ms;
 using System.Runtime.CompilerServices;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore;
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -26,73 +28,189 @@ namespace Real_estate_market_IB190099.Services
             _mapper = Mapper;
         }
 
-        public List<PredictionResult> Recommend(int id)
+        //public List<int> Recommend(int id)
+        //{
+        //    var mlContext = new MLContext();
+        //    var dbData = Context.Ratings.ToList();
+        //    var data =_mapper.Map<List<RatingMLModel>>(dbData);
+
+        //    var allPropertyIds = Context.Properties.Select(x => x.Id).Distinct().ToList();
+        //    var allUserIds = Context.Ratings.Select(x => x.UserId).Distinct().ToList();
+
+        //    var dataView = mlContext.Data.LoadFromEnumerable(data);
+
+        //    {
+        //        //var propertyIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("PropertyIdEncoded");
+        //        //var userIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("UserIdEncoded");
+        //        //var pipeline = propertyIdPipeline.Append(userIdPipeline);
+        //        //
+        //        //var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
+        //    }
+
+        //    //var pipeline = mlContext.Transforms.Conversion.MapValueToKey("PropertyId")
+        //    //    .Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"))
+        //    //    .Append(mlContext.Transforms.Conversion.MapValueToKey("Rating"))
+        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("PropertyId"))
+        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("UserId"))
+        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("Rating"));
+        //    //    //.Append(mlContext.Transforms.Conversion.MapValueToKey("PropertyId"))
+        //    //    //.Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"));
+
+
+        //    //var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
+
+        //    var split = mlContext.Data.TrainTestSplit(dataView, testFraction: 0.2);
+
+        //    {
+        //        //var options = new MatrixFactorizationTrainer.Options
+        //        //{
+        //        //    MatrixColumnIndexColumnName = "PropertyId",
+        //        //    MatrixRowIndexColumnName = "UserId",
+        //        //    LabelColumnName = "Rating",
+        //        //    NumberOfIterations = 20,
+        //        //    ApproximationRank = 100
+        //        //};
+
+        //        //var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
+        //        //var model = trainer.Fit(transformedData);
+        //    }
+        //    ITransformer model = BuildAndTrainModel(mlContext, split.TrainSet);
+
+        //    EvaluateModel(mlContext, split.TestSet, model);
+        //    return UseModelForSinglePrediction(mlContext, model,id);
+
+        //    {
+        //        //var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingMLModel, PropertyPrediction>(model);
+
+        //        //var userId = id; // User for whom we want to make recommendations
+        //        //var propertiesToScore =_mapper.Map<List<RatingMLModel>>(Context.Ratings.ToList());
+
+        //        //var scores = propertiesToScore.Select(property => predictionEngine.Predict(property));
+
+        //        //var recommendations = propertiesToScore.Zip(scores, (property, score) => new PredictionResult
+        //        //{
+        //        //    PropertyId = property.PropertyId,
+        //        //    Score = score.Score
+        //        //}).OrderByDescending(p => p.Score).ToList();
+        //    }
+
+        //    //return new List<PredictionResult>();
+        //}
+        static object isLocked = new object();
+        static MLContext mlContext = null;
+        static ITransformer model = null;
+
+        public List<PropertyOutput> Recommend(int propertyId,int userId)
         {
-            var mlContext = new MLContext();
-            var dbData = Context.Ratings.ToList();
-            var data =_mapper.Map<List<RatingMLModel>>(dbData);
-
-            var allPropertyIds = Context.Properties.Select(x => x.Id).Distinct().ToList();
-            var allUserIds = Context.Ratings.Select(x => x.UserId).Distinct().ToList();
-
-            var dataView = mlContext.Data.LoadFromEnumerable(data);
-
+            lock (isLocked)
             {
-                //var propertyIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("PropertyIdEncoded");
-                //var userIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("UserIdEncoded");
-                //var pipeline = propertyIdPipeline.Append(userIdPipeline);
-                //
-                //var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
+                if (mlContext == null)
+                {
+                    mlContext = new MLContext();
+
+                    var user = Context.Users.Include(x=>x.Ratings).FirstOrDefault(x=>x.Id==userId);
+                  
+                    if (user == null)
+                    {
+                        throw new UserException("wrong user id");
+                    }
+
+        
+                    IEnumerable<Rating> tmpData = user.Ratings.ToList();
+          
+                    var data=new List<RatingMLModel>();
+
+                    foreach (var item in tmpData)
+                    {
+                       foreach (var secondItem in tmpData) 
+                        { 
+                            if(secondItem.PropertyId!=item.PropertyId)
+                            {
+                                data.Add(new RatingMLModel
+                                {
+                                    PropertyId = (uint)item.PropertyId,
+                                    CorrelatedPropertyId = (uint)secondItem.PropertyId,
+
+                                });
+                            }
+                        }
+                    }
+
+
+
+                 
+
+                    var dataView = mlContext.Data.LoadFromEnumerable(data);
+
+                    MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
+
+                    options.MatrixColumnIndexColumnName = @"CorrelatedPropertyId";
+                    options.MatrixRowIndexColumnName = @"PropertyId";
+                    options.LabelColumnName = @"Rating1";
+                    options.C = 0.00001;
+                    options.Alpha = 0.01;
+                    options.Lambda = 0.025;
+                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
+                    //options.ApproximationRank = 19;
+                    //options.LearningRate = 1;
+                    options.NumberOfIterations = 127;
+                    //options.Quiet = true;
+                  
+                    
+
+                    var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
+                    model = trainer.Fit(dataView);
+                }
+
+            }
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingMLModel, Copurchase_prediction>(model);
+
+
+
+            //var properties = Context.Properties.ToList();
+            //var ratings=Context.Ratings.ToList();
+            //List<Property> propsToRemove=new List<Property>();    
+            //ratings.ForEach(rating => {
+            //    properties.ForEach(property =>
+            //    {
+            //        if(rating.PropertyId==property.Id && rating.UserId==id)
+            //        {
+            //            propsToRemove.Add(property);
+            //        }
+            //    });
+            //});
+
+            //propsToRemove.ForEach(property => { properties.Remove(property); });
+
+
+            List<Property> allItems = new List<Property>();
+
+            for (int i = 0; i < 10000; i++)
+            {
+                var tmp = Context.Properties.Where(x => x.Id != propertyId);
+                allItems.AddRange(tmp);
             }
 
-            var pipeline = mlContext.Transforms.Conversion.MapValueToKey("PropertyId")
-                .Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"))
-                .Append(mlContext.Transforms.Conversion.MapValueToKey("Rating"))
-                .Append(mlContext.Transforms.Conversion.MapKeyToValue("PropertyId"))
-                .Append(mlContext.Transforms.Conversion.MapKeyToValue("UserId"))
-                .Append(mlContext.Transforms.Conversion.MapKeyToValue("Rating"));
-                //.Append(mlContext.Transforms.Conversion.MapValueToKey("PropertyId"))
-                //.Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"));
+           
 
+            var predictionResult = new List<Tuple<Property, float>>();
 
-            var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
-
-            var split = mlContext.Data.TrainTestSplit(transformedDataView, testFraction: 0.2);
-
+            foreach (var item in allItems)
             {
-                //var options = new MatrixFactorizationTrainer.Options
-                //{
-                //    MatrixColumnIndexColumnName = "PropertyId",
-                //    MatrixRowIndexColumnName = "UserId",
-                //    LabelColumnName = "Rating",
-                //    NumberOfIterations = 20,
-                //    ApproximationRank = 100
-                //};
 
-                //var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
-                //var model = trainer.Fit(transformedData);
+                var prediction = predictionEngine.Predict(new RatingMLModel()
+                {
+                    CorrelatedPropertyId = (uint)propertyId,
+                    PropertyId = (uint)item.Id
+                });
+
+                predictionResult.Add(new Tuple<Property, float>(item, prediction.Score));
             }
-            ITransformer model = BuildAndTrainModel(mlContext, split.TrainSet);
+            var finalResult = predictionResult.OrderByDescending(x => x.Item2)
+                .Select(x => x.Item1).Distinct().Take(5).ToList();
 
-            EvaluateModel(mlContext, split.TestSet, model);
-            UseModelForSinglePrediction(mlContext, model,id);
 
-            {
-                //var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingMLModel, PropertyPrediction>(model);
-
-                //var userId = id; // User for whom we want to make recommendations
-                //var propertiesToScore =_mapper.Map<List<RatingMLModel>>(Context.Ratings.ToList());
-
-                //var scores = propertiesToScore.Select(property => predictionEngine.Predict(property));
-
-                //var recommendations = propertiesToScore.Zip(scores, (property, score) => new PredictionResult
-                //{
-                //    PropertyId = property.PropertyId,
-                //    Score = score.Score
-                //}).OrderByDescending(p => p.Score).ToList();
-            }
-
-            return new List<PredictionResult>();
+            return Mapper.Map< List<PropertyOutput>>(finalResult);
         }
 
         public List<PropertyRatingPrediction> RecommendMS()
@@ -120,19 +238,21 @@ namespace Real_estate_market_IB190099.Services
 
         ITransformer BuildAndTrainModel(MLContext mlContext, IDataView trainingDataView)
         {
-            IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "UserIdEncoded", inputColumnName: "UserId")
+            IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion
+                .MapValueToKey(outputColumnName: "UserIdEncoded", inputColumnName: "UserId")
             .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "PropertyIdEncoded", inputColumnName: "PropertyId"));
 
             var options = new MatrixFactorizationTrainer.Options
             {
                 MatrixColumnIndexColumnName = "UserIdEncoded",
                 MatrixRowIndexColumnName = "PropertyIdEncoded",
-                LabelColumnName = "Rating",
+                LabelColumnName = "Rating1",
                 NumberOfIterations = 20,
                 ApproximationRank = 100
             };
 
             var trainerEstimator = estimator.Append(mlContext.Recommendation().Trainers.MatrixFactorization(options));
+            
 
             Console.WriteLine("=============== Training the model ===============");
             ITransformer model = trainerEstimator.Fit(trainingDataView);
@@ -150,7 +270,7 @@ namespace Real_estate_market_IB190099.Services
             Console.WriteLine("RSquared: " + metrics.RSquared.ToString());
         }
 
-        void UseModelForSinglePrediction(MLContext mlContext, ITransformer model,int userId)
+        List<int> UseModelForSinglePrediction(MLContext mlContext, ITransformer model,int userId)
         {
 
             Console.WriteLine("=============== Making a prediction ===============");
@@ -158,22 +278,25 @@ namespace Real_estate_market_IB190099.Services
 
             var unratedProperties = GetAllUnratedProperties(userId);
 
-
+            var recommendedSorted = new List<int>();
             foreach (var propertyId in unratedProperties)
             {
-                var testInput = new RatingMLModel { PropertyId = (uint)propertyId, UserId = (uint)userId };
+                var testInput = new RatingMLModel { PropertyId = (uint)propertyId, CorrelatedPropertyId = (uint)userId };
 
                 var propertyRatingPrediction = predictionEngine.Predict(testInput);
+                recommendedSorted.Add(propertyId);
 
                 if (float.IsNaN(propertyRatingPrediction.Score))
                 {
                     Console.WriteLine("Cannot predict the rating for Property " + propertyId);
+                    //Console.WriteLine(propertyRatingPrediction.Rating);
+
                 }
                 else
                 {
                     Console.WriteLine("Rating prediction for Property " + propertyId + " is: " + propertyRatingPrediction.Score);
 
-                    if (Math.Round(propertyRatingPrediction.Score, 1) > 3.5)
+                    if (propertyRatingPrediction.Score > 3.5)
                     {
                         Console.WriteLine("Property " + propertyId + " is recommended for user " + userId);
                     }
@@ -183,7 +306,7 @@ namespace Real_estate_market_IB190099.Services
                     }
                 }
             }
-
+            return recommendedSorted;
             //var testInput=new RatingMLModel { PropertyId= 2,UserId=22 };
 
 

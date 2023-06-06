@@ -7,10 +7,14 @@ namespace Real_estate_market_IB190099.Model
 {
     public class RatingMLModel
     {
-        [KeyType(count: 2)]
+        [ColumnName(@"PropertyId")]
+        [KeyType(count: 13)]
         public uint PropertyId { get; set; }
-        [KeyType(count:25)]
-        public uint UserId { get; set; }
-        public float Rating { get; set; }
+        [ColumnName(@"CorrelatedPropertyId")]
+
+        [KeyType(count: 13)]
+        public uint CorrelatedPropertyId { get; set; }
+        [ColumnName(@"Rating1")]
+        public float Rating1 { get; set; }
     }
 }
