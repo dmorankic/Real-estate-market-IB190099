@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:realestatemobile/screens/register_screen.dart';
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -91,25 +93,61 @@ class _LoginState extends State<Login> {
                   ]),
                 ),
               ),
-              Container(
-                  child: Text(
-                "Forgot password?",
-                style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 255, 1),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                    decoration: TextDecoration.underline),
-              )),
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment(0.55, 0.01),
+                    child: Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                          color: Color.fromRGBO(0, 0, 255, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          decoration: TextDecoration.underline),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 15),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     width: 250,
+                    height: 40,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Login.routeName);
-                      },
+                      onPressed: () {},
                       child: Text('Log in'),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                      //color: Color.fromRGBO(0, 0, 255, 1),
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15.0),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Register.routeName);
+                    },
+                    child: Text(
+                      "Register",
+                      style: TextStyle(
+                          color: Color.fromRGBO(0, 0, 255, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          decoration: TextDecoration.underline),
                     ),
                   ),
                 ],

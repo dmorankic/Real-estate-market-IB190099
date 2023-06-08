@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
+import 'package:realestatemobile/screens/rent.dart';
+import 'package:realestatemobile/screens/search_ads.dart';
+
+import 'screens/date_picker.dart';
+import 'screens/register_screen.dart';
 
 // ignore_for_file: prefer_const_constructors
 void main() {
@@ -18,6 +23,18 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         if (settings.name == Login.routeName) {
           return MaterialPageRoute(builder: ((context) => Login()));
+        }
+        if (settings.name == Register.routeName) {
+          return MaterialPageRoute(builder: ((context) => Register()));
+        }
+        if (settings.name == DatePickerApp.routeName) {
+          return MaterialPageRoute(builder: ((context) => DatePickerApp()));
+        }
+        if (settings.name == SearchAds.routeName) {
+          return MaterialPageRoute(builder: ((context) => SearchAds()));
+        }
+        if (settings.name == Rent.routeName) {
+          return MaterialPageRoute(builder: ((context) => Rent()));
         }
       },
     );
@@ -98,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 180,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle button 2 press
+                      Navigator.pushNamed(context, Register.routeName);
                     },
                     child: Text('Register'),
                   ),
@@ -109,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       // Handle button 3 press
+                      Navigator.pushNamed(context, SearchAds.routeName);
                     },
                     child: Text('Continue unregistered'),
                   ),
