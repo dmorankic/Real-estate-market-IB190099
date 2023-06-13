@@ -31,7 +31,7 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<CityInsertRequest, City>();
             CreateMap<UserModel, UserUpdateRequest>();
             CreateMap<AdvertiseInsertRequest, Advertise>();
-            CreateMap<Rating, RatingMLModel>();
+            CreateMap<Rating, PropertyRating>();
             CreateMap<Property,PropertyOutput>();
 
 

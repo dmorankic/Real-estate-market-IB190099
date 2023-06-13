@@ -1,4 +1,8 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/rent.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
@@ -17,42 +21,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-      onGenerateRoute: (settings) {
-        if (settings.name == Login.routeName) {
-          return MaterialPageRoute(builder: ((context) => Login()));
-        }
-        if (settings.name == Register.routeName) {
-          return MaterialPageRoute(builder: ((context) => Register()));
-        }
-        if (settings.name == DatePickerApp.routeName) {
-          return MaterialPageRoute(builder: ((context) => DatePickerApp()));
-        }
-        if (settings.name == SearchAds.routeName) {
-          return MaterialPageRoute(builder: ((context) => SearchAds()));
-        }
-        if (settings.name == Rent.routeName) {
-          return MaterialPageRoute(builder: ((context) => Rent()));
-        }
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        onGenerateRoute: (settings) {
+          if (settings.name == Login.routeName) {
+            return MaterialPageRoute(builder: ((context) => Login()));
+          }
+          if (settings.name == Register.routeName) {
+            return MaterialPageRoute(builder: ((context) => Register()));
+          }
+          if (settings.name == DatePickerApp.routeName) {
+            return MaterialPageRoute(builder: ((context) => DatePickerApp()));
+          }
+          if (settings.name == SearchAds.routeName) {
+            return MaterialPageRoute(builder: ((context) => SearchAds()));
+          }
+          if (settings.name == Rent.routeName) {
+            return MaterialPageRoute(builder: ((context) => Rent()));
+          }
+        },
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -60,19 +59,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -76,13 +76,13 @@ packages:
     source: sdk
     version: "0.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -123,6 +123,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -131,6 +139,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      sha256: cdbe7530b12ecd9eb455bdaa2fcb8d4dad22e80b8afb4798b41479d5ce26847f
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -168,22 +184,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      sha256: "4aa69e3541d38810533b1455aa38997a89755f9928e16ef813b62b2e8bcc398c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "21.2.9"
-  syncfusion_flutter_datepicker:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_datepicker
-      sha256: "2d0b69106152be3cbabf97e43e03b414ff650eeb91f6b17e7d24b7fade0a9ce9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "21.2.9"
   term_glyph:
     dependency: transitive
     description:
@@ -210,3 +210,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=3.0.3 <4.0.0"
+  flutter: ">=1.16.0"
