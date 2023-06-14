@@ -101,7 +101,7 @@ namespace Real_estate_market_IB190099.Services
         static MLContext mlContext = null;
         static ITransformer model = null;
 
-        public List<PropertyOutput> Recommend(int propertyId,int userId)
+        public List<PropertyOutput> Recommend(int userId)
         {
             lock (isLocked)
             {
@@ -123,7 +123,8 @@ namespace Real_estate_market_IB190099.Services
 
                     foreach (var item in tmpData)
                     {
-                        data.Add(new PropertyRating { userId = (uint)item.UserId, propertyId = (uint)item.PropertyId, Label = (float)item.Rating1 });
+                        item.Rating1 = (int)item.Rating1;
+                        data.Add(new PropertyRating { userId = (uint)item.UserId, propertyId = (uint)item.PropertyId, Label =(float)item.Rating1 });
                     }
 
                     IDataView dataView = mlContext.Data.LoadFromEnumerable<PropertyRating>(data);
@@ -155,7 +156,7 @@ namespace Real_estate_market_IB190099.Services
 
             List<Property> allPropsExtended=new List<Property>();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 allPropsExtended.AddRange(allProps);
             }
@@ -166,13 +167,6 @@ namespace Real_estate_market_IB190099.Services
 
             foreach (var item in allPropsExtended)
             {
-                //var predictionEngine = mlContext.Model.CreatePredictionEngine<PropertyRating, Model.PropertyRatingPrediction>(model);
-
-                //var prediction = predictionEngine.Predict(new PropertyRating()
-                //{
-                //    propertyId = (uint)item.Id,
-                //    userId = (uint)userId
-                //});
                 
                 var prediction= UseModelForSinglePrediction(mlContext, model, item.Id, userId);
 
@@ -191,8 +185,8 @@ namespace Real_estate_market_IB190099.Services
             IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion
                 .MapValueToKey(outputColumnName: "userIdEncoded", inputColumnName: "userId")
             .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "propertyIdEncoded", inputColumnName: "propertyId"));
-            
-            
+
+            var trans = estimator.Fit(trainingDataView).Transform(trainingDataView);
 
 
 
@@ -201,13 +195,18 @@ namespace Real_estate_market_IB190099.Services
                 MatrixColumnIndexColumnName = "userIdEncoded",
                 MatrixRowIndexColumnName = "propertyIdEncoded",
                 LabelColumnName = "Label",
-                NumberOfIterations = 20,
-                ApproximationRank = 100
+                NumberOfIterations = 100,
+                ApproximationRank = 100,
+                C = 0.00001,
+                Lambda = 0.025,
+                Alpha = 0.01,
+                LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass,
+
             };
 
             var trainerEstimator = estimator.Append(mlContext.Recommendation().Trainers.MatrixFactorization(options));
             
-            ITransformer model = trainerEstimator.Fit(trainingDataView);
+            ITransformer model = trainerEstimator.Fit(trans);
 
             return model;
         }

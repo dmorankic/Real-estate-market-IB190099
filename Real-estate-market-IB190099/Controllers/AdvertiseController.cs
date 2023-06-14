@@ -20,10 +20,9 @@ namespace Real_estate_market_IB190099.Controllers
         }
         [AllowAnonymous]
         [HttpGet("recommendations")]
-        public ActionResult<IEnumerable<PropertyOutput>> GetRecommendations(int propertyId, int userId)
+        public ActionResult<IEnumerable<PropertyOutput>> GetRecommendations(int userId)
         {
-            // Use userId to get recommendations
-            var recommendations = _service.Recommend(propertyId,userId);
+            var recommendations = _service.Recommend(userId);
 
             return Ok(recommendations);
         }

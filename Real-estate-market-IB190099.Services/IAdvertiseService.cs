@@ -12,7 +12,7 @@ namespace Real_estate_market_IB190099.Services
 {
     public interface IAdvertiseService:ICRUDService<Advertise,BaseSearchObject,AdvertiseInsertRequest, AdvertiseInsertRequest>
     {
-        List<PropertyOutput> Recommend(int id, int userId);
+        List<PropertyOutput> Recommend(int userId);
         
     }
 }
