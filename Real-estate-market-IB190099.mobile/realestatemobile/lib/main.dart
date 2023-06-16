@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
+import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/rent.dart';
+import 'package:realestatemobile/screens/sale.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 
 import 'screens/date_picker.dart';
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -43,6 +46,9 @@ class MyApp extends StatelessWidget {
           }
           if (settings.name == Rent.routeName) {
             return MaterialPageRoute(builder: ((context) => Rent()));
+          }
+          if (settings.name == Sale.routeName) {
+            return MaterialPageRoute(builder: ((context) => Sale()));
           }
         },
       ),

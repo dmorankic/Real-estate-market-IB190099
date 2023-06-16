@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public class AdvertiseService : BaseCRUDService<Advertise, Advertise, BaseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
+    public class AdvertiseService : BaseCRUDService<Advertise, AdvertiseModel, AdvertiseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
         , IAdvertiseService
     {
         IMapper _mapper;
@@ -96,7 +96,21 @@ namespace Real_estate_market_IB190099.Services
         //    //return new List<PredictionResult>();
         //}
 
+        public override IQueryable<Advertise> AddFilter(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
+        {
+            var filteredQuery = base.AddFilter(query, search);
 
+            if (!string.IsNullOrWhiteSpace(search?.Type))
+            {
+                filteredQuery = filteredQuery.Where(x => x.Type == search.Type);
+            }
+            if (!string.IsNullOrWhiteSpace(search?.PropertyName))
+            {
+                filteredQuery = filteredQuery.Where(x => x!.Property.Name.Contains(search.PropertyName));
+            }
+
+            return filteredQuery;
+        }
         static object isLocked = new object();
         static MLContext mlContext = null;
         static ITransformer model = null;
@@ -186,7 +200,7 @@ namespace Real_estate_market_IB190099.Services
                 .MapValueToKey(outputColumnName: "userIdEncoded", inputColumnName: "userId")
             .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "propertyIdEncoded", inputColumnName: "propertyId"));
 
-            var trans = estimator.Fit(trainingDataView).Transform(trainingDataView);
+            //var trans = estimator.Fit(trainingDataView).Transform(trainingDataView);
 
 
 
@@ -206,7 +220,7 @@ namespace Real_estate_market_IB190099.Services
 
             var trainerEstimator = estimator.Append(mlContext.Recommendation().Trainers.MatrixFactorization(options));
             
-            ITransformer model = trainerEstimator.Fit(trans);
+            ITransformer model = trainerEstimator.Fit(trainingDataView);
 
             return model;
         }
@@ -220,6 +234,12 @@ namespace Real_estate_market_IB190099.Services
                 userId = (uint)userId
             });
             return prediction;
+        }
+
+        public override IQueryable<Advertise> AddInclude(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
+        {
+            query = query.Include(x => x.Property);
+            return base.AddInclude(query, search);
         }
     }
 }

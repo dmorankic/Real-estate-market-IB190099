@@ -31,5 +31,14 @@ namespace Real_estate_market_IB190099.WINUI.Properties {
                 return ((string)(this["ApiURL"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:7006/")]
+        public string ApiURLSecondary {
+            get {
+                return ((string)(this["ApiURLSecondary"]));
+            }
+        }
     }
 }

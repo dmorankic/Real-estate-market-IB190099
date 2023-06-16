@@ -10,7 +10,7 @@ namespace Real_estate_market_IB190099.WINUI
 {
     public class APIService
     {
-        public string _url = Settings.Default.ApiURL;
+        public string _url = Settings.Default.ApiURLSecondary;
         public string _resource = null;
         public static string username ;
         public static string password;

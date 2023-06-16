@@ -6,6 +6,7 @@ using Real_estate_market_IB190099.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +15,12 @@ namespace Real_estate_market_IB190099.Services
     public class MappingProfile : Profile
     {
 
+        
+       
         public MappingProfile()
         {
+            //var mappingService = new MappingService();
+  
             CreateMap<NameInsertRequest, City>();
             CreateMap<NameInsertRequest, Database.Role>();
             CreateMap<NameUpsertRequest, City>();
@@ -33,11 +38,17 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<AdvertiseInsertRequest, Advertise>();
             CreateMap<Rating, PropertyRating>();
             CreateMap<Property,PropertyOutput>();
+            CreateMap<Advertise, AdvertiseModel>();
+            //.AfterMap((src, dest) =>
+            // {
+            //     dest.property = Mapper.Map<PropertyOutput>(src.Property);
+            // });
 
 
 
 
 
         }
+     
     }
 }

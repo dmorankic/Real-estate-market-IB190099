@@ -1,5 +1,12 @@
+// ignore_for_file: prefer_final_fields, unused_field, sized_box_for_whitespace, empty_catches, unused_catch_clause, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:realestatemobile/screens/register_screen.dart';
+import 'package:realestatemobile/screens/search_ads.dart';
+import 'package:realestatemobile/utils/util.dart';
+
+import '../providers/user_provider.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
@@ -11,8 +18,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  late UserProvider _userProvider;
+
   @override
   Widget build(BuildContext context) {
+    _userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -59,7 +72,7 @@ class _LoginState extends State<Login> {
                       child: SizedBox(
                         width: 250,
                         child: TextField(
-                          //controller: _usernameController,
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
@@ -80,7 +93,7 @@ class _LoginState extends State<Login> {
                         child: TextField(
                           style: TextStyle(
                               fontSize: 15.0, height: 1, color: Colors.black),
-                          //controller: _passwordController,
+                          controller: _passwordController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Pasword",
@@ -116,7 +129,27 @@ class _LoginState extends State<Login> {
                     width: 250,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          Authorization.username = _usernameController.text;
+                          Authorization.password = _passwordController.text;
+                          await _userProvider.get();
+                          Navigator.pushNamed(context, SearchAds.routeName);
+                        } on Exception catch (e) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(e.toString()),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text("Ok"))
+                                    ],
+                                  ));
+                        }
+                      },
                       child: Text('Log in'),
                     ),
                   ),

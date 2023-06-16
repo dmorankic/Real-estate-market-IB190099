@@ -11,7 +11,7 @@ namespace Real_estate_market_IB190099.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AdvertiseController : BaseCRUDController<Advertise, BaseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
+    public class AdvertiseController : BaseCRUDController<AdvertiseModel, AdvertiseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
     {
         IAdvertiseService _service;
         public AdvertiseController(IAdvertiseService service) : base(service)
@@ -25,6 +25,12 @@ namespace Real_estate_market_IB190099.Controllers
             var recommendations = _service.Recommend(userId);
 
             return Ok(recommendations);
+        }
+        [AllowAnonymous]
+        public override IEnumerable<AdvertiseModel> Get([FromQuery] AdvertiseSearchObject search = null)
+        {
+            return base.Get(search);
+
         }
     }
 }

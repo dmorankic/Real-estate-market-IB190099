@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:realestatemobile/screens/sale.dart';
 import 'rent.dart';
 
 // ignore_for_file: use_build_context_synchronously
@@ -60,7 +61,9 @@ class _SearchAdsState extends State<SearchAds> {
                           width: 120,
                           height: 40,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, Sale.routeName);
+                            },
                             child: Text('Sale'),
                           ),
                         ),

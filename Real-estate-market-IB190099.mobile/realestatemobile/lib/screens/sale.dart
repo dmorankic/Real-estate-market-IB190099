@@ -5,40 +5,38 @@ import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
-import '../model/advertise.dart';
+import 'package:realestatemobile/utils/search_text_field.dart';
 
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 //ignore_use_build_context_synchronous
 
-class Rent extends StatefulWidget {
-  const Rent({super.key});
-  static const String routeName = "/rent";
+class Sale extends StatefulWidget {
+  const Sale({super.key});
+  static const String routeName = "/sale";
 
   @override
-  State<Rent> createState() => _RentState();
+  State<Sale> createState() => _SaleState();
 }
 
-class _RentState extends State<Rent> {
+class _SaleState extends State<Sale> {
   AdvertiseProvider? _advertiseProvider = null;
-  dynamic data = [];
+  dynamic data = {};
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _advertiseProvider = context.read<AdvertiseProvider>();
-    _advertiseProvider = Provider.of<AdvertiseProvider>(context, listen: false);
+    _advertiseProvider = context.read<AdvertiseProvider>();
     print("called initstate");
     loadData();
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get({'Type': 'rent'});
+    var tmpData = await _advertiseProvider?.get({'Type': 'sale'});
     setState(() {
-      data = tmpData!;
+      data = tmpData;
     });
   }
 
@@ -73,7 +71,7 @@ class _RentState extends State<Rent> {
                           child: Container(
                         margin: EdgeInsets.only(left: 14.0, top: 10),
                         child: Text(
-                          "Real estate rent",
+                          "Real estate sale",
                           style: TextStyle(fontSize: 29),
                         ),
                       ))
@@ -81,42 +79,11 @@ class _RentState extends State<Rent> {
                   ),
                 ),
                 SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: SizedBox(
-                        width: 300,
-                        height: 25,
-                        child: TextField(
-                          onSubmitted: (value) async {
-                            var tmpData = await _advertiseProvider
-                                ?.get({'PropertyName': value, 'Type': 'rent'});
-                            setState(() {
-                              data = tmpData;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 2),
-                            border: InputBorder.none,
-                            hintText: "Search",
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                              size: 21.0,
-                            ),
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                            isDense: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                _buildSearch('sale'),
+                SearchTextField(
+                  advertiseProvider: _advertiseProvider!,
+                  data: data,
+                  type: 'rent',
                 ),
                 SizedBox(height: 8),
                 Column(
@@ -130,6 +97,45 @@ class _RentState extends State<Rent> {
           ),
         ),
       ),
+    );
+  }
+
+  Row _buildSearch(String? type) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: SizedBox(
+            width: 300,
+            height: 25,
+            child: TextField(
+              onSubmitted: (value) async {
+                var tmpData = await _advertiseProvider
+                    ?.get({'PropertyName': value, 'Type': type});
+                setState(() {
+                  data = tmpData;
+                });
+              },
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(top: 2),
+                border: InputBorder.none,
+                hintText: "Search",
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                  size: 21.0,
+                ),
+                hintStyle: TextStyle(color: Colors.grey[400]),
+                isDense: true,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

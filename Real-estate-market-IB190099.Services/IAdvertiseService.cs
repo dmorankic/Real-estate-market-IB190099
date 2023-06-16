@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface IAdvertiseService:ICRUDService<Advertise,BaseSearchObject,AdvertiseInsertRequest, AdvertiseInsertRequest>
+    public interface IAdvertiseService:ICRUDService<AdvertiseModel, AdvertiseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
     {
         List<PropertyOutput> Recommend(int userId);
         
