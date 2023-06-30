@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'dart:io';
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:realestatemobile/screens/rent.dart';
 
 import '../utils/util.dart';
@@ -34,17 +34,9 @@ abstract class BaseProvider<T> with ChangeNotifier {
     http = IOClient(client);
   }
 
-  Future<List<T>> get([dynamic search]) async {
-    var url = "$_baseUrl$_endpoint";
+  Future<List<T>> get(dynamic search, String endpoint) async {
+    var url = "$_baseUrl$endpoint";
     Map<String, String> headers = createHeaders();
-
-    // if (search?.type != null) {
-    //   url = "$url?${search.type}";
-    // }
-
-    // if(search?.heading!=null){
-
-    // }
 
     if (search != null) {
       String queryString = getQueryString(search);
@@ -55,10 +47,38 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var response = await http!.get(uri, headers: headers);
     if (isValidResponseCode(response)) {
       var data = jsonDecode(response.body);
-      return data.map((x) => fromJson(x)).cast<T>().toList();
+      data = data.map((x) => fromJson(x)).cast<T>().toList();
+      return data;
     } else {
       throw Exception("Exception... handle this gracefully");
     }
+  }
+
+  Future<T> getById(String id, String endpoint) async {
+    var url = "$_baseUrl$endpoint/${id}";
+    Map<String, String> headers = createHeaders();
+
+    var uri = Uri.parse(url);
+    var response = await http!.get(uri, headers: headers);
+
+    if (isValidResponseCode(response)) {
+      var data = jsonDecode(response.body);
+      //var mappedData = fromJson(data);
+      var mappedData = fromJson(data);
+      print(mappedData);
+      return mappedData;
+    } else {
+      throw Exception("Exception... handle this gracefully");
+    }
+  }
+
+  Future<Response> saveAd(String userId, String advertiseId, String endpoint) {
+    var url = "${_baseUrl}${endpoint}/Save";
+    Map<String, String> headers = createHeaders();
+    var uri = Uri.parse(url);
+    return http!.post(uri,
+        headers: headers,
+        body: jsonEncode(<String, String>{"userId": "20", "advertiseId": "8"}));
   }
 
   Map<String, String> createHeaders() {

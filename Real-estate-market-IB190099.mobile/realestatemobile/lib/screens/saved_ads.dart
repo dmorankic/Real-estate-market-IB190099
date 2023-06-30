@@ -14,14 +14,14 @@ import 'package:realestatemobile/utils/search_text_field.dart';
 // ignore_for_file: prefer_const_literals_to_create_immutables
 //ignore_use_build_context_synchronous
 
-class Sale extends StatefulWidget {
-  const Sale({super.key});
-  static const String routeName = "/sale";
+class SavedAds extends StatefulWidget {
+  const SavedAds({super.key});
+  static const String routeName = "/saved";
   @override
-  State<Sale> createState() => _SaleState();
+  State<SavedAds> createState() => _SavedAdsState();
 }
 
-class _SaleState extends State<Sale> {
+class _SavedAdsState extends State<SavedAds> {
   AdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
@@ -75,7 +75,7 @@ class _SaleState extends State<Sale> {
                             child: Container(
                           margin: EdgeInsets.only(left: 14.0, top: 10),
                           child: Text(
-                            "Real estate sale",
+                            "Saved advertises",
                             style: TextStyle(fontSize: 29),
                           ),
                         ))

@@ -241,5 +241,28 @@ namespace Real_estate_market_IB190099.Services
             query = query.Include(x => x.Property);
             return base.AddInclude(query, search);
         }
+        
+        public override AdvertiseModel GetById(int id)
+        {
+
+            var advertise = Context.Advertises.Include(x=>x.Property).FirstOrDefault(x=>x.Id==id);
+            if(advertise== null)
+            {
+                throw new UserException("User with that Id does not exist");
+            }
+            return Mapper.Map<AdvertiseModel>(advertise);
+        }
+        public SavedAdvertiseInsertRequest SaveAdvertise(SavedAdvertiseInsertRequest insert)
+        {
+            var insertReq = Mapper.Map<SavedAdvertise>(insert);
+            var advertises = Context.SavedAdvertises.ToList();
+            advertises.ForEach(x =>
+            {
+                if (x.AdvertiseId == insert.AdvertiseId && x.UserId == insert.UserId) { throw new UserException("You already saved this advertise"); }
+            });
+            Context.SavedAdvertises.Add(insertReq);
+            Context.SaveChanges();
+            return insert;
+        }
     }
 }

@@ -21,6 +21,6 @@ class Advertise {
   factory Advertise.fromJson(Map<String, dynamic> json) =>
       _$AdvertiseFromJson(json);
 
-  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  /// Connect the generated [_$AdvertiseToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$AdvertiseToJson(this);
 }

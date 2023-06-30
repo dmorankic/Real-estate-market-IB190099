@@ -5,6 +5,7 @@ import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:realestatemobile/screens/advertise_details.dart';
 
 import '../model/advertise.dart';
 
@@ -24,19 +25,19 @@ class Rent extends StatefulWidget {
 class _RentState extends State<Rent> {
   AdvertiseProvider? _advertiseProvider = null;
   dynamic data = [];
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _advertiseProvider = context.read<AdvertiseProvider>();
-    _advertiseProvider = Provider.of<AdvertiseProvider>(context, listen: false);
-    print("called initstate");
+    _advertiseProvider = context.read<AdvertiseProvider>();
+    // _advertiseProvider = Provider.of<AdvertiseProvider>(context, listen: false);
     loadData();
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get({'Type': 'rent'});
+    var tmpData = await _advertiseProvider?.get({'Type': 'rent'}, "Advertise");
     setState(() {
       data = tmpData!;
     });
@@ -44,8 +45,6 @@ class _RentState extends State<Rent> {
 
   @override
   Widget build(BuildContext context) {
-    print("called build");
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -81,46 +80,10 @@ class _RentState extends State<Rent> {
                   ),
                 ),
                 SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: SizedBox(
-                        width: 300,
-                        height: 25,
-                        child: TextField(
-                          onSubmitted: (value) async {
-                            var tmpData = await _advertiseProvider
-                                ?.get({'PropertyName': value, 'Type': 'rent'});
-                            setState(() {
-                              data = tmpData;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 2),
-                            border: InputBorder.none,
-                            hintText: "Search",
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                              size: 21.0,
-                            ),
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                            isDense: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                _buildSearch('rent'),
                 SizedBox(height: 8),
                 Column(
-                  children: _buildAdvertisesCardList(),
+                  children: buildAdvertisesCardList(),
                 ),
                 SizedBox(
                   height: 8,
@@ -133,7 +96,60 @@ class _RentState extends State<Rent> {
     );
   }
 
-  List<Widget> _buildAdvertisesCardList() {
+  Row _buildSearch(String? type) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: SizedBox(
+            width: 250,
+            height: 25,
+            child: TextField(
+              controller: searchController,
+              onSubmitted: (value) async {
+                var tmpData = await _advertiseProvider
+                    ?.get({'PropertyName': value, 'Type': type}, "Advertise");
+
+                setState(() {
+                  data = tmpData;
+                });
+              },
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(top: 2),
+                border: InputBorder.none,
+                hintText: "Search",
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                  size: 21.0,
+                ),
+                hintStyle: TextStyle(color: Colors.grey[400]),
+                isDense: true,
+              ),
+            ),
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.filter_list),
+          onPressed: () async {
+            var tmpData = await _advertiseProvider?.get(
+                {'PropertyName': searchController.text, 'Type': type},
+                "Advertise");
+
+            setState(() {
+              data = tmpData;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  List<Widget> buildAdvertisesCardList() {
     if (data.length == 0) {
       return [Text("No items match your search")];
     }
@@ -143,75 +159,81 @@ class _RentState extends State<Rent> {
 
     List<Widget> list = data
         .map(
-          (x) => Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                border: Border.all(color: Colors.black)),
-            margin: EdgeInsets.only(bottom: 10),
-            child: Card(
-              child: Container(
-                width: 300,
-                margin: EdgeInsets.all(6.0),
-                child: Row(
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        Container(
-                          width: 100.0,
-                          height: 80.0,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24.0)),
-                          ),
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.elliptical(10, 10)),
-                            child: SizedBox.fromSize(
-                              size: Size.fromRadius(35),
-                              child: Image.asset("assets/images/logo2.png",
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ), //prop image
-                    Container(
-                      height: 100.00,
-                      width: 190.00,
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            "${x.property?.name}",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "${x.property?.description}",
-                            style: TextStyle(
-                              fontSize: 11.5,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
+          (x) => GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                  context, "${AdvertiseDetails.routeName}/${x.id}");
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  border: Border.all(color: Colors.black)),
+              margin: EdgeInsets.only(bottom: 10),
+              child: Card(
+                child: Container(
+                  width: 300,
+                  margin: EdgeInsets.all(6.0),
+                  child: Row(
+                    children: <Widget>[
+                      Column(
+                        children: [
                           Container(
-                            width: 188,
-                            child: Text(
-                              "\$${x.property?.price}",
-                              style: TextStyle(
-                                fontSize: 11.5,
+                            width: 100.0,
+                            height: 80.0,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)),
+                            ),
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.elliptical(10, 10)),
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(35),
+                                child: Image.asset("assets/images/logo2.png",
+                                    fit: BoxFit.cover),
                               ),
-                              textAlign: TextAlign.right,
                             ),
                           ),
                         ],
-                      ),
-                    )
-                  ],
+                      ), //prop image
+                      Container(
+                        height: 100.00,
+                        width: 190.00,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "${x.property?.name}",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "${x.property?.description}",
+                              style: TextStyle(
+                                fontSize: 11.5,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                              width: 188,
+                              child: Text(
+                                "\$${x.property?.price}",
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -32,5 +32,17 @@ namespace Real_estate_market_IB190099.Controllers
             return base.Get(search);
 
         }
+        [AllowAnonymous]
+        public override AdvertiseModel GetById(int id)
+        {
+            return base.GetById(id);
+        }
+        [HttpPost]
+        [Route("Save")]
+        public SavedAdvertiseInsertRequest SaveAdvertise([FromQuery] SavedAdvertiseInsertRequest savedAdvertise)
+        {
+            return _service.SaveAdvertise(savedAdvertise);
+        }
+
     }
 }

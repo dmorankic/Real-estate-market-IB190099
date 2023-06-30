@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:realestatemobile/providers/user_provider.dart';
+import 'package:realestatemobile/screens/advertise_details.dart';
+import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/rent.dart';
 import 'package:realestatemobile/screens/sale.dart';
+import 'package:realestatemobile/screens/saved_ads.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 
 import 'screens/date_picker.dart';
@@ -24,35 +27,48 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
-        onGenerateRoute: (settings) {
-          if (settings.name == Login.routeName) {
-            return MaterialPageRoute(builder: ((context) => Login()));
-          }
-          if (settings.name == Register.routeName) {
-            return MaterialPageRoute(builder: ((context) => Register()));
-          }
-          if (settings.name == DatePickerApp.routeName) {
-            return MaterialPageRoute(builder: ((context) => DatePickerApp()));
-          }
-          if (settings.name == SearchAds.routeName) {
-            return MaterialPageRoute(builder: ((context) => SearchAds()));
-          }
-          if (settings.name == Rent.routeName) {
-            return MaterialPageRoute(builder: ((context) => Rent()));
-          }
-          if (settings.name == Sale.routeName) {
-            return MaterialPageRoute(builder: ((context) => Sale()));
-          }
-        },
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+        ],
+        child: MaterialApp(
+            title: 'Flutter Demo',
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            onGenerateRoute: (settings) {
+              if (settings.name == Login.routeName) {
+                return MaterialPageRoute(builder: ((context) => Login()));
+              }
+              if (settings.name == Register.routeName) {
+                return MaterialPageRoute(builder: ((context) => Register()));
+              }
+              if (settings.name == DatePickerApp.routeName) {
+                return MaterialPageRoute(
+                    builder: ((context) => DatePickerApp()));
+              }
+              if (settings.name == SearchAds.routeName) {
+                return MaterialPageRoute(builder: ((context) => SearchAds()));
+              }
+              if (settings.name == Rent.routeName) {
+                return MaterialPageRoute(builder: ((context) => Rent()));
+              }
+              if (settings.name == Sale.routeName) {
+                return MaterialPageRoute(builder: ((context) => Sale()));
+              }
+              if (settings.name == BurgerMenu.routeName) {
+                return MaterialPageRoute(builder: ((context) => BurgerMenu()));
+              }
+              if (settings.name == SavedAds.routeName) {
+                return MaterialPageRoute(builder: ((context) => SavedAds()));
+              }
+
+              var uri = Uri.parse(settings.name!);
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" == AdvertiseDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => AdvertiseDetails(id: id));
+              }
+            }));
   }
 }
 

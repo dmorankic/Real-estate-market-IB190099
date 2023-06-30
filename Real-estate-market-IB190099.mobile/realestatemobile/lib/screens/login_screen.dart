@@ -6,6 +6,7 @@ import 'package:realestatemobile/screens/register_screen.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 import 'package:realestatemobile/utils/util.dart';
 
+import '../model/user.dart';
 import '../providers/user_provider.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -133,7 +134,16 @@ class _LoginState extends State<Login> {
                         try {
                           Authorization.username = _usernameController.text;
                           Authorization.password = _passwordController.text;
-                          await _userProvider.get();
+                          List<User> users =
+                              await _userProvider.get({}, "User");
+                          users.forEach((element) {
+                            if (element.userName == Authorization.username) {
+                              Authorization.loggedUser = element;
+                              print(element.userName);
+                            } else {
+                              print("FALSE");
+                            }
+                          });
                           Navigator.pushNamed(context, SearchAds.routeName);
                         } on Exception catch (e) {
                           showDialog(
@@ -162,7 +172,6 @@ class _LoginState extends State<Login> {
                   Text(
                     "Don't have an account?",
                     style: TextStyle(
-                      //color: Color.fromRGBO(0, 0, 255, 1),
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                     ),

@@ -2,17 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:realestatemobile/utils/shared.dart';
 
 import '../providers/advertise_provider.dart';
 
 class SearchTextField extends StatefulWidget {
-  SearchTextField(
-      {super.key,
-      required this.advertiseProvider,
-      required this.data,
-      required this.type});
-  AdvertiseProvider advertiseProvider;
+  SearchTextField({super.key, required this.type});
   dynamic data = {};
   String type;
   @override
@@ -20,15 +16,14 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  AdvertiseProvider? _advertiseProvider = null;
+  AdvertiseProvider? advertiseProvider = null;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _advertiseProvider = widget.advertiseProvider;
-    data = widget.data;
     type = widget.type;
+    advertiseProvider = context.read<AdvertiseProvider>();
   }
 
   dynamic data = {};
@@ -49,10 +44,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
             height: 25,
             child: TextField(
               onSubmitted: (value) async {
-                var tmpData = await _advertiseProvider
-                    ?.get({'PropertyName': value, 'Type': type});
+                var tmpData = await advertiseProvider
+                    ?.get({'PropertyName': value, 'Type': type}, "Advertise");
                 setState(() {
-                  Shared.data = tmpData;
+                  data = tmpData;
+                  Shared.data = data;
                 });
               },
               decoration: InputDecoration(

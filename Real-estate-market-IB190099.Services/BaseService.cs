@@ -46,9 +46,11 @@ namespace Real_estate_market_IB190099.Services
         {
             return query;
         }
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             var dbModelData = Context.Set<TDb>();
+
+      
             return Mapper.Map<T>(dbModelData.Find(id));
         }
 

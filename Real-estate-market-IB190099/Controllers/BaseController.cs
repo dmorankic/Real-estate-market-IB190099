@@ -22,6 +22,6 @@ namespace Real_estate_market_IB190099.Controllers
             return _service.Get(search);
         }
         [HttpGet("{id}")]
-        public T GetById(int id) { return _service.GetById(id); }
+        public virtual T GetById(int id) { return _service.GetById(id); }
     }
 }

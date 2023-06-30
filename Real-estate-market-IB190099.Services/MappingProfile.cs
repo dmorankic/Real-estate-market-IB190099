@@ -39,10 +39,7 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<Rating, PropertyRating>();
             CreateMap<Property,PropertyOutput>();
             CreateMap<Advertise, AdvertiseModel>();
-            //.AfterMap((src, dest) =>
-            // {
-            //     dest.property = Mapper.Map<PropertyOutput>(src.Property);
-            // });
+            CreateMap<SavedAdvertiseInsertRequest, SavedAdvertise>();   
 
 
 
