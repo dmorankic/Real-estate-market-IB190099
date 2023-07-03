@@ -72,13 +72,22 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
-  Future<Response> saveAd(String userId, String advertiseId, String endpoint) {
+  Future<Response> saveAd(String advertiseId, String endpoint) async {
     var url = "${_baseUrl}${endpoint}/Save";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
-    return http!.post(uri,
+    var response = await http!.post(uri,
         headers: headers,
-        body: jsonEncode(<String, String>{"userId": "20", "advertiseId": "8"}));
+        body: jsonEncode(<String, String>{
+          "userId": Authorization.loggedUser!.id.toString(),
+          "advertiseId": advertiseId
+        }));
+
+    if (isValidResponseCode(response)) {
+      return response;
+    } else {
+      throw Exception("Exception... handle this gracefully");
+    }
   }
 
   Map<String, String> createHeaders() {
@@ -109,7 +118,8 @@ abstract class BaseProvider<T> with ChangeNotifier {
     } else if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode == 400) {
-      throw Exception("Bad request");
+      var message = response.body.substring(11, response.body.length - 3);
+      throw Exception(message);
     } else if (response.statusCode == 401) {
       throw Exception("Unauthorized");
     } else if (response.statusCode == 403) {

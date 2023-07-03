@@ -40,7 +40,8 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<Property,PropertyOutput>();
             CreateMap<Advertise, AdvertiseModel>();
             CreateMap<SavedAdvertiseInsertRequest, SavedAdvertise>();   
-
+            CreateMap<SavedAdvertise,SavedAdvertiseModel>();
+            
 
 
 

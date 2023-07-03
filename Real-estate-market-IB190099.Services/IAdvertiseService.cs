@@ -14,5 +14,7 @@ namespace Real_estate_market_IB190099.Services
     {
         List<PropertyOutput> Recommend(int userId);
         public SavedAdvertiseInsertRequest SaveAdvertise(SavedAdvertiseInsertRequest insert);
+        public SavedAdvertiseInsertRequest RemoveFromSaved(SavedAdvertiseInsertRequest insert);
+        public IEnumerable<AdvertiseModel> GetSavedAdvertises(int userId);
     }
 }

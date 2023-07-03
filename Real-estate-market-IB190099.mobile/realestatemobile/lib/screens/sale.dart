@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unused_local_variable
+// ignore_for_file: sized_box_for_whitespace, unused_local_variable, avoid_init_to_null
 
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';

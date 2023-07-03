@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
+import 'package:realestatemobile/utils/util.dart';
 
 import '../providers/advertise_provider.dart';
 import 'dart:convert';
@@ -22,7 +23,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   final CarouselController _carouselController = CarouselController();
   AdvertiseProvider? _advertiseProvider = null;
   Future<Advertise>? data;
-
+  String saved = "Save";
   @override
   void initState() {
     super.initState();
@@ -48,12 +49,15 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
         builder: (BuildContext context, AsyncSnapshot<Advertise> snapshot) {
           Widget child;
           if (snapshot.hasData) {
+            Authorization.loggedUser?.savedAdvertisesIds?.forEach((x) => {
+                  if (x == snapshot.data?.id) {saved = "Remove from saved"}
+                });
             child = SafeArea(
                 child: SingleChildScrollView(
               child: Center(
                 child: Column(
                   children: [
-                    _buildNav(),
+                    _buildNav(snapshot.data!.id.toString()),
                     _buildSlider(),
                     Column(
                       children: [
@@ -268,7 +272,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     }).toList();
   }
 
-  Container _buildNav() {
+  Container _buildNav(String advertiseId) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -281,11 +285,84 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
           ),
           OutlinedButton(
             child: Text(
-              "Save",
+              saved,
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () async {
-              await _advertiseProvider?.saveAd("20", "6", "Advertise");
+              if (saved == "Remove from saved") {
+                try {
+                  var response = await _advertiseProvider?.removeFromSaved(
+                      advertiseId, "Advertise");
+
+                  setState(() {
+                    Authorization.loggedUser?.savedAdvertisesIds
+                        ?.remove(int.parse(advertiseId));
+                    saved = "Save";
+                  });
+
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("Advertise removed from saved"),
+                            content:
+                                Text("You removed this advertise from saved"),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                } on Exception catch (e) {
+                  print(e.toString());
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("No action done"),
+                            content: Text(e.toString()),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                }
+              } else if (saved == "Save") {
+                try {
+                  var response = await _advertiseProvider?.saveAd(
+                      advertiseId, "Advertise");
+
+                  setState(() {
+                    Authorization.loggedUser?.savedAdvertisesIds
+                        ?.add(int.parse(advertiseId));
+                    saved = "Remove from saved";
+                  });
+
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("Advertise saved successfully"),
+                            content: Text("You saved this advertise"),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                } on Exception catch (e) {
+                  print(e.toString());
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("No action done"),
+                            content: Text(e.toString()),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                }
+              }
             },
             style: ButtonStyle(
                 backgroundColor:

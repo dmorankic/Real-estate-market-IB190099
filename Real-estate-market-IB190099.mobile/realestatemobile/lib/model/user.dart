@@ -13,7 +13,7 @@ class User {
   DateTime? dateOfBirth;
   DateTime? dateRegistered;
   String? gender;
-
+  List<int>? savedAdvertisesIds;
   User() {}
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

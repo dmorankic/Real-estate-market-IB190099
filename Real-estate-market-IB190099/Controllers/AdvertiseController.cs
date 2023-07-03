@@ -39,9 +39,20 @@ namespace Real_estate_market_IB190099.Controllers
         }
         [HttpPost]
         [Route("Save")]
-        public SavedAdvertiseInsertRequest SaveAdvertise([FromQuery] SavedAdvertiseInsertRequest savedAdvertise)
+        public SavedAdvertiseInsertRequest SaveAdvertise([FromBody] SavedAdvertiseInsertRequest savedAdvertise)
         {
             return _service.SaveAdvertise(savedAdvertise);
+        }
+        [HttpDelete]
+        public SavedAdvertiseInsertRequest RemoveFromSaved([FromBody] SavedAdvertiseInsertRequest savedAdvertise)
+        {
+            return _service.RemoveFromSaved(savedAdvertise);
+        }
+        [Route("SavedAdv")]
+        [HttpGet]
+        public IEnumerable<AdvertiseModel> GetSavedAdvertises(int userId)
+        {
+            return _service.GetSavedAdvertises(userId);
         }
 
     }

@@ -264,5 +264,32 @@ namespace Real_estate_market_IB190099.Services
             Context.SaveChanges();
             return insert;
         }
+
+
+        public SavedAdvertiseInsertRequest RemoveFromSaved(SavedAdvertiseInsertRequest insert)
+        {
+            var advertises = Context.SavedAdvertises.ToList();
+            bool found=false;
+            advertises.ForEach(x =>
+            {
+                if (x.AdvertiseId == insert.AdvertiseId && x.UserId == insert.UserId) { Context.SavedAdvertises.Remove(x); found = true; }
+            });
+            if (found == false) { throw new UserException("Given advertise is not saved by this user"); }
+            Context.SaveChanges();
+            return insert;
+        }
+
+
+        public IEnumerable<AdvertiseModel> GetSavedAdvertises(int userId)
+        {
+           var advertises=Context.SavedAdvertises.Include(x=>x.Advertise).Include(x=>x.Advertise.Property).Where(x=>x.UserId== userId).ToList();
+           List<AdvertiseModel> mappedAdvertises=new List<AdvertiseModel>();
+            advertises.ForEach(x =>
+            {
+                var advertise=Mapper.Map<AdvertiseModel>(x.Advertise);
+                mappedAdvertises.Add(advertise);
+            });
+            return mappedAdvertises;
+        }
     }
 }

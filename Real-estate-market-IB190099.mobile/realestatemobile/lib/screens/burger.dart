@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
+import 'package:realestatemobile/screens/search_ads.dart';
 
 class BurgerMenu extends StatefulWidget {
   const BurgerMenu({super.key});
@@ -134,7 +135,9 @@ class _BurgerMenuState extends State<BurgerMenu> {
         ),
       ),
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, SearchAds.routeName);
+        },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),

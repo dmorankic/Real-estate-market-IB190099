@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
+import 'package:realestatemobile/screens/burger.dart';
 
 import '../model/advertise.dart';
 
@@ -51,32 +52,37 @@ class _RentState extends State<Rent> {
           child: Center(
             child: Column(
               children: [
-                Text.rich(
-                  TextSpan(
-                    style: TextStyle(
-                      fontSize: 30,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, BurgerMenu.routeName);
+                  },
+                  child: Text.rich(
+                    TextSpan(
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                      children: [
+                        WidgetSpan(
+                            style: TextStyle(height: 40),
+                            child: Container(
+                              height: 33,
+                              margin: EdgeInsets.only(top: 15.0),
+                              child: Image.asset(
+                                "assets/images/logo.png",
+                                width: 40,
+                                height: 42,
+                              ),
+                            )),
+                        WidgetSpan(
+                            child: Container(
+                          margin: EdgeInsets.only(left: 14.0, top: 10),
+                          child: Text(
+                            "Real estate rent",
+                            style: TextStyle(fontSize: 29),
+                          ),
+                        ))
+                      ],
                     ),
-                    children: [
-                      WidgetSpan(
-                          style: TextStyle(height: 40),
-                          child: Container(
-                            height: 33,
-                            margin: EdgeInsets.only(top: 15.0),
-                            child: Image.asset(
-                              "assets/images/logo.png",
-                              width: 40,
-                              height: 42,
-                            ),
-                          )),
-                      WidgetSpan(
-                          child: Container(
-                        margin: EdgeInsets.only(left: 14.0, top: 10),
-                        child: Text(
-                          "Real estate rent",
-                          style: TextStyle(fontSize: 29),
-                        ),
-                      ))
-                    ],
                   ),
                 ),
                 SizedBox(height: 12),

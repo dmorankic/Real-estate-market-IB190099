@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_field, sized_box_for_whitespace, empty_catches, unused_catch_clause, use_build_context_synchronously
+// ignore_for_file: prefer_final_fields, unused_field, sized_box_for_whitespace, empty_catches, unused_catch_clause, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -139,12 +139,11 @@ class _LoginState extends State<Login> {
                           users.forEach((element) {
                             if (element.userName == Authorization.username) {
                               Authorization.loggedUser = element;
-                              print(element.userName);
-                            } else {
-                              print("FALSE");
                             }
                           });
-                          Navigator.pushNamed(context, SearchAds.routeName);
+                          Navigator.pop(context);
+                          Navigator.popAndPushNamed(
+                              context, SearchAds.routeName);
                         } on Exception catch (e) {
                           showDialog(
                               context: context,
