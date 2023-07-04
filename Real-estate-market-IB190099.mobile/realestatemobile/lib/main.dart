@@ -7,6 +7,7 @@ import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
+import 'package:realestatemobile/screens/my_profile.dart';
 import 'package:realestatemobile/screens/rent.dart';
 import 'package:realestatemobile/screens/sale.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
               }
               if (settings.name == SavedAds.routeName) {
                 return MaterialPageRoute(builder: ((context) => SavedAds()));
+              }
+              if (settings.name == MyProfile.routeName) {
+                return MaterialPageRoute(builder: ((context) => MyProfile()));
               }
 
               var uri = Uri.parse(settings.name!);

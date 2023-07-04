@@ -23,7 +23,6 @@ abstract class BaseProvider<T> with ChangeNotifier {
   BaseProvider(String endpoint) {
     _baseUrl = const String.fromEnvironment("baseUrl",
         defaultValue: "https://10.0.2.2:7006/");
-    print("baseurl: $_baseUrl");
 
     if (_baseUrl!.endsWith("/") == false) {
       _baseUrl = _baseUrl! + "/";
@@ -63,9 +62,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
     if (isValidResponseCode(response)) {
       var data = jsonDecode(response.body);
-      //var mappedData = fromJson(data);
       var mappedData = fromJson(data);
-      print(mappedData);
       return mappedData;
     } else {
       throw Exception("Exception... handle this gracefully");

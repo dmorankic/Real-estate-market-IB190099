@@ -43,7 +43,8 @@ dependencies:
   http: ^1.0.0
   json_serializable: ^6.7.0
   carousel_slider: ^4.0.0
-
+  email_validator: '^2.1.16'
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

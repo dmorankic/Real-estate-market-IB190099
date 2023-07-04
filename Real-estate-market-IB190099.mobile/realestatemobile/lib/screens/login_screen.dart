@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
                           controller: _usernameController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Email",
+                            hintText: "Username",
                             hintStyle: TextStyle(color: Colors.grey[400]),
                             isDense: true,
                           ),
@@ -92,6 +92,7 @@ class _LoginState extends State<Login> {
                       child: SizedBox(
                         width: 250,
                         child: TextField(
+                          obscureText: true,
                           style: TextStyle(
                               fontSize: 15.0, height: 1, color: Colors.black),
                           controller: _passwordController,

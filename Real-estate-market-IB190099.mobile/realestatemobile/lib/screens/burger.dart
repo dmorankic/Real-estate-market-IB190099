@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:realestatemobile/screens/my_profile.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 
@@ -49,7 +50,9 @@ class _BurgerMenuState extends State<BurgerMenu> {
         ),
       ),
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, MyProfile.routeName);
+        },
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -70,7 +73,7 @@ class _BurgerMenuState extends State<BurgerMenu> {
                         size: 45,
                       ),
                     ],
-                  ), //prop image
+                  ),
                   Container(
                     margin: EdgeInsets.only(left: 70),
                     child: Column(
