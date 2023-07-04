@@ -29,7 +29,6 @@ class _SavedAdsState extends State<SavedAds> {
 
   @override
   void initState() {
-    print("called SAVEDADS INITSTATE");
     super.initState();
     _advertiseProvider = context.read<AdvertiseProvider>();
     loadData();
@@ -60,7 +59,8 @@ class _SavedAdsState extends State<SavedAds> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, BurgerMenu.routeName);
+                    Navigator.pushNamed(context, BurgerMenu.routeName)
+                        .then((value) => {loadData()});
                   },
                   child: Text.rich(
                     TextSpan(
@@ -176,7 +176,8 @@ class _SavedAdsState extends State<SavedAds> {
           (x) => GestureDetector(
             onTap: () {
               Navigator.pushNamed(
-                  context, "${AdvertiseDetails.routeName}/${x.id}");
+                      context, "${AdvertiseDetails.routeName}/${x.id}")
+                  .then((value) => {loadData()});
             },
             child: Container(
               decoration: BoxDecoration(

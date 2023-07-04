@@ -289,6 +289,21 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () async {
+              if (Authorization.loggedUser == null) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: Text("Not logged in"),
+                          content: Text("Please log in for further actions"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Ok"))
+                          ],
+                        ));
+                return;
+              }
+
               if (saved == "Remove from saved") {
                 try {
                   var response = await _advertiseProvider?.removeFromSaved(
