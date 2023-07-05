@@ -6,13 +6,13 @@ part 'message.g.dart';
 
 @JsonSerializable()
 class Message {
-  String? id;
+  int? id;
   String? content;
   User? sender;
-  String? senderId;
+  int? senderId;
   Object? timestamp;
   Advertise? advertise;
-  String? advertiseId;
+  int? advertiseId;
 
   Message() {}
 

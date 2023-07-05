@@ -10,7 +10,7 @@ namespace Real_estate_market_IB190099.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MessageController : BaseCRUDController<MessageModel, NameSearchObject, MessageInsertRequest, MessageInsertRequest>
+    public class MessageController : BaseCRUDController<MessageModel, MessageSearchObject, MessageInsertRequest, MessageInsertRequest>
     {
         public MessageController(IMessageService service) : base(service)
         {

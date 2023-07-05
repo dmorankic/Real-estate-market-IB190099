@@ -28,7 +28,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   Future<Advertise>? data;
   String saved = "Save";
   MessageProvider? _messageProvider;
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -413,14 +413,23 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => SimpleDialog(
-                    title: Text('Send message for article ${propertyName}'),
+                    title: Text('Send message for article $propertyName'),
                     children: <Widget>[
-                      TextField(
-                          controller: messageController,
-                          maxLines: 8,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: "Type here")),
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'You did not insert message';
+                              }
+                              return null;
+                            },
+                            controller: messageController,
+                            maxLines: 8,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: "Type here")),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -439,42 +448,45 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                                           Colors.blue.shade900))),
                           OutlinedButton(
                               onPressed: () async {
-                                try {
-                                  var response = await sendMessage(advertiseId);
-                                  if (response.statusCode == 200) {
+                                if (_formKey.currentState!.validate()) {
+                                  try {
+                                    var response =
+                                        await sendMessage(advertiseId);
+                                    if (response.statusCode == 200) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                                title: Text("Message sent"),
+                                                content: Text(
+                                                    "You sent message for this article"),
+                                                actions: [
+                                                  ElevatedButton(
+                                                      onPressed: () => {
+                                                            Navigator.pop(
+                                                                context),
+                                                            Navigator.pop(
+                                                                context),
+                                                          },
+                                                      child: Text("Ok"))
+                                                ],
+                                              ));
+                                    }
+                                  } on Exception catch (e) {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
-                                              title: Text("Message sent"),
-                                              content: Text(
-                                                  "You sent message for this article"),
+                                              title: Text("No action done"),
+                                              content: Text(e.toString()),
                                               actions: [
                                                 ElevatedButton(
-                                                    onPressed: () => {
-                                                          Navigator.pop(
-                                                              context),
-                                                          Navigator.pop(
-                                                              context),
-                                                        },
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
                                                     child: Text("Ok"))
                                               ],
                                             ));
                                   }
-                                } on Exception catch (e) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                            title: Text("No action done"),
-                                            content: Text(e.toString()),
-                                            actions: [
-                                              ElevatedButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                  child: Text("Ok"))
-                                            ],
-                                          ));
                                 }
                               },
                               child: Text(
@@ -520,7 +532,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       "timestamp": DateTime.now().toString(),
       "advertiseId": advertiseId!
     };
-
+    messageController.text = "";
     var response = await _messageProvider!.send(body);
     return response;
   }

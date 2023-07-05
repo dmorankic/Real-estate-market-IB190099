@@ -7,17 +7,17 @@ part of 'message.dart';
 // **************************************************************************
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message()
-  ..id = json['id'] as String?
+  ..id = json['id'] as int?
   ..content = json['content'] as String?
   ..sender = json['sender'] == null
       ? null
       : User.fromJson(json['sender'] as Map<String, dynamic>)
-  ..senderId = json['senderId'] as String?
+  ..senderId = json['senderId'] as int?
   ..timestamp = json['timestamp']
   ..advertise = json['advertise'] == null
       ? null
       : Advertise.fromJson(json['advertise'] as Map<String, dynamic>)
-  ..advertiseId = json['advertiseId'] as String?;
+  ..advertiseId = json['advertiseId'] as int?;
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'id': instance.id,

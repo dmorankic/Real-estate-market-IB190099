@@ -13,14 +13,29 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public class MessageService : BaseCRUDService<Message, MessageModel, NameSearchObject, MessageInsertRequest, MessageInsertRequest>
+    public class MessageService : BaseCRUDService<Message, MessageModel, MessageSearchObject, MessageInsertRequest, MessageInsertRequest>
         , IMessageService
     {
         public MessageService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
         {
            
         }
-   
 
+        public override IQueryable<Message> AddFilter(IQueryable<Message> query, MessageSearchObject search = null)
+        {
+            var filteredQuery = base.AddFilter(query, search);
+
+            if (search?.userId!=null)
+            {
+                filteredQuery = filteredQuery.Where(x => x.SenderId == search.userId);
+            }
+
+            return filteredQuery;
+        }
+        public override IQueryable<Message> AddInclude(IQueryable<Message> query, MessageSearchObject search = null)
+        {
+            query = query.Include(x => x.Advertise.Property);
+            return base.AddInclude(query, search);
+        }
     }
 }
