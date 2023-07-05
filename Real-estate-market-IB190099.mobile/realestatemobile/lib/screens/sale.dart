@@ -8,7 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/utils/search_text_field.dart';
-
+import 'package:realestatemobile/utils/util.dart';
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -52,7 +52,9 @@ class _SaleState extends State<Sale> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, BurgerMenu.routeName);
+                    if (Authorization.loggedUser != null) {
+                      Navigator.pushNamed(context, BurgerMenu.routeName);
+                    }
                   },
                   child: Text.rich(
                     TextSpan(
@@ -199,7 +201,7 @@ class _SaleState extends State<Sale> {
                             ),
                           ),
                         ],
-                      ), //prop image
+                      ),
                       Container(
                         height: 100.00,
                         width: 190.00,

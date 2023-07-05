@@ -154,7 +154,7 @@ namespace Real_estate_market_IB190099.Services
         public override IEnumerable<UserModel> Get(UserSearchObject search = null)
         {
 
-            var query = Context.Users.ToList();
+            var query = Context.Users.Include(x=>x.Address).Include(x=>x.Address.City).ToList();
             var mappedQuery=Mapper.Map<List<UserModel>>(query);
             var savedAds = Context.SavedAdvertises.Include(x=>x.Advertise).ToList();
             for(int i=0; i<mappedQuery.Count;i++)

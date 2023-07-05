@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unused_local_variable
+// ignore_for_file: sized_box_for_whitespace, unused_local_variable, avoid_init_to_null
 
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
@@ -7,41 +7,39 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
+import 'package:realestatemobile/utils/search_text_field.dart';
 import 'package:realestatemobile/utils/util.dart';
-
-import '../model/advertise.dart';
-
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 //ignore_use_build_context_synchronous
 
-class Rent extends StatefulWidget {
-  const Rent({super.key});
-  static const String routeName = "/rent";
-
+class Demand extends StatefulWidget {
+  const Demand({super.key});
+  static const String routeName = "/demand";
   @override
-  State<Rent> createState() => _RentState();
+  State<Demand> createState() => _DemandState();
 }
 
-class _RentState extends State<Rent> {
+class _DemandState extends State<Demand> {
   AdvertiseProvider? _advertiseProvider = null;
-  dynamic data = [];
+  dynamic data = {};
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _advertiseProvider = context.read<AdvertiseProvider>();
-    // _advertiseProvider = Provider.of<AdvertiseProvider>(context, listen: false);
+
     loadData();
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get({'Type': 'rent'}, "Advertise");
+    var tmpData =
+        await _advertiseProvider?.get({'Type': 'demand'}, "Advertise");
+
     setState(() {
-      data = tmpData!;
+      data = tmpData;
     });
   }
 
@@ -80,7 +78,7 @@ class _RentState extends State<Rent> {
                             child: Container(
                           margin: EdgeInsets.only(left: 14.0, top: 10),
                           child: Text(
-                            "Real estate rent",
+                            "Real estate demand",
                             style: TextStyle(fontSize: 29),
                           ),
                         ))
@@ -89,7 +87,7 @@ class _RentState extends State<Rent> {
                   ),
                 ),
                 SizedBox(height: 12),
-                _buildSearch('rent'),
+                _buildSearch('demand'),
                 SizedBox(height: 8),
                 Column(
                   children: buildAdvertisesCardList(),
@@ -204,7 +202,7 @@ class _RentState extends State<Rent> {
                             ),
                           ),
                         ],
-                      ), //prop image
+                      ),
                       Container(
                         height: 100.00,
                         width: 190.00,

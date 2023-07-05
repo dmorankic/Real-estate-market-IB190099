@@ -22,12 +22,15 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..gender = json['gender'] as String?
   ..savedAdvertisesIds = (json['savedAdvertisesIds'] as List<dynamic>?)
       ?.map((e) => e as int)
-      .toList();
+      .toList()
+  ..address = json['address'] == null
+      ? null
+      : Address.fromJson(json['address'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'firstName': instance.firstName,
-      'userName': instance.userName,
+      'username': instance.userName,
       'lastName': instance.lastName,
       'email': instance.email,
       'phone': instance.phone,
@@ -35,4 +38,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'dateRegistered': instance.dateRegistered?.toIso8601String(),
       'gender': instance.gender,
       'savedAdvertisesIds': instance.savedAdvertisesIds,
+      'address': instance.address,
     };

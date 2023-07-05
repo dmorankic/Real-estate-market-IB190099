@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 import 'package:realestatemobile/utils/util.dart';
+import '../model/patch_object.dart';
 import '../model/user.dart';
 import '../providers/user_provider.dart';
 import 'login_screen.dart';
@@ -515,37 +516,18 @@ class _MyProfileState extends State<MyProfile> {
                                 width: 200,
                                 height: 45,
                                 child: TextFormField(
-                                    controller: dateRegisteredController,
-                                    validator: (value) {
-                                      if (value == null || value.length == 0) {
-                                        return 'Please enter birth date';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: const InputDecoration(
-                                        icon: Icon(Icons.calendar_today),
-                                        hintText: "Date registered"),
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: tmpDate,
-                                              firstDate: DateTime(1920),
-                                              lastDate: DateTime(2101));
-                                      setState(() {
-                                        dateController.text =
-                                            pickedDate.toString();
-                                      });
-                                      if (pickedDate != null) {
-                                        tmpDate = pickedDate;
-                                        String formattedDate =
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(pickedDate);
-                                      } else {
-                                        print("Date is not selected");
-                                      }
-                                    }),
+                                  controller: dateRegisteredController,
+                                  validator: (value) {
+                                    if (value == null || value.length == 0) {
+                                      return 'Please enter birth date';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                      icon: Icon(Icons.calendar_today),
+                                      hintText: "Date registered"),
+                                  readOnly: true,
+                                ),
                               ),
                             ),
                           ],
@@ -567,27 +549,44 @@ class _MyProfileState extends State<MyProfile> {
                                 const SnackBar(
                                     content: Text('Processing Data')),
                               );
-                              var response = await registerNewUser();
-                              if (response.statusCode == 200) {
-                                var userDecoded = jsonDecode(response.body);
-                                User user = User.fromJson(userDecoded);
-                                Authorization.loggedUser = user;
-                                Authorization.username = user.userName;
-                                Authorization.password =
-                                    passwordController.text;
+                              try {
+                                var response = await updateUser();
+                                var addressResponse = await updateUserAddress();
+                                if (response.statusCode == 200 &&
+                                    addressResponse.statusCode == 200) {
+                                  var userDecoded = jsonDecode(response.body);
+                                  User user = User.fromJson(userDecoded);
+                                  Authorization.loggedUser = user;
+                                  Authorization.username = user.userName;
+                                  Authorization.password =
+                                      passwordController.text;
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Text("Profile update"),
+                                            content: Text(
+                                                "You have successfully updated your profile"),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text("Ok"))
+                                            ],
+                                          ));
+                                }
+                              } on Exception catch (e) {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                          title: Text("Registration"),
-                                          content: Text(
-                                              "You have successfully registered, click ok to continue to application"),
+                                          title: Text("An error occured"),
+                                          content: Text(e.toString()),
                                           actions: [
                                             ElevatedButton(
                                                 onPressed: () {
                                                   Navigator.pop(context);
-                                                  Navigator.pushNamed(context,
-                                                      SearchAds.routeName);
                                                 },
                                                 child: Text("Ok"))
                                           ],
@@ -610,27 +609,36 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
-  bool passwordMatch() {
-    return passwordController.text == confirmPasswordController.text;
+  Future<Response> updateUser() async {
+    List<PatchObject> updateReq = [
+      PatchObject(
+          path: "/FirstName", op: "replace", value: firstNameController.text),
+      new PatchObject(
+          path: "/LastName", op: "replace", value: lastNameController.text),
+      new PatchObject(
+          path: "/Email", op: "replace", value: emailController.text),
+      new PatchObject(
+          path: "/Phone", op: "replace", value: phoneController.text),
+      new PatchObject(
+          path: "/DateOfBirth", op: "replace", value: dateController.text),
+      new PatchObject(
+          path: "/Gender", op: "replace", value: genderController.text)
+    ];
+    var response =
+        await _userProvider.update(updateReq, Authorization.loggedUser!.id!);
+
+    return response;
   }
 
-  Future<Response> registerNewUser() async {
-    Map<String, String> user = {
-      "firstName": firstNameController.text,
-      "username":
-          "${firstNameController.text.toLowerCase()}.${lastNameController.text.toLowerCase()}",
-      "password": passwordController.text,
-      "lastName": lastNameController.text,
-      "email": emailController.text,
-      "phone": phoneController.text,
-      "dateOfBirth": dateController.text,
-      "gender": genderController.text,
+  Future<Response> updateUserAddress() async {
+    Map<String, String> body = {
+      "citytName": cityController.text,
       "numberStreet": streetController.text,
-      "city": cityController.text,
       "zipCode": zipController.text
     };
-    var response = await _userProvider.register(user);
 
+    var response =
+        await _userProvider.updateAddress(body, Authorization.loggedUser!.id!);
     return response;
   }
 
@@ -643,6 +651,9 @@ class _MyProfileState extends State<MyProfile> {
     dateController.text = user.dateOfBirth!.toString();
     genderController.text = user.gender!;
     dateRegisteredController.text = user.dateRegistered!.toString();
+    cityController.text = user.address!.city!.name!;
+    streetController.text = user.address!.numberStreet!;
+    zipController.text = user.address!.city!.zipCode!;
     setState(() {
       selectedItem = user.gender!;
     });

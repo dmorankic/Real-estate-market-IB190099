@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:realestatemobile/screens/demand.dart';
 import 'package:realestatemobile/screens/sale.dart';
 import 'rent.dart';
 
@@ -88,7 +89,9 @@ class _SearchAdsState extends State<SearchAds> {
                           width: 120,
                           height: 40,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, Demand.routeName);
+                            },
                             child: Text('Demand'),
                           ),
                         ),

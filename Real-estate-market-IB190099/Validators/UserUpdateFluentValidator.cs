@@ -18,7 +18,7 @@ namespace Real_estate_market_IB190099.Validators
             RuleFor(d => d.DateRegistered)
                 .NotEmpty();
             RuleFor(d => d.Phone)
-                .Matches(@"^\d{9,10}$");
+                .Matches(@"^\d{3}\s\d{8,9}$");
             RuleFor(d=>d.Username)
                 .Length(1, 15);
             RuleFor(d => d.Gender)
