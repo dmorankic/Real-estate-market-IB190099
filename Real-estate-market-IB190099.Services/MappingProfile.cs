@@ -13,14 +13,9 @@ using System.Threading.Tasks;
 namespace Real_estate_market_IB190099.Services
 {
     public class MappingProfile : Profile
-    {
-
-        
-       
+    {           
         public MappingProfile()
-        {
-            //var mappingService = new MappingService();
-  
+        {  
             CreateMap<NameInsertRequest, City>();
             CreateMap<NameInsertRequest, Database.Role>();
             CreateMap<NameUpsertRequest, City>();
@@ -40,13 +35,10 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<Property,PropertyOutput>();
             CreateMap<Advertise, AdvertiseModel>();
             CreateMap<SavedAdvertiseInsertRequest, SavedAdvertise>();   
-            CreateMap<SavedAdvertise,SavedAdvertiseModel>();
-            
-
-
-
+            CreateMap<SavedAdvertise,SavedAdvertiseModel>();  
+            CreateMap<MessageInsertRequest, Message>();
+            CreateMap<Message, MessageModel>();
 
         }
-     
     }
 }

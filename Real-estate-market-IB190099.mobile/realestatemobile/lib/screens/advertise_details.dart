@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
+import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/utils/util.dart';
 
 import '../providers/advertise_provider.dart';
@@ -21,13 +23,17 @@ class AdvertiseDetails extends StatefulWidget {
 class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   List<String> images = ["assets/images/logo.png", "assets/images/logo2.png"];
   final CarouselController _carouselController = CarouselController();
+  TextEditingController messageController = TextEditingController();
   AdvertiseProvider? _advertiseProvider = null;
   Future<Advertise>? data;
   String saved = "Save";
+  MessageProvider? _messageProvider;
+
   @override
   void initState() {
     super.initState();
     _advertiseProvider = context.read<AdvertiseProvider>();
+    _messageProvider = context.read<MessageProvider>();
 
     loadData();
   }
@@ -202,7 +208,8 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                         ],
                       ),
                     ),
-                    _buildDetailsBottom(),
+                    _buildDetailsBottom(snapshot.data!.property?.name!,
+                        snapshot.data!.id!.toString()),
                   ],
                 ),
               ),
@@ -389,7 +396,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     );
   }
 
-  Container _buildDetailsBottom() {
+  Container _buildDetailsBottom(String? propertyName, String? advertiseId) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -402,7 +409,89 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 style: TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => SimpleDialog(
+                    title: Text('Send message for article ${propertyName}'),
+                    children: <Widget>[
+                      TextField(
+                          controller: messageController,
+                          maxLines: 8,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "Type here")),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          OutlinedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blue.shade900))),
+                          OutlinedButton(
+                              onPressed: () async {
+                                try {
+                                  var response = await sendMessage(advertiseId);
+                                  if (response.statusCode == 200) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: Text("Message sent"),
+                                              content: Text(
+                                                  "You sent message for this article"),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () => {
+                                                          Navigator.pop(
+                                                              context),
+                                                          Navigator.pop(
+                                                              context),
+                                                        },
+                                                    child: Text("Ok"))
+                                              ],
+                                            ));
+                                  }
+                                } on Exception catch (e) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Text("No action done"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text("Ok"))
+                                            ],
+                                          ));
+                                }
+                              },
+                              child: Text(
+                                "Send",
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.blue.shade900)))
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.blue.shade900)),
@@ -422,5 +511,17 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
       ),
     );
+  }
+
+  Future<Response> sendMessage(String? advertiseId) async {
+    Map<String, String> body = {
+      "content": messageController.text,
+      "senderId": Authorization.loggedUser!.id!.toString(),
+      "timestamp": DateTime.now().toString(),
+      "advertiseId": advertiseId!
+    };
+
+    var response = await _messageProvider!.send(body);
+    return response;
   }
 }

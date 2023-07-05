@@ -11,11 +11,11 @@ public partial class Message
 
     public int? SenderId { get; set; }
 
-    public int? RecieverId { get; set; }
-
     public DateTime? Timestamp { get; set; }
 
-    public virtual User? Reciever { get; set; }
+    public int AdvertiseId { get; set; }
+
+    public virtual Advertise Advertise { get; set; } = null!;
 
     public virtual User? Sender { get; set; }
 }

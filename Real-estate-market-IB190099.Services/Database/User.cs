@@ -35,9 +35,7 @@ public partial class User
 
     public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
 
-    public virtual ICollection<Message> MessageRecievers { get; set; } = new List<Message>();
-
-    public virtual ICollection<Message> MessageSenders { get; set; } = new List<Message>();
+    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
 
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 

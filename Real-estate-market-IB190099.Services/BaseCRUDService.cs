@@ -18,7 +18,7 @@ namespace Real_estate_market_IB190099.Services
         {
         }
 
-        public T Insert(TInsert insert)
+        public virtual T Insert(TInsert insert)
         {
             var set = Context.Set<TDb>();
             TDb insertEntity = Mapper.Map<TDb>(insert);

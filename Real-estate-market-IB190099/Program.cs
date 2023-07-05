@@ -47,6 +47,8 @@ builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAddressService, AddressService>();
 builder.Services.AddTransient<IAdvertiseService, AdvertiseService>();
+builder.Services.AddTransient<IMessageService, MessageService>();
+
 builder.Services.AddTransient<IValidator<User>,UserUpdateFluentValidator>();
 
 
@@ -62,7 +64,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

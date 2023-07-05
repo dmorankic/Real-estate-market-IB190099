@@ -111,11 +111,12 @@ public partial class Ib190099Context : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Timestamp).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Reciever).WithMany(p => p.MessageRecievers)
-                .HasForeignKey(d => d.RecieverId)
-                .HasConstraintName("FK_MessageReciever");
+            entity.HasOne(d => d.Advertise).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.AdvertiseId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Message_Advertise");
 
-            entity.HasOne(d => d.Sender).WithMany(p => p.MessageSenders)
+            entity.HasOne(d => d.Sender).WithMany(p => p.Messages)
                 .HasForeignKey(d => d.SenderId)
                 .HasConstraintName("FK_MessageSender");
         });

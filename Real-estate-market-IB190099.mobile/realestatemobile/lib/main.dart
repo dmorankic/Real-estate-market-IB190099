@@ -1,8 +1,10 @@
 // ignore_for_file: body_might_complete_normally_nullable
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
+import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => MessageProvider()),
         ],
         child: MaterialApp(
             title: 'Flutter Demo',

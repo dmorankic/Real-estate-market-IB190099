@@ -17,6 +17,8 @@ public partial class Advertise
 
     public DateTime? DateCreated { get; set; }
 
+    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+
     public virtual Property? Property { get; set; }
 
     public virtual ICollection<SavedAdvertise> SavedAdvertises { get; set; } = new List<SavedAdvertise>();
