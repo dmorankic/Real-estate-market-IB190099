@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_init_to_null, prefer_final_fields, unused_field
 
 import 'package:flutter/material.dart';
+import 'package:realestatemobile/model/message.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/utils/util.dart';
@@ -23,6 +24,7 @@ class _InboxState extends State<Inbox> {
     loadData();
   }
 
+  bool exists = false;
   dynamic data = {};
   @override
   Widget build(BuildContext context) {
@@ -79,7 +81,33 @@ class _InboxState extends State<Inbox> {
     if (data == null) {
       return [Text("Loading...")];
     }
-    List<Widget> list = data
+    List<Message> distinctAdvertiseMessages = [];
+    data.forEach((x) => {
+          if (distinctAdvertiseMessages.isEmpty)
+            {distinctAdvertiseMessages.add(x)}
+          else
+            {
+              for (int i = 0; i < distinctAdvertiseMessages.length; i++)
+                {
+                  if (x.advertiseId == distinctAdvertiseMessages[i].advertiseId)
+                    {
+                      setState(
+                        () {
+                          exists = true;
+                        },
+                      )
+                    }
+                },
+              if (exists == false) {distinctAdvertiseMessages.add(x)},
+              setState(
+                () {
+                  exists = false;
+                },
+              )
+            }
+        });
+
+    List<Widget> list = distinctAdvertiseMessages
         .map((x) => GestureDetector(
               onTap: () {},
               child: Container(
@@ -99,7 +127,7 @@ class _InboxState extends State<Inbox> {
                         Column(
                           children: <Widget>[
                             Text(
-                              x.advertise.property.name,
+                              x.advertise!.property!.name!,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
@@ -109,7 +137,7 @@ class _InboxState extends State<Inbox> {
                         Column(
                           children: <Widget>[
                             Text(
-                              "${x.content.length > 20 ? x.content.substring(0, 20) : x.content}...",
+                              "${x.content!.length > 20 ? x.content!.substring(0, 20) : x.content}...",
                               style: TextStyle(fontSize: 15),
                               textAlign: TextAlign.center,
                             ),

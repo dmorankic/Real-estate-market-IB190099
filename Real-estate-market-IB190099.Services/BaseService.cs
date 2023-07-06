@@ -4,6 +4,7 @@ using Real_estate_market_IB190099.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +43,7 @@ namespace Real_estate_market_IB190099.Services
             return query;
         }
 
+     
         public virtual IQueryable<TDb> AddInclude(IQueryable<TDb> query, TSearch search = null)
         {
             return query;
