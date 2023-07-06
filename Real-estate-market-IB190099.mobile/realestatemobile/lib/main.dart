@@ -10,6 +10,7 @@ import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/screens/demand.dart';
 import 'package:realestatemobile/screens/inbox.dart';
+import 'package:realestatemobile/screens/inbox_details.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/my_profile.dart';
 import 'package:realestatemobile/screens/rent.dart';
@@ -75,6 +76,10 @@ class MyApp extends StatelessWidget {
               if (settings.name == Inbox.routeName) {
                 return MaterialPageRoute(builder: ((context) => Inbox()));
               }
+              if (settings.name == InboxDetails.routeName) {
+                return MaterialPageRoute(
+                    builder: ((context) => InboxDetails()));
+              }
 
               var uri = Uri.parse(settings.name!);
               if (uri.pathSegments.length == 2 &&
@@ -82,6 +87,13 @@ class MyApp extends StatelessWidget {
                 var id = uri.pathSegments[1];
                 return MaterialPageRoute(
                     builder: (context) => AdvertiseDetails(id: id));
+              }
+
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" == InboxDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => InboxDetails(id: id));
               }
             }));
   }

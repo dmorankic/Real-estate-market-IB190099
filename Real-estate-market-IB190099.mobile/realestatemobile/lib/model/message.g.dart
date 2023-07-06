@@ -17,7 +17,8 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message()
   ..advertise = json['advertise'] == null
       ? null
       : Advertise.fromJson(json['advertise'] as Map<String, dynamic>)
-  ..advertiseId = json['advertiseId'] as int?;
+  ..advertiseId = json['advertiseId'] as int?
+  ..isEmployee = json['isEmployee'] as int?;
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'id': instance.id,
@@ -27,4 +28,5 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'timestamp': instance.timestamp,
       'advertise': instance.advertise,
       'advertiseId': instance.advertiseId,
+      'isEmployee': instance.isEmployee
     };

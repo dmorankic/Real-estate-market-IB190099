@@ -12,6 +12,7 @@ namespace Real_estate_market_IB190099.Model
         public UserModel Sender { get; set; }
         public int SenderId { get; set; }
         public DateTime? Timestamp { get; set; }
+        public byte? IsEmployee { get; set; }
         public int AdvertiseId { get; set; }
         public virtual AdvertiseModel Advertise { get; set; } 
 

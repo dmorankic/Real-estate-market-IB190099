@@ -13,6 +13,7 @@ class Message {
   Object? timestamp;
   Advertise? advertise;
   int? advertiseId;
+  int? isEmployee;
 
   Message() {}
 

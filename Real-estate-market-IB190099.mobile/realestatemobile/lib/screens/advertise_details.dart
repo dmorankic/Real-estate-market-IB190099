@@ -530,7 +530,8 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       "content": messageController.text,
       "senderId": Authorization.loggedUser!.id!.toString(),
       "timestamp": DateTime.now().toString(),
-      "advertiseId": advertiseId!
+      "advertiseId": advertiseId!,
+      "isEmployee": "0"
     };
     messageController.text = "";
     var response = await _messageProvider!.send(body);

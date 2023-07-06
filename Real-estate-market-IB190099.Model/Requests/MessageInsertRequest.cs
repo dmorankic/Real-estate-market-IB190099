@@ -15,6 +15,7 @@ namespace Real_estate_market_IB190099.Model.Requests
         [Required]
         public DateTime Timestamp { get; set; }
         [Required]
+        public byte? IsEmployee { get; set; }
 
         public int AdvertiseId { get; set; }
 

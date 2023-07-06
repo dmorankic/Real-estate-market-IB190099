@@ -15,6 +15,8 @@ public partial class Message
 
     public int AdvertiseId { get; set; }
 
+    public byte? IsEmployee { get; set; }
+
     public virtual Advertise Advertise { get; set; } = null!;
 
     public virtual User? Sender { get; set; }
