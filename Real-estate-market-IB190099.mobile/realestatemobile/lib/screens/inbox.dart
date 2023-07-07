@@ -143,18 +143,39 @@ class _InboxState extends State<Inbox> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(left: 30),
+                              margin: EdgeInsets.only(left: 25),
                               child: Text(
                                 x.isEmployee == 0
                                     ? "You : ${x.content!.length > 20 ? x.content!.substring(0, 20) : x.content}..."
-                                    : "Real estate : ${x.content!.length > 20 ? x.content!.substring(0, 20) : x.content}...",
+                                    : "Real estate : ${x.content!.length > 12 ? x.content!.substring(0, 12) : x.content}...",
                                 style: TextStyle(fontSize: 15),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Text(
-                              DateFormat.jm().format(
-                                  DateTime.parse(x.timestamp.toString())),
+                              DateUtils.isSameDay(
+                                      DateTime.parse(x.timestamp.toString()),
+                                      DateTime.now())
+                                  ? DateFormat.jm().format(
+                                      DateTime.parse(x.timestamp.toString()))
+                                  : DateUtils.isSameMonth(
+                                          DateTime.parse(
+                                              x.timestamp.toString()),
+                                          DateTime.parse(
+                                              x.timestamp.toString()))
+                                      ? DateTime.now()
+                                                      .difference(
+                                                          DateTime.parse(x
+                                                              .timestamp
+                                                              .toString()))
+                                                      .inDays +
+                                                  1 ==
+                                              1
+                                          ? "yesterday"
+                                          : "${(DateTime.now().difference(DateTime.parse(x.timestamp.toString())).inDays + 1).toString()} days ago"
+                                      : DateFormat.yMMMMd('en_US').format(
+                                          DateTime.parse(
+                                              x.timestamp.toString())),
                               style: TextStyle(fontSize: 15),
                               textAlign: TextAlign.center,
                             ),

@@ -284,12 +284,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       margin: EdgeInsets.all(20),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          BackButton(),
           OutlinedButton(
             child: Text(
               saved,
