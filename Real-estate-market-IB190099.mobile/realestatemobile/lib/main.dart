@@ -8,6 +8,7 @@ import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
+import 'package:realestatemobile/screens/create_ad.dart';
 import 'package:realestatemobile/screens/demand.dart';
 import 'package:realestatemobile/screens/inbox.dart';
 import 'package:realestatemobile/screens/inbox_details.dart';
@@ -28,8 +29,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -79,6 +78,9 @@ class MyApp extends StatelessWidget {
               if (settings.name == InboxDetails.routeName) {
                 return MaterialPageRoute(
                     builder: ((context) => InboxDetails()));
+              }
+              if (settings.name == CreateAd.routeName) {
+                return MaterialPageRoute(builder: ((context) => CreateAd()));
               }
 
               var uri = Uri.parse(settings.name!);

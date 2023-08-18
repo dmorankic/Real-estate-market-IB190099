@@ -528,6 +528,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       "advertiseId": advertiseId!,
       "isEmployee": "0"
     };
+
     messageController.text = "";
     var response = await _messageProvider!.send(body);
     return response;

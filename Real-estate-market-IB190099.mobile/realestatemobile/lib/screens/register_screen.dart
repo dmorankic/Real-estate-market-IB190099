@@ -51,7 +51,7 @@ class _RegisterState extends State<Register> {
   validatePhoneNumber(String? number) {
     String patttern = r'(^\d{3}\s\d{8,9}$)';
     RegExp regExp = new RegExp(patttern);
-    if (number == null || number.length == 0) {
+    if (number == null || number.isEmpty) {
       return 'Please enter phone number';
     } else if (!regExp.hasMatch(number)) {
       return 'Phone format should be 387 61222333(3)';
@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
   validateZIPcode(String? zip) {
     String patttern = r'(^\d{5}$)';
     RegExp regExp = new RegExp(patttern);
-    if (zip == null || zip.length == 0) {
+    if (zip == null || zip.isEmpty) {
       return 'Please enter ZIP code';
     } else if (!regExp.hasMatch(zip)) {
       return 'ZIP code must have exactly 5 digits';
@@ -315,7 +315,7 @@ class _RegisterState extends State<Register> {
                           child: TextFormField(
                               controller: dateController,
                               validator: (value) {
-                                if (value == null || value.length == 0) {
+                                if (value == null || value.isEmpty) {
                                   return 'Please enter birth date';
                                 }
                                 return null;
@@ -356,7 +356,7 @@ class _RegisterState extends State<Register> {
                           height: 45,
                           child: DropdownButtonFormField(
                             validator: (value) {
-                              if (value == null || value.length == 0) {
+                              if (value == null || value.isEmpty) {
                                 return 'Please select gender';
                               }
                               return null;

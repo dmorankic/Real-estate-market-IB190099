@@ -54,7 +54,6 @@ class _LoginState extends State<Login> {
                 'Welcome back',
                 style: TextStyle(
                   fontSize: 20,
-                  // fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 40),
