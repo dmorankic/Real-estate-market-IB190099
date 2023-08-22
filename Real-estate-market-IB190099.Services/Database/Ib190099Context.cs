@@ -21,6 +21,8 @@ public partial class Ib190099Context : DbContext
 
     public virtual DbSet<City> Cities { get; set; }
 
+    public virtual DbSet<Image> Images { get; set; }
+
     public virtual DbSet<Location> Locations { get; set; }
 
     public virtual DbSet<Message> Messages { get; set; }
@@ -91,6 +93,16 @@ public partial class Ib190099Context : DbContext
             entity.Property(e => e.ZipCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Image>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Image__3214EC0726650A03");
+
+            entity.ToTable("Image");
+
+            entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.Image1).HasColumnName("Image");
         });
 
         modelBuilder.Entity<Location>(entity =>

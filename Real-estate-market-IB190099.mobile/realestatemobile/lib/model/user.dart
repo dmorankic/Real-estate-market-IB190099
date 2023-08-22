@@ -7,7 +7,7 @@ part 'user.g.dart';
 class User {
   int? id;
   String? firstName;
-  String? userName;
+  String? username;
   String? lastName;
   String? email;
   String? phone;

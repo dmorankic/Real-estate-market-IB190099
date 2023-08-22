@@ -28,5 +28,5 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'timestamp': instance.timestamp,
       'advertise': instance.advertise,
       'advertiseId': instance.advertiseId,
-      'isEmployee': instance.isEmployee
+      'isEmployee': instance.isEmployee,
     };

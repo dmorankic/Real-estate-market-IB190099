@@ -1,10 +1,10 @@
 // ignore_for_file: body_might_complete_normally_nullable
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
+import 'package:realestatemobile/providers/local_image_provider.dart';
 import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
@@ -21,9 +21,20 @@ import 'package:realestatemobile/screens/search_ads.dart';
 
 import 'screens/date_picker.dart';
 import 'screens/register_screen.dart';
+import 'dart:io';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 // ignore_for_file: prefer_const_constructors
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -36,6 +47,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => MessageProvider()),
+          ChangeNotifierProvider(create: (_) => LocalImageProvider()),
         ],
         child: MaterialApp(
             title: 'Flutter Demo',

@@ -459,7 +459,7 @@ class _RegisterState extends State<Register> {
                               var userDecoded = jsonDecode(response.body);
                               User user = User.fromJson(userDecoded);
                               Authorization.loggedUser = user;
-                              Authorization.username = user.userName;
+                              Authorization.username = user.username;
                               Authorization.password = passwordController.text;
                               showDialog(
                                   context: context,

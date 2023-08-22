@@ -137,7 +137,7 @@ class _LoginState extends State<Login> {
                           List<User> users =
                               await _userProvider.get({}, "User");
                           users.forEach((element) {
-                            if (element.userName == Authorization.username) {
+                            if (element.username == Authorization.username) {
                               Authorization.loggedUser = element;
                             }
                           });

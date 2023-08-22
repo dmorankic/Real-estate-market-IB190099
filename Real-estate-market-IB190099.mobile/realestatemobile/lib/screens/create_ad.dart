@@ -1,10 +1,18 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings
 
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:realestatemobile/state/image_state.dart';
 import '../utils/util.dart';
 import 'burger.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import '../providers/local_image_provider.dart';
 
 class CreateAd extends StatefulWidget {
   const CreateAd({super.key});
@@ -15,7 +23,92 @@ class CreateAd extends StatefulWidget {
 }
 
 class _CreateAdState extends State<CreateAd> {
+  XFile? image;
+  List _images = [];
+  final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+  late LocalImageProvider _imageProvider;
+
+  Future sendImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+    if (img != null) {
+      _imageProvider.uploadImage(img.path);
+    }
+  }
+
+  Future getImageServer() async {
+    if (_imageProvider != null) {
+      Future<Response> response = _imageProvider.getImageFromServer();
+      response
+          .then((res) => {
+                if (res.statusCode == 200)
+                  {
+                    //  final data = jsonDecode(res.body);
+
+                    setState(() {
+                      _images = jsonDecode(res.body);
+                    })
+                  }
+              })
+          .catchError((err) {
+        print('Error: $err'); // Prints 401.
+      }, test: (error) {
+        return error is int && error >= 400;
+      });
+    }
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      sendImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      sendImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //getImageServer();
+  }
 
   TextEditingController adSectionController = TextEditingController();
   TextEditingController descController = TextEditingController();
@@ -31,6 +124,7 @@ class _CreateAdState extends State<CreateAd> {
 
   @override
   Widget build(BuildContext context) {
+    _imageProvider = Provider.of<LocalImageProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -416,6 +510,49 @@ class _CreateAdState extends State<CreateAd> {
                                   ],
                                 ),
                               ),
+                            ),
+                            SizedBox(height: 15),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: SizedBox(
+                                  width: 250,
+                                  child: IconButton(
+                                    onPressed: () => myAlert(),
+                                    icon: Icon(Icons.upload),
+                                  )),
+                            ),
+                            SizedBox(height: 15),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: SizedBox(
+                                  width: 250,
+                                  child: _images.length != 0
+                                      ? GridView.builder(
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2),
+                                          itemCount: _images.length,
+                                          itemBuilder: (_, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.all(10),
+                                              child: Image(
+                                                image: NetworkImage(
+                                                    'https:/10.0.2.2:7006/Images/' +
+                                                        _images[index]
+                                                            ['image']),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            );
+                                          })
+                                      : Center(child: Text("No Image"))),
                             ),
                           ]),
                         ),

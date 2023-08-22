@@ -48,6 +48,10 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAddressService, AddressService>();
 builder.Services.AddTransient<IAdvertiseService, AdvertiseService>();
 builder.Services.AddTransient<IMessageService, MessageService>();
+builder.Services.AddTransient<IImageService, ImageService>();
+builder.Services.AddTransient<IImageWriter, ImageWriter>();
+
+
 
 builder.Services.AddTransient<IValidator<User>,UserUpdateFluentValidator>();
 
@@ -63,6 +67,7 @@ builder.Services.AddDbContext<Ib190099Context>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+app.UseStaticFiles();
 
 
 if (app.Environment.IsDevelopment())

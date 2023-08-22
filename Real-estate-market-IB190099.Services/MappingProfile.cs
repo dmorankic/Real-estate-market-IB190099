@@ -38,6 +38,8 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<SavedAdvertise,SavedAdvertiseModel>();  
             CreateMap<MessageInsertRequest, Message>();
             CreateMap<Message, MessageModel>();
+            CreateMap<ImageUpsertRequest, Image>();
+
 
         }
     }
