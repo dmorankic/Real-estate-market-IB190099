@@ -107,36 +107,30 @@ class _DemandState extends State<Demand> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: SizedBox(
-            width: 250,
-            height: 25,
-            child: TextField(
-              controller: searchController,
-              onSubmitted: (value) async {
-                var tmpData = await _advertiseProvider
-                    ?.get({'PropertyName': value, 'Type': type}, "Advertise");
+        SizedBox(
+          width: 270,
+          height: 35,
+          child: TextField(
+            controller: searchController,
+            onSubmitted: (value) async {
+              var tmpData = await _advertiseProvider
+                  ?.get({'PropertyName': value, 'Type': type}, "Advertise");
 
-                setState(() {
-                  data = tmpData;
-                });
-              },
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 2),
-                border: InputBorder.none,
-                hintText: "Search",
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                  size: 21.0,
-                ),
-                hintStyle: TextStyle(color: Colors.grey[400]),
-                isDense: true,
+              setState(() {
+                data = tmpData;
+              });
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(top: 2),
+              border: InputBorder.none,
+              hintText: "Search",
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+                size: 21.0,
               ),
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              isDense: true,
             ),
           ),
         ),

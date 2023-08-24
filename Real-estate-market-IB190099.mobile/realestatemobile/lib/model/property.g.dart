@@ -13,14 +13,20 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property()
   ..floors = json['floors'] as int?
   ..propertyType = json['propertyType'] as String?
   ..rooms = json['rooms'] as int?
-  ..yearOfConstruction = json['yearOfConstruction'] as String?
+  ..yearOfConstruction = json['yearOfConstruction'] as int?
   ..parking = json['parking'] as int?
   ..water = json['water'] as int?
   ..electricity = json['electricity'] as int?
   ..price = json['price'] as int?
   ..addressId = json['addressId'] as int?
   ..quadrature = (json['quadrature'] as num?)?.toDouble()
-  ..locationId = json['locationId'] as int?;
+  ..locationId = json['locationId'] as int?
+  ..images = (json['images'] as List<dynamic>?)
+      ?.map((e) => LocalImage.fromJson(e).imageUrl as String)
+      .toList()
+  ..address = json['address'] == null
+      ? null
+      : Address.fromJson(json['address'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'id': instance.id,
@@ -37,4 +43,6 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'addressId': instance.addressId,
       'quadrature': instance.quadrature,
       'locationId': instance.locationId,
+      'images': instance.images,
+      'address': instance.address,
     };

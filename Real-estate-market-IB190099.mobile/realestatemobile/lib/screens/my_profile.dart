@@ -32,7 +32,7 @@ class _MyProfileState extends State<MyProfile> {
 
   TextEditingController dateController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -554,12 +554,10 @@ class _MyProfileState extends State<MyProfile> {
                                 var addressResponse = await updateUserAddress();
                                 if (response.statusCode == 200 &&
                                     addressResponse.statusCode == 200) {
-                                  var userDecoded = jsonDecode(response.body);
+                                  var userDecoded =
+                                      jsonDecode(addressResponse.body);
                                   User user = User.fromJson(userDecoded);
                                   Authorization.loggedUser = user;
-                                  Authorization.username = user.username;
-                                  Authorization.password =
-                                      passwordController.text;
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) =>
@@ -643,20 +641,22 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   void populateForm() {
-    User user = Authorization.loggedUser!;
-    firstNameController.text = user.firstName!;
-    lastNameController.text = user.lastName!;
-    emailController.text = user.email!;
-    phoneController.text = user.phone!;
-    dateController.text = user.dateOfBirth!.toString();
-    genderController.text = user.gender!;
-    dateRegisteredController.text = user.dateRegistered!.toString();
-    cityController.text = user.address!.city!.name!;
-    streetController.text = user.address!.numberStreet!;
-    zipController.text = user.address!.city!.zipCode!;
-    setState(() {
-      selectedItem = user.gender!;
-    });
+    if (Authorization.loggedUser != null) {
+      User user = Authorization.loggedUser!;
+      firstNameController.text = user.firstName!;
+      lastNameController.text = user.lastName!;
+      emailController.text = user.email!;
+      phoneController.text = user.phone!;
+      dateController.text = user.dateOfBirth!.toString();
+      genderController.text = user.gender!;
+      dateRegisteredController.text = user.dateRegistered!.toString();
+      cityController.text = user.address!.city!.name!;
+      streetController.text = user.address!.numberStreet!;
+      zipController.text = user.address!.city!.zipCode!;
+      setState(() {
+        selectedItem = user.gender!;
+      });
+    }
   }
 }
 

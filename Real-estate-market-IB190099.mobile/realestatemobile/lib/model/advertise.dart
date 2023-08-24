@@ -4,6 +4,7 @@ import 'dart:core';
 import 'dart:ffi';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:realestatemobile/model/property.dart';
+import 'package:realestatemobile/model/user.dart';
 
 part 'advertise.g.dart';
 
@@ -17,6 +18,7 @@ class Advertise {
   int? userId;
   DateTime? dateCreated;
   Property? property;
+  User? user;
 
   factory Advertise.fromJson(Map<String, dynamic> json) =>
       _$AdvertiseFromJson(json);

@@ -39,7 +39,7 @@ class AdvertiseProvider extends BaseProvider<Advertise> {
   }
 
   Future<Response> removeFromSaved(String advertiseId, String endpoint) async {
-    var url = "${_baseUrl}${endpoint}";
+    var url = "$_baseUrl$endpoint";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response = await http!.delete(uri,
@@ -48,6 +48,20 @@ class AdvertiseProvider extends BaseProvider<Advertise> {
           "userId": Authorization.loggedUser!.id.toString(),
           "advertiseId": advertiseId
         }));
+
+    if (isValidResponseCode(response)) {
+      return response;
+    } else {
+      throw Exception("Exception... handle this gracefully");
+    }
+  }
+
+  Future<Response> createAdvertise(Map<String, dynamic> body) async {
+    var url = "${_baseUrl}Advertise";
+    Map<String, String> headers = createHeaders();
+    var uri = Uri.parse(url);
+    var response =
+        await http!.post(uri, headers: headers, body: jsonEncode(body));
 
     if (isValidResponseCode(response)) {
       return response;

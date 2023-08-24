@@ -4,12 +4,14 @@ import 'package:json_annotation/json_annotation.dart';
 part 'image.g.dart';
 
 @JsonSerializable()
-class Image {
-  Image() {}
-  String? Image1;
+class LocalImage {
+  LocalImage() {}
+  int? id;
+  String? imageUrl;
 
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  factory LocalImage.fromJson(Map<String, dynamic> json) =>
+      _$LocalImageFromJson(json);
 
-  /// Connect the generated [_$ImageToJson] function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
+  /// Connect the generated [_$LocalImageToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$LocalImageToJson(this);
 }

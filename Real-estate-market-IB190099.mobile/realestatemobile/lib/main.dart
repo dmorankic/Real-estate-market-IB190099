@@ -50,66 +50,80 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LocalImageProvider()),
         ],
         child: MaterialApp(
-            title: 'Flutter Demo',
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
-            onGenerateRoute: (settings) {
-              if (settings.name == Login.routeName) {
-                return MaterialPageRoute(builder: ((context) => Login()));
-              }
-              if (settings.name == Register.routeName) {
-                return MaterialPageRoute(builder: ((context) => Register()));
-              }
-              if (settings.name == DatePickerApp.routeName) {
-                return MaterialPageRoute(
-                    builder: ((context) => DatePickerApp()));
-              }
-              if (settings.name == SearchAds.routeName) {
-                return MaterialPageRoute(builder: ((context) => SearchAds()));
-              }
-              if (settings.name == Rent.routeName) {
-                return MaterialPageRoute(builder: ((context) => Rent()));
-              }
-              if (settings.name == Sale.routeName) {
-                return MaterialPageRoute(builder: ((context) => Sale()));
-              }
-              if (settings.name == BurgerMenu.routeName) {
-                return MaterialPageRoute(builder: ((context) => BurgerMenu()));
-              }
-              if (settings.name == SavedAds.routeName) {
-                return MaterialPageRoute(builder: ((context) => SavedAds()));
-              }
-              if (settings.name == Demand.routeName) {
-                return MaterialPageRoute(builder: ((context) => Demand()));
-              }
-              if (settings.name == MyProfile.routeName) {
-                return MaterialPageRoute(builder: ((context) => MyProfile()));
-              }
-              if (settings.name == Inbox.routeName) {
-                return MaterialPageRoute(builder: ((context) => Inbox()));
-              }
-              if (settings.name == InboxDetails.routeName) {
-                return MaterialPageRoute(
-                    builder: ((context) => InboxDetails()));
-              }
-              if (settings.name == CreateAd.routeName) {
-                return MaterialPageRoute(builder: ((context) => CreateAd()));
-              }
+          title: 'Flutter Demo',
+          home: MyHomePage(title: 'Flutter Demo Home Page'),
+          onGenerateRoute: (settings) {
+            if (settings.name == Login.routeName) {
+              return MaterialPageRoute(builder: ((context) => Login()));
+            }
+            if (settings.name == Register.routeName) {
+              return MaterialPageRoute(builder: ((context) => Register()));
+            }
+            if (settings.name == DatePickerApp.routeName) {
+              return MaterialPageRoute(builder: ((context) => DatePickerApp()));
+            }
+            if (settings.name == SearchAds.routeName) {
+              return MaterialPageRoute(builder: ((context) => SearchAds()));
+            }
+            if (settings.name == Rent.routeName) {
+              return MaterialPageRoute(builder: ((context) => Rent()));
+            }
+            if (settings.name == Sale.routeName) {
+              return MaterialPageRoute(builder: ((context) => Sale()));
+            }
+            if (settings.name == BurgerMenu.routeName) {
+              return MaterialPageRoute(builder: ((context) => BurgerMenu()));
+            }
+            if (settings.name == SavedAds.routeName) {
+              return MaterialPageRoute(builder: ((context) => SavedAds()));
+            }
+            if (settings.name == Demand.routeName) {
+              return MaterialPageRoute(builder: ((context) => Demand()));
+            }
+            if (settings.name == MyProfile.routeName) {
+              return MaterialPageRoute(builder: ((context) => MyProfile()));
+            }
+            if (settings.name == Inbox.routeName) {
+              return MaterialPageRoute(builder: ((context) => Inbox()));
+            }
+            if (settings.name == InboxDetails.routeName) {
+              return MaterialPageRoute(builder: ((context) => InboxDetails()));
+            }
+            if (settings.name == CreateAd.routeName) {
+              return MaterialPageRoute(
+                  maintainState: false, builder: ((context) => CreateAd()));
+            }
 
-              var uri = Uri.parse(settings.name!);
-              if (uri.pathSegments.length == 2 &&
-                  "/${uri.pathSegments.first}" == AdvertiseDetails.routeName) {
-                var id = uri.pathSegments[1];
-                return MaterialPageRoute(
-                    builder: (context) => AdvertiseDetails(id: id));
-              }
+            var uri = Uri.parse(settings.name!);
+            if (uri.pathSegments.length == 2 &&
+                "/${uri.pathSegments.first}" == AdvertiseDetails.routeName) {
+              var id = uri.pathSegments[1];
+              return MaterialPageRoute(
+                  builder: (context) => AdvertiseDetails(id: id));
+            }
 
-              if (uri.pathSegments.length == 2 &&
-                  "/${uri.pathSegments.first}" == InboxDetails.routeName) {
-                var id = uri.pathSegments[1];
-                return MaterialPageRoute(
-                    builder: (context) => InboxDetails(id: id));
-              }
-            }));
+            if (uri.pathSegments.length == 2 &&
+                "/${uri.pathSegments.first}" == InboxDetails.routeName) {
+              var id = uri.pathSegments[1];
+              return MaterialPageRoute(
+                  builder: (context) => InboxDetails(id: id));
+            }
+          },
+          theme: ThemeData(
+            inputDecorationTheme: InputDecorationTheme(
+              labelStyle: TextStyle(color: Color.fromARGB(255, 124, 124, 124)),
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black)),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
+            ),
+          ),
+        ));
   }
 }
 

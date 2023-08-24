@@ -22,9 +22,13 @@ namespace Real_estate_market_IB190099.Services
         , IAdvertiseService
     {
         IMapper _mapper;
-        public AdvertiseService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
+        Ib190099Context _context;
+        IAddressService _AddresService;
+        public AdvertiseService(Ib190099Context Context, IMapper Mapper, IAddressService AddresService) : base(Context, Mapper)
         {
             _mapper = Mapper;
+            _context= Context;
+            _AddresService = AddresService;
         }
 
         //public List<int> Recommend(int id)
@@ -238,14 +242,14 @@ namespace Real_estate_market_IB190099.Services
 
         public override IQueryable<Advertise> AddInclude(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
         {
-            query = query.Include(x => x.Property);
+            query = query.Include(x => x.Property.Images).Include(x=>x.Property.Address.City);
             return base.AddInclude(query, search);
         }
         
         public override AdvertiseModel GetById(int id)
         {
 
-            var advertise = Context.Advertises.Include(x=>x.Property).FirstOrDefault(x=>x.Id==id);
+            var advertise = Context.Advertises.Include(x=>x.Property.Images).Include(x=>x.Property.Address.City).FirstOrDefault(x=>x.Id==id);
             if(advertise== null)
             {
                 throw new UserException("User with that Id does not exist");
@@ -290,6 +294,45 @@ namespace Real_estate_market_IB190099.Services
                 mappedAdvertises.Add(advertise);
             });
             return mappedAdvertises;
+        }
+
+        public override void BeforeInsert(AdvertiseInsertRequest insert, Advertise entity)
+        {
+            Property prop = new Property()
+            {
+                Name = insert.Name,
+                Description = insert.Description,
+                Floors = insert.Floors,
+                PropertyType = insert.PropertyType,
+                Rooms = insert.Rooms,
+                YearOfConstruction = insert.YearOfConstruction,
+                Parking = insert.Parking,
+                Electricity = insert.Electricity,
+                Water = insert.Water,
+                Price = insert.Price,
+                Quadrature = insert.Quadrature,
+            };
+
+            var address = Context.Addresses
+                .FirstOrDefault(x => x.NumberStreet == insert.NumberStreet &&
+                x.City.ZipCode == insert.ZipCode.ToString() && insert.CitytName==x.City.Name);
+            if (address == null)
+            {
+                address = _AddresService
+                  .Insert(
+                   new AddressInsertRequest()
+                   {
+                       CityName = insert.CitytName,
+                       NumberStreet = insert.NumberStreet,
+                       ZipCode = insert.ZipCode.ToString()
+                   });
+            }
+            var images = _context.Images.Where(x => insert.Images.Contains(x.Id)).ToList();
+            prop.Images= images;
+            entity.Property = prop;
+            entity.Property.AddressId = address.Id;
+
+            base.BeforeInsert(insert, entity);
         }
     }
 }

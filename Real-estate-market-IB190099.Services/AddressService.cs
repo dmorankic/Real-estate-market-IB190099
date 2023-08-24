@@ -32,7 +32,7 @@ namespace Real_estate_market_IB190099.Services
             {
                 var city = Context.Cities.FirstOrDefault(x => x.Name == insert.CityName
                 || x.ZipCode == insert.ZipCode);
-                if (city != null)
+                if (city != null )
                 {
                     if (!(city.Name == insert.CityName && city.ZipCode == insert.ZipCode))
                     {

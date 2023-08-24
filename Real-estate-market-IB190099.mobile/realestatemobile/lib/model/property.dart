@@ -1,5 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+import 'package:realestatemobile/model/image.dart';
+
+import 'address.dart';
 
 part 'property.g.dart';
 
@@ -13,7 +18,7 @@ class Property {
   int? floors;
   String? propertyType;
   int? rooms;
-  String? yearOfConstruction;
+  int? yearOfConstruction;
   int? parking;
   int? water;
   int? electricity;
@@ -21,6 +26,8 @@ class Property {
   int? addressId;
   double? quadrature;
   int? locationId;
+  List<String>? images;
+  Address? address;
 
   factory Property.fromJson(Map<String, dynamic> json) =>
       _$PropertyFromJson(json);

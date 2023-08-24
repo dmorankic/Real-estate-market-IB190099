@@ -50,6 +50,7 @@ namespace Real_estate_market_IB190099.Services
             {
                 return null;
             }
+            BeforeUpdate(update, entity);
             Context.SaveChanges();
             return Mapper.Map<T>(entity);
         }

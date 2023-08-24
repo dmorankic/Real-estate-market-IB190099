@@ -6,6 +6,6 @@ namespace Real_estate_market_IB190099.Model.Requests
 {
     public class ImageUpsertRequest
     {
-        public byte[] Image1 { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

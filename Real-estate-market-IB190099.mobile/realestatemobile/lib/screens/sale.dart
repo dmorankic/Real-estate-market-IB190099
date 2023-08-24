@@ -25,6 +25,7 @@ class _SaleState extends State<Sale> {
   AdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
+  final String _baseUrl = 'https://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -106,36 +107,30 @@ class _SaleState extends State<Sale> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: SizedBox(
-            width: 250,
-            height: 25,
-            child: TextField(
-              controller: searchController,
-              onSubmitted: (value) async {
-                var tmpData = await _advertiseProvider
-                    ?.get({'PropertyName': value, 'Type': type}, "Advertise");
+        SizedBox(
+          width: 270,
+          height: 35,
+          child: TextField(
+            controller: searchController,
+            onSubmitted: (value) async {
+              var tmpData = await _advertiseProvider
+                  ?.get({'PropertyName': value, 'Type': type}, "Advertise");
 
-                setState(() {
-                  data = tmpData;
-                });
-              },
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 2),
-                border: InputBorder.none,
-                hintText: "Search",
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                  size: 21.0,
-                ),
-                hintStyle: TextStyle(color: Colors.grey[400]),
-                isDense: true,
+              setState(() {
+                data = tmpData;
+              });
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(top: 2),
+              border: InputBorder.none,
+              hintText: "Search",
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+                size: 21.0,
               ),
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              isDense: true,
             ),
           ),
         ),
@@ -195,8 +190,12 @@ class _SaleState extends State<Sale> {
                                   BorderRadius.all(Radius.elliptical(10, 10)),
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(35),
-                                child: Image.asset("assets/images/logo2.png",
-                                    fit: BoxFit.cover),
+                                child: x.property?.images.isEmpty
+                                    ? Image.asset("assets/images/logo2.png",
+                                        fit: BoxFit.cover)
+                                    : Image.network(
+                                        '$_baseUrl${x.property?.images[0]}',
+                                        fit: BoxFit.cover),
                               ),
                             ),
                           ),

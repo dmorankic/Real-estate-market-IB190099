@@ -17,8 +17,6 @@ public partial class Property
 
     public int? Rooms { get; set; }
 
-    public string? YearOfConstruction { get; set; }
-
     public byte? Parking { get; set; }
 
     public byte? Water { get; set; }
@@ -33,9 +31,13 @@ public partial class Property
 
     public int? LocationId { get; set; }
 
+    public int? YearOfConstruction { get; set; }
+
     public virtual Address? Address { get; set; }
 
     public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
+
+    public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
     public virtual Location? Location { get; set; }
 

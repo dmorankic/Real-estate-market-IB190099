@@ -101,8 +101,11 @@ public partial class Ib190099Context : DbContext
 
             entity.ToTable("Image");
 
-            entity.Property(e => e.Date).HasColumnType("date");
-            entity.Property(e => e.Image1).HasColumnName("Image");
+            entity.Property(e => e.ImageUrl).IsUnicode(false);
+
+            entity.HasOne(d => d.Property).WithMany(p => p.Images)
+                .HasForeignKey(d => d.PropertyId)
+                .HasConstraintName("FK_Image_Property");
         });
 
         modelBuilder.Entity<Location>(entity =>
@@ -146,9 +149,6 @@ public partial class Ib190099Context : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.PropertyType)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.YearOfConstruction)
                 .HasMaxLength(255)
                 .IsUnicode(false);
 

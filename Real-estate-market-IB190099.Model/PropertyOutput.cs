@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
+
 namespace Real_estate_market_IB190099.Model
 {
     public class PropertyOutput
@@ -19,7 +20,7 @@ namespace Real_estate_market_IB190099.Model
 
         public int? Rooms { get; set; }
 
-        public string YearOfConstruction { get; set; }
+        public int YearOfConstruction { get; set; }
 
         public byte? Parking { get; set; }
 
@@ -34,7 +35,9 @@ namespace Real_estate_market_IB190099.Model
         public double? Quadrature { get; set; }
 
         public int? LocationId { get; set; }
+        public virtual ICollection<ImageModel> Images { get; set; } = new List<ImageModel>();
 
-        //public virtual Address Address { get; set; }
+
+        public virtual AddressModel Address { get; set; }
     }
 }

@@ -21,7 +21,12 @@ class AdvertiseDetails extends StatefulWidget {
 }
 
 class _AdvertiseDetailsState extends State<AdvertiseDetails> {
-  List<String> images = ["assets/images/logo.png", "assets/images/logo2.png"];
+  List<String> defaultImages = [
+    "assets/images/logo.png",
+    "assets/images/logo2.png"
+  ];
+  List<String> images = [];
+  final String _baseUrl = 'https://10.0.2.2:7006/';
   final CarouselController _carouselController = CarouselController();
   TextEditingController messageController = TextEditingController();
   AdvertiseProvider? _advertiseProvider = null;
@@ -64,7 +69,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 child: Column(
                   children: [
                     _buildNav(snapshot.data!.id.toString()),
-                    _buildSlider(),
+                    _buildSlider(snapshot.data!),
                     Column(
                       children: [
                         Container(
@@ -115,7 +120,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Address : Bistarac bb, Lukavac",
+                              "Address : ${snapshot.data?.property?.address != null ? "${snapshot.data!.property!.address!.numberStreet!}, ${snapshot.data!.property!.address!.city!.name!}" : 'not provided'}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -199,7 +204,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Contact : 00222555447",
+                              "Contact : ${snapshot.data?.user != null ? snapshot.data?.user!.phone : ' not provided'}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -245,7 +250,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     );
   }
 
-  CarouselSlider _buildSlider() {
+  CarouselSlider _buildSlider(Advertise data) {
     return CarouselSlider(
       carouselController: _carouselController,
       options: CarouselOptions(
@@ -258,25 +263,44 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         viewportFraction: 0.8,
       ),
-      items: _buildImages(),
+      items: _buildImages(data),
     );
   }
 
-  List<Widget> _buildImages() {
-    return images.map((url) {
-      return Builder(
-        builder: (BuildContext context) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            child: Image.asset(
-              url,
-              fit: BoxFit.cover,
-            ),
-          );
-        },
-      );
-    }).toList();
+  List<Widget> _buildImages(Advertise data) {
+    if (data.property != null &&
+        data.property!.images != null &&
+        data.property!.images!.isNotEmpty) {
+      return data.property!.images!.map((imgLoc) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child: Image.network(
+                '$_baseUrl$imgLoc',
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+        );
+      }).toList();
+    } else {
+      return defaultImages.map((url) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child: Image.asset(
+                url,
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+        );
+      }).toList();
+    }
   }
 
   Container _buildNav(String advertiseId) {

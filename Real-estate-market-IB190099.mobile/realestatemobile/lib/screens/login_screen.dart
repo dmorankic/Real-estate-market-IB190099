@@ -64,43 +64,31 @@ class _LoginState extends State<Login> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: SizedBox(
-                        width: 250,
-                        child: TextField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Username",
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                            isDense: true,
-                          ),
+                    SizedBox(
+                      width: 270,
+                      child: TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Username",
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                          isDense: true,
                         ),
                       ),
                     ),
                     SizedBox(height: 15),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: SizedBox(
-                        width: 250,
-                        child: TextField(
-                          obscureText: true,
-                          style: TextStyle(
-                              fontSize: 15.0, height: 1, color: Colors.black),
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Pasword",
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                            isDense: true,
-                          ),
+                    SizedBox(
+                      width: 270,
+                      child: TextField(
+                        obscureText: true,
+                        style: TextStyle(
+                            fontSize: 15.0, height: 1, color: Colors.black),
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Pasword",
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                          isDense: true,
                         ),
                       ),
                     ),

@@ -19,11 +19,14 @@ namespace Real_estate_market_IB190099.Services
     public class UserService : BaseCRUDService<Database.User, Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>, IUserService
     {
         public IAddressService _AddresService;
+        Ib190099Context _context;
         public UserService(Ib190099Context Context, IMapper Mapper,
             IAddressService AddresService) : base(Context, Mapper)
         {
             _AddresService= AddresService;
+            _context= Context;
         }
+
 
         public override IQueryable<Database.User> AddFilter(IQueryable<Database.User> query, UserSearchObject search = null)
         {
@@ -45,7 +48,7 @@ namespace Real_estate_market_IB190099.Services
             entity.PasswordHash = GenerateHash(salt, insert.Password);
             var address = Context.Addresses
                 .FirstOrDefault(x => x.NumberStreet == insert.NumberStreet &&
-                x.City.ZipCode==insert.ZipCode);
+                x.City.ZipCode==insert.ZipCode && x.City.Name==insert.City);
             if (address == null) 
             {
                 address = _AddresService
@@ -61,11 +64,11 @@ namespace Real_estate_market_IB190099.Services
 
             base.BeforeInsert(insert, entity);
         }
-        
+
 
         public override UserModel Update(int id, UserUpdateRequest update)
         {
-            var user=Context.Users.FirstOrDefault(x => x.Id == id);
+            var user=Context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 return null;
@@ -140,7 +143,7 @@ namespace Real_estate_market_IB190099.Services
         public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
         {
 
-            var userQuery = Context.Users.Find(id);
+            var userQuery = _context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
             if (userQuery == null)
             {
                 return Mapper.Map<UserModel>(userQuery);
@@ -150,6 +153,19 @@ namespace Real_estate_market_IB190099.Services
             Context.SaveChanges();
 
             return Mapper.Map<UserModel>(userQuery);
+        }
+        //public override void BeforeUpdate(UserUpdateRequest update, User entity)
+        //{
+        //    entity.Address = entity.Address;
+        //    entity.Address.City=entity.Address.City;
+        //    base.BeforeUpdate(update, entity);
+        //}
+        public override UserModel GetById(int id)
+        {
+
+            var user = _context.Users.Include(x => x.Address.City).FirstOrDefault(x => x.Id == id);
+            return Mapper.Map<UserModel>(user);
+
         }
         public override IEnumerable<UserModel> Get(UserSearchObject search = null)
         {

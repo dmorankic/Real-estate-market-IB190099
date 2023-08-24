@@ -7,22 +7,15 @@ import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:image_picker/image_picker.dart';
 import '../model/image.dart';
-// import 'package:http/http.dart' as httpClient;
 import '../utils/util.dart';
 import 'base_provider.dart';
 
-class LocalImageProvider extends BaseProvider<Image> {
-  LocalImageProvider() : super("Image") {
-    //httpClient.badCertificateCallback = (cert, host, port) => true;
-    //http = IOClient(client);
-  }
+class LocalImageProvider extends BaseProvider<LocalImage> {
+  LocalImageProvider() : super("Image");
   static String baseUrl = "https://10.0.2.2:7006/";
-
-  //HttpClient client = new HttpClient();
-  //IOClient http;
   @override
-  Image fromJson(data) {
-    return Image.fromJson(data);
+  LocalImage fromJson(data) {
+    return LocalImage.fromJson(data);
   }
 
   Future<Response> upload(Map<String, String> body) async {
@@ -36,24 +29,6 @@ class LocalImageProvider extends BaseProvider<Image> {
       return response;
     } else {
       throw Exception("Exception... handle this gracefully");
-    }
-  }
-
-  Future sendImage(XFile? media) async {
-    var uri = "https://10.0.2.2:7006/Image/UploadImage";
-
-    var request = httpClient.MultipartRequest('POST', Uri.parse(uri));
-
-    if (media != null) {
-      var pic = await httpClient.MultipartFile.fromPath("image", media.path);
-
-      request.files.add(pic);
-
-      await request.send().then((result) async {
-        await httpClient.Response.fromStream(result).then((response) {
-          return response;
-        });
-      });
     }
   }
 
