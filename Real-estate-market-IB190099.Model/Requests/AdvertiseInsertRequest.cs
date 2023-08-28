@@ -34,6 +34,9 @@ namespace Real_estate_market_IB190099.Model.Requests
         // public int? AddressId { get; set; }
 
         public double? Quadrature { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
 
         //public int? LocationId { get; set; }
 

@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
+import 'package:realestatemobile/screens/online_payment.dart';
 import 'package:realestatemobile/utils/util.dart';
 
 import '../providers/advertise_provider.dart';
@@ -34,6 +36,11 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   String saved = "Save";
   MessageProvider? _messageProvider;
   final _formKey = GlobalKey<FormState>();
+
+  GoogleMapController? mapController; //contrller for Google map
+  Set<Marker> markers = Set(); //markers for google map
+  LatLng showLocation = LatLng(0, 0);
+
   @override
   void initState() {
     super.initState();
@@ -60,6 +67,21 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
         builder: (BuildContext context, AsyncSnapshot<Advertise> snapshot) {
           Widget child;
           if (snapshot.hasData) {
+            if (snapshot.data?.property?.location != null) {
+              showLocation = LatLng(
+                  snapshot!.data!.property!.location!.latitude!,
+                  snapshot!.data!.property!.location!.longitude!);
+              markers.add(Marker(
+                markerId: MarkerId(showLocation.toString()),
+                position: showLocation!,
+                infoWindow: InfoWindow(
+                  title: 'Insert location',
+                  snippet: 'Location of your property',
+                ),
+                icon: BitmapDescriptor.defaultMarker,
+              ));
+            }
+
             Authorization.loggedUser?.savedAdvertisesIds?.forEach((x) => {
                   if (x == snapshot.data?.id) {saved = "Remove from saved"}
                 });
@@ -196,6 +218,41 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                               style: TextStyle(
                                 fontSize: 13,
                               ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: SizedBox(
+                              width: 300,
+                              height: 200,
+                              child: snapshot.data?.property?.location != null
+                                  ? GoogleMap(
+                                      zoomGesturesEnabled: true,
+                                      initialCameraPosition: CameraPosition(
+                                        target: showLocation!,
+                                        zoom: 15.0,
+                                      ),
+                                      markers: markers,
+                                      mapType: MapType.normal,
+                                      onMapCreated: (controller) {
+                                        setState(() {
+                                          mapController = controller;
+                                        });
+                                      },
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("Location is not inserted"),
+                                      ],
+                                    ),
                             ),
                           ),
                           SizedBox(
@@ -533,7 +590,9 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               "Pay in advance",
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, OnlinePayment.routeName);
+            },
             style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(Colors.blue.shade900)),

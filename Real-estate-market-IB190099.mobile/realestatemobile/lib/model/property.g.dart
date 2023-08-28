@@ -26,7 +26,10 @@ Property _$PropertyFromJson(Map<String, dynamic> json) => Property()
       .toList()
   ..address = json['address'] == null
       ? null
-      : Address.fromJson(json['address'] as Map<String, dynamic>);
+      : Address.fromJson(json['address'] as Map<String, dynamic>)
+  ..location = json['location'] == null
+      ? null
+      : Location.fromJson(json['location'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'id': instance.id,
@@ -45,4 +48,5 @@ Map<String, dynamic> _$PropertyToJson(Property instance) => <String, dynamic>{
       'locationId': instance.locationId,
       'images': instance.images,
       'address': instance.address,
+      'location': instance.location,
     };

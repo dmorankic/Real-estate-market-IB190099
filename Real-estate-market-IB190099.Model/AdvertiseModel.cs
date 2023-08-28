@@ -22,6 +22,7 @@ namespace Real_estate_market_IB190099.Model
         public DateTime? DateCreated { get; set; }
 
         public virtual PropertyOutput Property { get; set; }
+
         public virtual ICollection<ImageModel> Images  { get; set; }=new List<ImageModel>();
 
 

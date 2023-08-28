@@ -117,9 +117,11 @@ class _RegisterState extends State<Register> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(children: [
                       SizedBox(
-                        width: 270,
+                        width: 300,
                         child: TextFormField(
                           controller: firstNameController,
+                          style: TextStyle(
+                              fontSize: 15.0, height: 1, color: Colors.black),
                           validator: (value) {
                             if (value == null ||
                                 value.isEmpty ||
@@ -129,16 +131,16 @@ class _RegisterState extends State<Register> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "First name",
+                            labelText: "First name",
                             hintStyle: TextStyle(color: Colors.grey[400]),
                             isDense: true,
+                            border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       SizedBox(height: 15),
                       SizedBox(
-                        width: 270,
+                        width: 300,
                         child: TextFormField(
                           controller: lastNameController,
                           style: TextStyle(
@@ -152,16 +154,16 @@ class _RegisterState extends State<Register> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Last name",
+                            labelText: "Last name",
                             hintStyle: TextStyle(color: Colors.grey[400]),
                             isDense: true,
+                            border: OutlineInputBorder(),
                           ),
                         ),
                       ),
                       SizedBox(height: 15),
                       SizedBox(
-                        width: 270,
+                        width: 300,
                         child: TextFormField(
                           controller: emailController,
                           style: TextStyle(
@@ -175,10 +177,10 @@ class _RegisterState extends State<Register> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Email",
+                            labelText: "Email",
                             hintStyle: TextStyle(color: Colors.grey[400]),
                             isDense: true,
+                            border: OutlineInputBorder(),
                           ),
                         ),
                       ),
@@ -187,9 +189,6 @@ class _RegisterState extends State<Register> {
                         width: 300,
                         child: TextFormField(
                           keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
                           controller: phoneController,
                           style: TextStyle(
                               fontSize: 15.0, height: 1, color: Colors.black),
@@ -296,8 +295,6 @@ class _RegisterState extends State<Register> {
                                 tmpDate = pickedDate;
                                 String formattedDate =
                                     DateFormat('dd-MM-yyyy').format(pickedDate);
-                              } else {
-                                print("Date is not selected");
                               }
                             }),
                       ),

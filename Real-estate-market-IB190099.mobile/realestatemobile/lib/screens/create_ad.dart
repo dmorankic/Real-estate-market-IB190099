@@ -17,6 +17,7 @@ import 'burger.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import '../providers/local_image_provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreateAd extends StatefulWidget {
   const CreateAd({super.key});
@@ -30,6 +31,8 @@ class _CreateAdState extends State<CreateAd> {
   XFile? image;
   List _images = [];
   List _imageIds = [];
+  double lat = 27.7089427;
+  double lon = 85.3086209;
 
   final ImagePicker picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
@@ -38,6 +41,9 @@ class _CreateAdState extends State<CreateAd> {
 
   late LocalImageProvider _imageProvider;
   AdvertiseProvider? _advertiseProvider = null;
+  GoogleMapController? mapController; //contrller for Google map
+  Set<Marker> markers = Set(); //markers for google map
+  LatLng showLocation = LatLng(44.525555, 18.521741);
 
   Future sendImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
@@ -113,6 +119,18 @@ class _CreateAdState extends State<CreateAd> {
 
   @override
   void initState() {
+    markers.add(Marker(
+      //add marker on google map
+      markerId: MarkerId(showLocation.toString()),
+      position: showLocation, //position of marker
+      infoWindow: InfoWindow(
+        //popup info
+        title: 'My Custom Title ',
+        snippet: 'My Custom Subtitle',
+      ),
+      icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+    ));
+
     super.initState();
   }
 
@@ -587,22 +605,7 @@ class _CreateAdState extends State<CreateAd> {
                               ],
                             ),
                           ),
-
                           SizedBox(height: 15),
-                          // Container(
-                          //   padding: EdgeInsets.all(8),
-                          //   decoration: BoxDecoration(
-                          //       border: Border.all(color: Colors.black),
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(5))),
-                          //   child: SizedBox(
-                          //       width: 250,
-                          //       child: IconButton(
-                          //         onPressed: () => myAlert(),
-                          //         icon: Icon(Icons.upload),
-                          //       )),
-                          // ),
-
                           Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
@@ -690,6 +693,54 @@ class _CreateAdState extends State<CreateAd> {
                                 labelText: "Price",
                                 isDense: true,
                                 border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: SizedBox(
+                              width: 300,
+                              height: 200,
+                              child: GoogleMap(
+                                zoomGesturesEnabled: true,
+                                initialCameraPosition: CameraPosition(
+                                  target: showLocation,
+                                  zoom: 15.0,
+                                ),
+                                markers: markers,
+                                mapType: MapType.normal,
+                                onMapCreated: (controller) {
+                                  setState(() {
+                                    mapController = controller;
+                                  });
+                                },
+                                onTap: (position) {
+                                  setState(() {
+                                    markers = {};
+                                    markers.add(Marker(
+                                      markerId:
+                                          MarkerId(showLocation.toString()),
+                                      position: position,
+                                      infoWindow: InfoWindow(
+                                        title: 'My Custom Title ',
+                                        snippet: 'My Custom Subtitle',
+                                      ),
+                                      icon: BitmapDescriptor.defaultMarker,
+                                    ));
+                                    lat = position.latitude;
+                                    lon = position.longitude;
+                                    mapController?.animateCamera(
+                                        CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                                target: position, zoom: 15.0)));
+                                  });
+                                },
                               ),
                             ),
                           ),
@@ -804,7 +855,9 @@ class _CreateAdState extends State<CreateAd> {
       "UserId": Authorization.loggedUser?.id,
       "CitytName": cityController.text,
       "NumberStreet": numberStreetController.text,
-      "ZipCode": zipController.text
+      "ZipCode": zipController.text,
+      "Latitude": lat,
+      "Longitude": lon
     };
     var response = await _advertiseProvider!.createAdvertise(advertise);
 

@@ -154,23 +154,18 @@ namespace Real_estate_market_IB190099.Services
 
             return Mapper.Map<UserModel>(userQuery);
         }
-        //public override void BeforeUpdate(UserUpdateRequest update, User entity)
-        //{
-        //    entity.Address = entity.Address;
-        //    entity.Address.City=entity.Address.City;
-        //    base.BeforeUpdate(update, entity);
-        //}
+   
         public override UserModel GetById(int id)
         {
 
-            var user = _context.Users.Include(x => x.Address.City).FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.Include(x => x.Address.City).Include(x=>x.Role).FirstOrDefault(x => x.Id == id);
             return Mapper.Map<UserModel>(user);
 
         }
         public override IEnumerable<UserModel> Get(UserSearchObject search = null)
         {
 
-            var query = Context.Users.Include(x=>x.Address).Include(x=>x.Address.City).ToList();
+            var query = Context.Users.Include(x=>x.Address).Include(x=>x.Address.City).Include(x=>x.Role).ToList();
             var mappedQuery=Mapper.Map<List<UserModel>>(query);
             var savedAds = Context.SavedAdvertises.Include(x=>x.Advertise).ToList();
             for(int i=0; i<mappedQuery.Count;i++)

@@ -40,6 +40,8 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<Message, MessageModel>();
             CreateMap<ImageUpsertRequest, Image>();
             CreateMap<Image, ImageModel>();
+            CreateMap<Location, LocationModel>();
+
 
 
 

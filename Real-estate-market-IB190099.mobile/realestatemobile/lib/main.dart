@@ -14,14 +14,16 @@ import 'package:realestatemobile/screens/inbox.dart';
 import 'package:realestatemobile/screens/inbox_details.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/my_profile.dart';
+import 'package:realestatemobile/screens/online_payment.dart';
 import 'package:realestatemobile/screens/rent.dart';
 import 'package:realestatemobile/screens/sale.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
-
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'screens/date_picker.dart';
 import 'screens/register_screen.dart';
 import 'dart:io';
+import '.env';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -33,8 +35,11 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 // ignore_for_file: prefer_const_constructors
-void main() {
+void main() async {
   HttpOverrides.global = MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = stripePublishableKey;
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 
@@ -92,6 +97,9 @@ class MyApp extends StatelessWidget {
             if (settings.name == CreateAd.routeName) {
               return MaterialPageRoute(
                   maintainState: false, builder: ((context) => CreateAd()));
+            }
+            if (settings.name == OnlinePayment.routeName) {
+              return MaterialPageRoute(builder: ((context) => OnlinePayment()));
             }
 
             var uri = Uri.parse(settings.name!);

@@ -242,14 +242,25 @@ namespace Real_estate_market_IB190099.Services
 
         public override IQueryable<Advertise> AddInclude(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
         {
-            query = query.Include(x => x.Property.Images).Include(x=>x.Property.Address.City);
+            query = query
+                .Include(x => x.Property.Images)
+                .Include(x=>x.Property.Address.City)
+                .Include(x=>x.User)
+                .Include(x=>x.Property.Location);
+
             return base.AddInclude(query, search);
         }
         
         public override AdvertiseModel GetById(int id)
         {
 
-            var advertise = Context.Advertises.Include(x=>x.Property.Images).Include(x=>x.Property.Address.City).FirstOrDefault(x=>x.Id==id);
+            var advertise = Context.Advertises
+                .Include(x=>x.User)
+                .Include(x=>x.Property.Images)
+                .Include(x=>x.Property.Address.City)
+                .Include(x => x.Property.Location)
+                .FirstOrDefault(x=>x.Id==id);
+
             if(advertise== null)
             {
                 throw new UserException("User with that Id does not exist");
@@ -286,7 +297,12 @@ namespace Real_estate_market_IB190099.Services
 
         public IEnumerable<AdvertiseModel> GetSavedAdvertises(int userId)
         {
-           var advertises=Context.SavedAdvertises.Include(x=>x.Advertise).Include(x=>x.Advertise.Property).Where(x=>x.UserId== userId).ToList();
+           var advertises=Context.SavedAdvertises
+                .Include(x=>x.Advertise)
+                .Include(x=>x.Advertise.Property)
+                .Include(x => x.Advertise.Property.Location)
+                .Where(x=>x.UserId== userId).ToList();
+
            List<AdvertiseModel> mappedAdvertises=new List<AdvertiseModel>();
             advertises.ForEach(x =>
             {
@@ -313,6 +329,15 @@ namespace Real_estate_market_IB190099.Services
                 Quadrature = insert.Quadrature,
             };
 
+            Location loc = new Location();
+            if (insert.Latitude != null && insert.Longitude != null)
+            {
+                loc.Latitude = insert.Latitude.Value;
+                loc.Longitude = insert.Longitude.Value;
+            }
+
+            prop.Location = loc;
+         
             var address = Context.Addresses
                 .FirstOrDefault(x => x.NumberStreet == insert.NumberStreet &&
                 x.City.ZipCode == insert.ZipCode.ToString() && insert.CitytName==x.City.Name);

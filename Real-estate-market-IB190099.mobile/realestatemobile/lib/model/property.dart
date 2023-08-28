@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:realestatemobile/model/image.dart';
+import 'package:realestatemobile/model/location.dart';
 
 import 'address.dart';
 
@@ -28,6 +29,7 @@ class Property {
   int? locationId;
   List<String>? images;
   Address? address;
+  Location? location;
 
   factory Property.fromJson(Map<String, dynamic> json) =>
       _$PropertyFromJson(json);

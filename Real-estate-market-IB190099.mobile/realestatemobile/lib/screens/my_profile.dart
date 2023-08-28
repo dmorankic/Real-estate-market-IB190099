@@ -42,6 +42,7 @@ class _MyProfileState extends State<MyProfile> {
   TextEditingController genderController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController dateRegisteredController = TextEditingController();
+  final _genderKey = GlobalKey<FormFieldState>();
 
   DateTime tmpDate = DateTime.now();
   @override
@@ -125,412 +126,264 @@ class _MyProfileState extends State<MyProfile> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       child: Column(children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "First name:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            controller: firstNameController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 3) {
+                                return 'Please enter first name (min 3 characters)';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "First name",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  style: TextStyle(height: 0.8),
-                                  controller: firstNameController,
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        value.length < 3) {
-                                      return 'Please enter first name (min 3 characters)';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "First name",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Last name:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            controller: lastNameController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 3) {
+                                return 'Please enter last name (min 3 characters)';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Last name",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: lastNameController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        value.length < 3) {
-                                      return 'Please enter last name (min 3 characters)';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Last name",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Email:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            controller: emailController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  !EmailValidator.validate(value)) {
+                                return 'Please enter valid email address';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Email",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: emailController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        !EmailValidator.validate(value)) {
-                                      return 'Please enter valid email address';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Email",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Phone:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: phoneController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              return validatePhoneNumber(value!);
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Phone number",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: phoneController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    return validatePhoneNumber(value!);
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Phone number",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "City:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            controller: cityController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 3) {
+                                return 'Please enter city name (min 3 characters)';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "City",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: cityController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        value.length < 3) {
-                                      return 'Please enter city name (min 3 characters)';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "City",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Street:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            controller: streetController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 3) {
+                                return 'Please enter street and number';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Street and number",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: streetController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty ||
-                                        value.length < 3) {
-                                      return 'Please enter street and number';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Sreet and number",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "ZIP code:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: zipController,
+                            style: TextStyle(
+                                fontSize: 15.0, height: 1, color: Colors.black),
+                            validator: (value) {
+                              return validateZIPcode(value);
+                            },
+                            decoration: InputDecoration(
+                              labelText: "ZIP code",
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              isDense: true,
+                              border: OutlineInputBorder(),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: zipController,
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      height: 1,
-                                      color: Colors.black),
-                                  validator: (value) {
-                                    return validateZIPcode(value);
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "ZIP code",
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[400]),
-                                    isDense: true,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Date of birth:",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                height: 45,
-                                child: TextFormField(
-                                    controller: dateController,
-                                    validator: (value) {
-                                      if (value == null || value.length == 0) {
-                                        return 'Please enter birth date';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: const InputDecoration(
-                                        icon: Icon(Icons.calendar_today),
-                                        hintText: "Date of birth"),
-                                    readOnly: true,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                              context: context,
-                                              initialDate: tmpDate,
-                                              firstDate: DateTime(1920),
-                                              lastDate: DateTime(2101));
-                                      setState(() {
-                                        dateController.text =
-                                            pickedDate.toString();
-                                      });
-                                      if (pickedDate != null) {
-                                        tmpDate = pickedDate;
-                                        String formattedDate =
-                                            DateFormat('dd-MM-yyyy')
-                                                .format(pickedDate);
-                                      } else {
-                                        print("Date is not selected");
-                                      }
-                                    }),
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          width: 270,
+                          child: TextFormField(
+                              controller: dateController,
+                              validator: (value) {
+                                if (value == null || value.length == 0) {
+                                  return 'Please enter birth date';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                  icon: Icon(Icons.calendar_today),
+                                  labelText: "Date of birth"),
+                              readOnly: true,
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: tmpDate,
+                                    firstDate: DateTime(1920),
+                                    lastDate: DateTime(2101));
+                                setState(() {
+                                  dateController.text = pickedDate.toString();
+                                });
+                                if (pickedDate != null) {
+                                  tmpDate = pickedDate;
+                                  String formattedDate =
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(pickedDate);
+                                } else {
+                                  print("Date is not selected");
+                                }
+                              }),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Gender:",
-                              style: TextStyle(fontSize: 18),
+                        SizedBox(
+                          width: 290,
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              labelText: 'Gender',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              contentPadding: EdgeInsets.all(10),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                              ),
-                              child: SizedBox(
-                                width: 200,
-                                height: 45,
-                                child: DropdownButtonFormField(
-                                  validator: (value) {
-                                    if (value == null || value.length == 0) {
-                                      return 'Please select gender';
-                                    }
-                                    return null;
-                                  },
-                                  items: _createList(),
-                                  hint: Text("Select gender"),
-                                  value: selectedItem,
-                                  isExpanded: true,
-                                  onChanged: (String? value) => {
-                                    setState(() {
-                                      genderController.text = value!;
-                                      selectedItem = value ?? "";
-                                    })
-                                  },
-                                ),
+                            child: ButtonTheme(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.padded,
+                              child: DropdownButtonFormField<String>(
+                                key: _genderKey,
+                                hint: const Text("Select gender"),
+                                isExpanded: true,
+                                value: selectedItem,
+                                elevation: 16,
+                                onChanged: (String? value) {
+                                  _genderKey.currentState!.validate();
+
+                                  setState(() {
+                                    genderController.text = value ?? "";
+                                    selectedItem = value ?? "";
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please select gender';
+                                  }
+                                  return null;
+                                },
+                                items: _createList(),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                         SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Registered:",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: SizedBox(
-                                width: 200,
-                                height: 45,
-                                child: TextFormField(
-                                  controller: dateRegisteredController,
-                                  validator: (value) {
-                                    if (value == null || value.length == 0) {
-                                      return 'Please enter birth date';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.calendar_today),
-                                      hintText: "Date registered"),
-                                  readOnly: true,
-                                ),
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          width: 270,
+                          child: TextFormField(
+                              controller: dateRegisteredController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter date of registration';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                  icon: Icon(Icons.calendar_today),
+                                  labelText: "Date of registration"),
+                              readOnly: true,
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: tmpDate,
+                                    firstDate: DateTime(1920),
+                                    lastDate: DateTime(2101));
+                                setState(() {
+                                  dateRegisteredController.text =
+                                      pickedDate.toString();
+                                });
+                                if (pickedDate != null) {
+                                  tmpDate = pickedDate;
+                                  String formattedDate =
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(pickedDate);
+                                } else {
+                                  print("Date is not selected");
+                                }
+                              }),
                         ),
                         SizedBox(height: 15),
                       ]),
@@ -620,7 +473,11 @@ class _MyProfileState extends State<MyProfile> {
       new PatchObject(
           path: "/DateOfBirth", op: "replace", value: dateController.text),
       new PatchObject(
-          path: "/Gender", op: "replace", value: genderController.text)
+          path: "/Gender", op: "replace", value: genderController.text),
+      new PatchObject(
+          path: "/dateRegistered",
+          op: "replace",
+          value: dateRegisteredController.text)
     ];
     var response =
         await _userProvider.update(updateReq, Authorization.loggedUser!.id!);

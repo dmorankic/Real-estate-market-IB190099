@@ -39,5 +39,6 @@ namespace Real_estate_market_IB190099.Model
 
 
         public virtual AddressModel Address { get; set; }
+        public virtual LocationModel Location { get; set; }
     }
 }
