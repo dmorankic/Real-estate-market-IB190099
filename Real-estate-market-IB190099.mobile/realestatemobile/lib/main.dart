@@ -24,6 +24,7 @@ import 'screens/date_picker.dart';
 import 'screens/register_screen.dart';
 import 'dart:io';
 import '.env';
+import 'package:flutter_config/flutter_config.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -38,7 +39,8 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = stripePublishableKey;
+  // await FlutterConfig.loadEnvVariables();
+  Stripe.publishableKey = FlutterConfig.get('stripePublishableKey');
   await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
