@@ -22,7 +22,6 @@ class _InboxState extends State<Inbox> {
   void initState() {
     super.initState();
     _messageProvider = context.read<MessageProvider>();
-
     loadData();
   }
 
@@ -113,7 +112,8 @@ class _InboxState extends State<Inbox> {
         .map((x) => GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
-                    context, "${InboxDetails.routeName}/${x.advertiseId}");
+                        context, "${InboxDetails.routeName}/${x.advertiseId}")
+                    .then((value) => {loadData()});
               },
               child: Container(
                 alignment: Alignment.center,

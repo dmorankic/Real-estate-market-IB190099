@@ -1,20 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, unused_local_variable, unnecessary_new, prefer_is_empty
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:realestatemobile/screens/search_ads.dart';
 import 'package:realestatemobile/utils/util.dart';
 import '../model/patch_object.dart';
 import '../model/user.dart';
 import '../providers/user_provider.dart';
-import 'login_screen.dart';
-import 'date_picker.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:meta/meta.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 //ignore_use_build_context_synchronous
@@ -87,9 +81,7 @@ class _MyProfileState extends State<MyProfile> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 8),
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.center,
                     child: Text.rich(
                       TextSpan(
                         style: TextStyle(
@@ -119,7 +111,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 15),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                     child: Container(
@@ -280,7 +272,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         SizedBox(height: 15),
                         SizedBox(
-                          width: 270,
+                          width: 295,
                           child: TextFormField(
                               controller: dateController,
                               validator: (value) {
@@ -314,7 +306,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         SizedBox(height: 15),
                         SizedBox(
-                          width: 290,
+                          width: 295,
                           child: InputDecorator(
                             decoration: InputDecoration(
                               labelText: 'Gender',
@@ -352,7 +344,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         SizedBox(height: 15),
                         SizedBox(
-                          width: 270,
+                          width: 295,
                           child: TextFormField(
                               controller: dateRegisteredController,
                               validator: (value) {

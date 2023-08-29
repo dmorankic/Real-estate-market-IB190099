@@ -30,7 +30,6 @@ class _InboxDetailsState extends State<InboxDetails> {
   void initState() {
     super.initState();
     _messageProvider = context.read<MessageProvider>();
-    print(widget.id);
     loadData();
   }
 

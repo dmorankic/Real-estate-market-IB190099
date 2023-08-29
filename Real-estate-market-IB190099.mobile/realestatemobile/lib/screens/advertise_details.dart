@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/screens/online_payment.dart';
+import 'package:realestatemobile/screens/stripe_payment.dart';
 import 'package:realestatemobile/utils/util.dart';
 
 import '../providers/advertise_provider.dart';
@@ -270,8 +271,10 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                         ],
                       ),
                     ),
-                    _buildDetailsBottom(snapshot.data!.property?.name!,
-                        snapshot.data!.id!.toString()),
+                    _buildDetailsBottom(
+                        snapshot.data!.property?.name!,
+                        snapshot.data!.id!.toString(),
+                        snapshot.data!.property?.price),
                   ],
                 ),
               ),
@@ -472,7 +475,8 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     );
   }
 
-  Container _buildDetailsBottom(String? propertyName, String? advertiseId) {
+  Container _buildDetailsBottom(
+      String? propertyName, String? advertiseId, int? price) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -591,7 +595,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, OnlinePayment.routeName);
+              Navigator.pushNamed(context, "${StripePayment.routeName}/$price");
             },
             style: ButtonStyle(
                 backgroundColor:

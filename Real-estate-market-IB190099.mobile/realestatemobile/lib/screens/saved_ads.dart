@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
-import 'package:realestatemobile/utils/search_text_field.dart';
 import 'package:realestatemobile/utils/util.dart';
 
 // ignore_for_file: use_build_context_synchronously
@@ -26,6 +24,7 @@ class _SavedAdsState extends State<SavedAds> {
   AdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
+  final String _baseUrl = 'https://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -197,14 +196,17 @@ class _SavedAdsState extends State<SavedAds> {
                               borderRadius:
                                   BorderRadius.all(Radius.elliptical(10, 10)),
                               child: SizedBox.fromSize(
-                                size: Size.fromRadius(35),
-                                child: Image.asset("assets/images/logo2.png",
-                                    fit: BoxFit.cover),
-                              ),
+                                  size: Size.fromRadius(35),
+                                  child: x.property?.images.isEmpty
+                                      ? Image.asset("assets/images/logo2.png",
+                                          fit: BoxFit.cover)
+                                      : Image.network(
+                                          '$_baseUrl${x.property?.images[0]}',
+                                          fit: BoxFit.cover)),
                             ),
                           ),
                         ],
-                      ), //prop image
+                      ),
                       Container(
                         height: 100.00,
                         width: 190.00,

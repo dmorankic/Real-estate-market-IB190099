@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
-import 'package:realestatemobile/utils/search_text_field.dart';
 import 'package:realestatemobile/utils/util.dart';
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors

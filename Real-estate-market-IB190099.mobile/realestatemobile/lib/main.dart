@@ -1,6 +1,7 @@
 // ignore_for_file: body_might_complete_normally_nullable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
@@ -20,10 +21,11 @@ import 'package:realestatemobile/screens/sale.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:realestatemobile/screens/stripe_payment.dart';
+import 'blocs/payment/payment_bloc.dart';
 import 'screens/date_picker.dart';
 import 'screens/register_screen.dart';
 import 'dart:io';
-import '.env';
 import 'package:flutter_config/flutter_config.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -39,9 +41,7 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  // await FlutterConfig.loadEnvVariables();
-  Stripe.publishableKey = FlutterConfig.get('stripePublishableKey');
-  await Stripe.instance.applySettings();
+  await FlutterConfig.loadEnvVariables();
   runApp(const MyApp());
 }
 
@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    Stripe.publishableKey =
+        "pk_test_51N5P5eJpQ0wElC71IztGKauTzDKan8TuHCZ2CRZHj64pGPtXRT2RD1A12bgAzSh2gPkpT8iuEM6xpQX9amI3SRNH00NdqlK7bi";
+    Stripe.instance.applySettings();
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AdvertiseProvider()),
@@ -56,80 +59,95 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => MessageProvider()),
           ChangeNotifierProvider(create: (_) => LocalImageProvider()),
         ],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          home: MyHomePage(title: 'Flutter Demo Home Page'),
-          onGenerateRoute: (settings) {
-            if (settings.name == Login.routeName) {
-              return MaterialPageRoute(builder: ((context) => Login()));
-            }
-            if (settings.name == Register.routeName) {
-              return MaterialPageRoute(builder: ((context) => Register()));
-            }
-            if (settings.name == DatePickerApp.routeName) {
-              return MaterialPageRoute(builder: ((context) => DatePickerApp()));
-            }
-            if (settings.name == SearchAds.routeName) {
-              return MaterialPageRoute(builder: ((context) => SearchAds()));
-            }
-            if (settings.name == Rent.routeName) {
-              return MaterialPageRoute(builder: ((context) => Rent()));
-            }
-            if (settings.name == Sale.routeName) {
-              return MaterialPageRoute(builder: ((context) => Sale()));
-            }
-            if (settings.name == BurgerMenu.routeName) {
-              return MaterialPageRoute(builder: ((context) => BurgerMenu()));
-            }
-            if (settings.name == SavedAds.routeName) {
-              return MaterialPageRoute(builder: ((context) => SavedAds()));
-            }
-            if (settings.name == Demand.routeName) {
-              return MaterialPageRoute(builder: ((context) => Demand()));
-            }
-            if (settings.name == MyProfile.routeName) {
-              return MaterialPageRoute(builder: ((context) => MyProfile()));
-            }
-            if (settings.name == Inbox.routeName) {
-              return MaterialPageRoute(builder: ((context) => Inbox()));
-            }
-            if (settings.name == InboxDetails.routeName) {
-              return MaterialPageRoute(builder: ((context) => InboxDetails()));
-            }
-            if (settings.name == CreateAd.routeName) {
-              return MaterialPageRoute(
-                  maintainState: false, builder: ((context) => CreateAd()));
-            }
-            if (settings.name == OnlinePayment.routeName) {
-              return MaterialPageRoute(builder: ((context) => OnlinePayment()));
-            }
+        child: BlocProvider(
+          create: (context) => PaymentBloc(),
+          child: MaterialApp(
+            title: 'Flutter Demo',
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            onGenerateRoute: (settings) {
+              if (settings.name == Login.routeName) {
+                return MaterialPageRoute(builder: ((context) => Login()));
+              }
+              if (settings.name == Register.routeName) {
+                return MaterialPageRoute(builder: ((context) => Register()));
+              }
+              if (settings.name == DatePickerApp.routeName) {
+                return MaterialPageRoute(
+                    builder: ((context) => DatePickerApp()));
+              }
+              if (settings.name == SearchAds.routeName) {
+                return MaterialPageRoute(builder: ((context) => SearchAds()));
+              }
+              if (settings.name == Rent.routeName) {
+                return MaterialPageRoute(builder: ((context) => Rent()));
+              }
+              if (settings.name == Sale.routeName) {
+                return MaterialPageRoute(builder: ((context) => Sale()));
+              }
+              if (settings.name == BurgerMenu.routeName) {
+                return MaterialPageRoute(builder: ((context) => BurgerMenu()));
+              }
+              if (settings.name == SavedAds.routeName) {
+                return MaterialPageRoute(builder: ((context) => SavedAds()));
+              }
+              if (settings.name == Demand.routeName) {
+                return MaterialPageRoute(builder: ((context) => Demand()));
+              }
+              if (settings.name == MyProfile.routeName) {
+                return MaterialPageRoute(builder: ((context) => MyProfile()));
+              }
+              if (settings.name == Inbox.routeName) {
+                return MaterialPageRoute(builder: ((context) => Inbox()));
+              }
+              if (settings.name == InboxDetails.routeName) {
+                return MaterialPageRoute(
+                    builder: ((context) => InboxDetails()));
+              }
+              if (settings.name == CreateAd.routeName) {
+                return MaterialPageRoute(
+                    maintainState: false, builder: ((context) => CreateAd()));
+              }
+              if (settings.name == OnlinePayment.routeName) {
+                return MaterialPageRoute(
+                    builder: ((context) => OnlinePayment()));
+              }
 
-            var uri = Uri.parse(settings.name!);
-            if (uri.pathSegments.length == 2 &&
-                "/${uri.pathSegments.first}" == AdvertiseDetails.routeName) {
-              var id = uri.pathSegments[1];
-              return MaterialPageRoute(
-                  builder: (context) => AdvertiseDetails(id: id));
-            }
+              var uri = Uri.parse(settings.name!);
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" == AdvertiseDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => AdvertiseDetails(id: id));
+              }
 
-            if (uri.pathSegments.length == 2 &&
-                "/${uri.pathSegments.first}" == InboxDetails.routeName) {
-              var id = uri.pathSegments[1];
-              return MaterialPageRoute(
-                  builder: (context) => InboxDetails(id: id));
-            }
-          },
-          theme: ThemeData(
-            inputDecorationTheme: InputDecorationTheme(
-              labelStyle: TextStyle(color: Color.fromARGB(255, 124, 124, 124)),
-              hintStyle: TextStyle(color: Colors.grey[400]),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black)),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" == InboxDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => InboxDetails(id: id));
+              }
+
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" == StripePayment.routeName) {
+                var totalPrice = double.tryParse(uri.pathSegments[1]);
+                return MaterialPageRoute(
+                    builder: (context) =>
+                        StripePayment(totalPrice: totalPrice));
+              }
+            },
+            theme: ThemeData(
+              inputDecorationTheme: InputDecorationTheme(
+                labelStyle:
+                    TextStyle(color: Color.fromARGB(255, 124, 124, 124)),
+                hintStyle: TextStyle(color: Colors.grey[400]),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
               ),
             ),
           ),
