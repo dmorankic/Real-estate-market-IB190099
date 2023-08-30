@@ -3,6 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/payment_provider.dart';
+import '../utils/util.dart';
 
 class StripePayment extends StatefulWidget {
   StripePayment({this.totalPrice, super.key});
@@ -15,6 +20,14 @@ class StripePayment extends StatefulWidget {
 
 class _StripePaymentState extends State<StripePayment> {
   Map<String, dynamic>? paymentIntentData;
+  PaymentProvider? _paymentProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _paymentProvider = context.read<PaymentProvider>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +114,7 @@ class _StripePaymentState extends State<StripePayment> {
           )
           .then((value) {});
 
-      displayPaymentSheet();
+      displayPaymentSheet(amount);
     } on Exception catch (e) {
       showDialog(
           context: context,
@@ -118,7 +131,7 @@ class _StripePaymentState extends State<StripePayment> {
     }
   }
 
-  displayPaymentSheet() async {
+  displayPaymentSheet(double amount) async {
     try {
       await Stripe.instance.presentPaymentSheet().onError((error, stackTrace) {
         throw Exception(error);
@@ -126,6 +139,7 @@ class _StripePaymentState extends State<StripePayment> {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Payment successful")));
+      savePaymentInfo(amount);
     } on Exception catch (e) {
       showDialog(
           context: context,
@@ -136,6 +150,18 @@ class _StripePaymentState extends State<StripePayment> {
     } catch (e) {
       print('$e');
     }
+  }
+
+  Future<Response> savePaymentInfo(double amount) async {
+    Map<String, dynamic> body = {
+      "amount": amount,
+      "userId": Authorization.loggedUser!.id!.toString(),
+      "transactionDate": DateTime.now().toString(),
+      "propertyId": 4004
+    };
+
+    var response = await _paymentProvider!.create(body);
+    return response;
   }
 
   createPaymentIntent(String amount, String currency) async {

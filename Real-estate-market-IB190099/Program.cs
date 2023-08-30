@@ -50,6 +50,7 @@ builder.Services.AddTransient<IAdvertiseService, AdvertiseService>();
 builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IImageWriter, ImageWriter>();
+builder.Services.AddTransient<IPaymentService, PaymentService>();
 
 
 

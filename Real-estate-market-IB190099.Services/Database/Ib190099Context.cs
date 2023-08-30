@@ -27,6 +27,8 @@ public partial class Ib190099Context : DbContext
 
     public virtual DbSet<Message> Messages { get; set; }
 
+    public virtual DbSet<Payment> Payments { get; set; }
+
     public virtual DbSet<Property> Properties { get; set; }
 
     public virtual DbSet<Rating> Ratings { get; set; }
@@ -134,6 +136,23 @@ public partial class Ib190099Context : DbContext
             entity.HasOne(d => d.Sender).WithMany(p => p.Messages)
                 .HasForeignKey(d => d.SenderId)
                 .HasConstraintName("FK_MessageSender");
+        });
+
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Payment__3214EC078403829A");
+
+            entity.ToTable("Payment");
+
+            entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.PropertyId)
+                .HasConstraintName("FK_PaymentProperty");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_PaymentUsers");
         });
 
         modelBuilder.Entity<Property>(entity =>

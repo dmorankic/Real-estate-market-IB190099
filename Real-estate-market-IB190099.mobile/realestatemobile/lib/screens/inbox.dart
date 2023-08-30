@@ -194,7 +194,7 @@ class _InboxState extends State<Inbox> {
 
   Future loadData() async {
     var tmpData = await _messageProvider
-        ?.get({'userId': Authorization.loggedUser!.id}, "Message");
+        ?.get({'id': Authorization.loggedUser!.id}, "Message");
 
     setState(() {
       data = tmpData;

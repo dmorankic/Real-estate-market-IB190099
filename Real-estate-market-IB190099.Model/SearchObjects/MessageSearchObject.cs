@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Real_estate_market_IB190099.Model.SearchObjects
 {
-    public class MessageSearchObject : BaseSearchObject
+    public class IdSearchObject : BaseSearchObject
     {
-        public int userId { get; set; }
+        public int id { get; set; }
     }
 }

@@ -1,4 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
+using Real_estate_market_IB190099.Model;
+using Real_estate_market_IB190099.Model.SearchObjects;
+using Real_estate_market_IB190099.Services.Database;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -8,22 +12,23 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public class PaymentService
+    public class PaymentService : BaseCRUDService<Payment, PaymentModel, IdSearchObject, PaymentUpsertRequest, PaymentUpsertRequest>, IPaymentService
     {
-        //public PaymentIntentConfirmOptions StripePayEndpointIntentId(int paymentIntentId=0)
-        //{
-        //    try
-        //    {
-        //        if (paymentIntentId!=0)
-        //        {
-        //            var intent =new Stripe.PaymentIntentConfirmOptions(paymentIntentId);
-                    
-        //        }
-        //    }catch(Exception ex)
-        //    {
+        public PaymentService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
+        {
+           
+        }
+        public override IQueryable<Payment> AddFilter(IQueryable<Payment> query, IdSearchObject search = null)
+        {
+            var filteredQuery = base.AddFilter(query, search);
 
-        //    }
-        //}
+            if (search?.id != null)
+            {
+                filteredQuery = filteredQuery.Where(x => x.UserId == search.id);
+            }
+
+            return filteredQuery;
+        }
 
 
     }

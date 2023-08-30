@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/providers/local_image_provider.dart';
+import 'package:realestatemobile/providers/payment_provider.dart';
 import 'package:realestatemobile/providers/user_provider.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
@@ -15,7 +16,7 @@ import 'package:realestatemobile/screens/inbox.dart';
 import 'package:realestatemobile/screens/inbox_details.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/my_profile.dart';
-import 'package:realestatemobile/screens/online_payment.dart';
+import 'package:realestatemobile/screens/payment_list.dart';
 import 'package:realestatemobile/screens/rent.dart';
 import 'package:realestatemobile/screens/sale.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => UserProvider()),
           ChangeNotifierProvider(create: (_) => MessageProvider()),
           ChangeNotifierProvider(create: (_) => LocalImageProvider()),
+          ChangeNotifierProvider(create: (_) => PaymentProvider()),
         ],
         child: BlocProvider(
           create: (context) => PaymentBloc(),
@@ -107,9 +109,8 @@ class MyApp extends StatelessWidget {
                 return MaterialPageRoute(
                     maintainState: false, builder: ((context) => CreateAd()));
               }
-              if (settings.name == OnlinePayment.routeName) {
-                return MaterialPageRoute(
-                    builder: ((context) => OnlinePayment()));
+              if (settings.name == PaymentList.routeName) {
+                return MaterialPageRoute(builder: ((context) => PaymentList()));
               }
 
               var uri = Uri.parse(settings.name!);

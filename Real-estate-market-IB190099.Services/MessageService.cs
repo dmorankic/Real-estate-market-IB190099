@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public class MessageService : BaseCRUDService<Message, MessageModel, MessageSearchObject, MessageInsertRequest, MessageInsertRequest>
+    public class MessageService : BaseCRUDService<Message, MessageModel, IdSearchObject, MessageInsertRequest, MessageInsertRequest>
         , IMessageService
     {
         public MessageService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
@@ -21,18 +21,18 @@ namespace Real_estate_market_IB190099.Services
            
         }
 
-        public override IQueryable<Message> AddFilter(IQueryable<Message> query, MessageSearchObject search = null)
+        public override IQueryable<Message> AddFilter(IQueryable<Message> query, IdSearchObject search = null)
         {
             var filteredQuery = base.AddFilter(query, search);
 
-            if (search?.userId!=null)
+            if (search?.id!=null)
             {
-                filteredQuery = filteredQuery.Where(x => x.SenderId == search.userId);
+                filteredQuery = filteredQuery.Where(x => x.SenderId == search.id);
             }
 
             return filteredQuery;
         }
-        public override IQueryable<Message> AddInclude(IQueryable<Message> query, MessageSearchObject search = null)
+        public override IQueryable<Message> AddInclude(IQueryable<Message> query, IdSearchObject search = null)
         {
             query = query.Include(x => x.Advertise.Property).OrderByDescending(x => x.Timestamp);
             

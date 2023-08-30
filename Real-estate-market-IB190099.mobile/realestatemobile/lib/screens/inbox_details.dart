@@ -1,9 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_init_to_null, prefer_final_fields, unused_field, use_build_context_synchronously
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:realestatemobile/model/message.dart';
@@ -296,7 +292,7 @@ class _InboxDetailsState extends State<InboxDetails> {
 
   Future loadData() async {
     var tmpData = await _messageProvider
-        ?.get({'userId': Authorization.loggedUser!.id}, "Message");
+        ?.get({'id': Authorization.loggedUser!.id}, "Message");
 
     setState(() {
       data = tmpData;

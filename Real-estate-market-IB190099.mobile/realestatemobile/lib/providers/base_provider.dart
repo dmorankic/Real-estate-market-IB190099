@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'dart:io';
 import 'dart:async';
-import 'dart:convert';
 import 'package:realestatemobile/screens/rent.dart';
 
 import '../utils/util.dart';

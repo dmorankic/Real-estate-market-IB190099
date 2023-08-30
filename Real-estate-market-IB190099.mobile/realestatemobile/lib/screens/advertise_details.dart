@@ -7,12 +7,9 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
-import 'package:realestatemobile/screens/online_payment.dart';
 import 'package:realestatemobile/screens/stripe_payment.dart';
 import 'package:realestatemobile/utils/util.dart';
-
 import '../providers/advertise_provider.dart';
-import 'dart:convert';
 
 class AdvertiseDetails extends StatefulWidget {
   static const String routeName = "/advertise_details";

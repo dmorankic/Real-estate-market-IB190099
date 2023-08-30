@@ -5,7 +5,7 @@ part 'image.g.dart';
 
 @JsonSerializable()
 class LocalImage {
-  LocalImage() {}
+  LocalImage();
   int? id;
   String? imageUrl;
 

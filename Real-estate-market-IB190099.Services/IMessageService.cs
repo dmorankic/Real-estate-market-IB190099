@@ -10,7 +10,7 @@ using Real_estate_market_IB190099.Services.Database;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface IMessageService : ICRUDService<MessageModel, MessageSearchObject, MessageInsertRequest, MessageInsertRequest>
+    public interface IMessageService : ICRUDService<MessageModel, IdSearchObject, MessageInsertRequest, MessageInsertRequest>
     {
 
     }
