@@ -88,7 +88,7 @@
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label1);
             this.Name = "frmLogin";
-            this.Text = "frmLogin";
+            this.Text = "Real estate market";
             this.ResumeLayout(false);
             this.PerformLayout();
 

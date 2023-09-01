@@ -258,7 +258,7 @@ namespace Real_estate_market_IB190099.WINUI
 
        private bool isValidPhoneNumber()
         {
-            string pattern = @"^\d{9,10}$";
+            string pattern = @"^\d|\s{9,10}$";
             return Regex.IsMatch(txtPhone.Text, pattern);
         }
     }

@@ -11,7 +11,7 @@ import '../providers/user_provider.dart';
 import 'package:email_validator/email_validator.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
-//ignore_use_build_context_synchronous
+//ignore_use_build_context_synchronous9
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -25,8 +25,8 @@ class _MyProfileState extends State<MyProfile> {
   late UserProvider _userProvider;
 
   TextEditingController dateController = TextEditingController();
+  DateTime? dateVar;
   TextEditingController passwordController = TextEditingController();
-
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -36,6 +36,8 @@ class _MyProfileState extends State<MyProfile> {
   TextEditingController genderController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController dateRegisteredController = TextEditingController();
+  DateTime? dateRegisterVar;
+
   final _genderKey = GlobalKey<FormFieldState>();
 
   DateTime tmpDate = DateTime.now();
@@ -292,7 +294,10 @@ class _MyProfileState extends State<MyProfile> {
                                     firstDate: DateTime(1920),
                                     lastDate: DateTime(2101));
                                 setState(() {
-                                  dateController.text = pickedDate.toString();
+                                  dateController.text = DateFormat('dd-MM-yyyy')
+                                      .format(pickedDate!)
+                                      .toString();
+                                  dateVar = pickedDate;
                                 });
                                 if (pickedDate != null) {
                                   tmpDate = pickedDate;
@@ -365,7 +370,10 @@ class _MyProfileState extends State<MyProfile> {
                                     lastDate: DateTime(2101));
                                 setState(() {
                                   dateRegisteredController.text =
-                                      pickedDate.toString();
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(pickedDate!)
+                                          .toString();
+                                  dateRegisterVar = pickedDate;
                                 });
                                 if (pickedDate != null) {
                                   tmpDate = pickedDate;
@@ -462,14 +470,11 @@ class _MyProfileState extends State<MyProfile> {
           path: "/Email", op: "replace", value: emailController.text),
       new PatchObject(
           path: "/Phone", op: "replace", value: phoneController.text),
-      new PatchObject(
-          path: "/DateOfBirth", op: "replace", value: dateController.text),
+      new PatchObject(path: "/DateOfBirth", op: "replace", value: dateVar),
       new PatchObject(
           path: "/Gender", op: "replace", value: genderController.text),
       new PatchObject(
-          path: "/dateRegistered",
-          op: "replace",
-          value: dateRegisteredController.text)
+          path: "/dateRegistered", op: "replace", value: dateRegisterVar)
     ];
     var response =
         await _userProvider.update(updateReq, Authorization.loggedUser!.id!);
@@ -496,9 +501,10 @@ class _MyProfileState extends State<MyProfile> {
       lastNameController.text = user.lastName!;
       emailController.text = user.email!;
       phoneController.text = user.phone!;
-      dateController.text = user.dateOfBirth!.toString();
+      dateController.text = DateFormat('dd-MM-yyyy').format(user.dateOfBirth!);
       genderController.text = user.gender!;
-      dateRegisteredController.text = user.dateRegistered!.toString();
+      dateRegisteredController.text =
+          DateFormat('dd-MM-yyyy').format(user.dateRegistered!);
       cityController.text = user.address!.city!.name!;
       streetController.text = user.address!.numberStreet!;
       zipController.text = user.address!.city!.zipCode!;

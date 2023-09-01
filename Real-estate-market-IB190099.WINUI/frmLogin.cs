@@ -16,6 +16,7 @@ namespace Real_estate_market_IB190099.WINUI
         public frmLogin()
         {
             InitializeComponent();
+            txtPassword.PasswordChar= '*';  
         }
 
         private async void btnLogin_Click(object sender, EventArgs e)
@@ -28,7 +29,7 @@ namespace Real_estate_market_IB190099.WINUI
                 var res=await _api.Get<dynamic>();
 
                 frmUsers frm=new frmUsers();
-                this.Hide();
+                Hide();
                 frm.Show();
 
             }catch(Exception ex)

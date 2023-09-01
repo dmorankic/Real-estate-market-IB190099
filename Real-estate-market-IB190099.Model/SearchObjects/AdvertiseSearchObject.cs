@@ -8,6 +8,8 @@ namespace Real_estate_market_IB190099.Model.SearchObjects
     {
         public string Type { get; set; }
         public string PropertyName { get; set; }
+        public string Status { get; set; }
+
 
     }
 }

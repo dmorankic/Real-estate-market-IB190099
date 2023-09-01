@@ -137,7 +137,7 @@ class _LoginState extends State<Login> {
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                     title: Text("Error"),
-                                    content: Text(e.toString()),
+                                    content: Text("Incorrect credentials"),
                                     actions: [
                                       ElevatedButton(
                                           onPressed: () =>

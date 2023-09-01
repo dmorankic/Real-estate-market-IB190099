@@ -112,6 +112,12 @@ namespace Real_estate_market_IB190099.Services
             {
                 filteredQuery = filteredQuery.Where(x => x!.Property.Name.Contains(search.PropertyName));
             }
+            if (!string.IsNullOrWhiteSpace(search?.Status))
+            {
+                filteredQuery = filteredQuery.Where(x => x!.Status==search.Status);
+            }
+
+
 
             return filteredQuery;
         }
@@ -301,6 +307,7 @@ namespace Real_estate_market_IB190099.Services
                 .Include(x=>x.Advertise)
                 .Include(x=>x.Advertise.Property)
                 .Include(x => x.Advertise.Property.Location)
+                .Include(x=>x.Advertise.Property.Images)
                 .Where(x=>x.UserId== userId).ToList();
 
            List<AdvertiseModel> mappedAdvertises=new List<AdvertiseModel>();
@@ -356,8 +363,31 @@ namespace Real_estate_market_IB190099.Services
             prop.Images= images;
             entity.Property = prop;
             entity.Property.AddressId = address.Id;
+            entity.DateCreated=DateTime.Now;
 
             base.BeforeInsert(insert, entity);
+        }
+
+        public override IEnumerable<AdvertiseModel> Get(AdvertiseSearchObject search = null)
+        {
+            var dbModelData = Context.Set<Advertise>().AsQueryable();
+            dbModelData = AddFilter(dbModelData, search);
+
+            if (search?.PageSize.HasValue == true && search?.Page.HasValue == true)
+            {
+                dbModelData = dbModelData.Skip((search.Page.Value - 1) * search.PageSize.Value).Take(search.PageSize.Value);
+
+            }
+            dbModelData = AddInclude(dbModelData, search);
+
+            var list = dbModelData.ToList();
+           
+            var listModel = Mapper.Map<List<AdvertiseModel>>(list);
+            listModel.ForEach(x => { x.PropName = x.Property.Name;
+                x.Price = x.Property.Price.ToString();
+            });
+
+            return listModel;
         }
     }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/payment_provider.dart';
 
@@ -79,7 +80,7 @@ class _PaymentListState extends State<PaymentList> {
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 20),
                 Column(
                   children: _buildPaymentsCardList(),
                 ),
@@ -115,60 +116,27 @@ class _PaymentListState extends State<PaymentList> {
                 margin: EdgeInsets.all(6.0),
                 child: Row(
                   children: <Widget>[
-                    Column(
-                      children: [
-                        Container(
-                          width: 100.0,
-                          height: 80.0,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24.0)),
-                          ),
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.elliptical(10, 10)),
-                            child: SizedBox.fromSize(
-                              size: Size.fromRadius(35),
-                              child: Image.asset("assets/images/logo2.png",
-                                  fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
+                    SizedBox(
                       height: 100.00,
-                      width: 190.00,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Text(
-                            "${x.amount}",
+                            "Reciever : Real estate market",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 17, fontWeight: FontWeight.w500),
                           ),
-                          SizedBox(
-                            height: 10,
+                          Text(
+                            "Date : ${DateFormat().format(x.transactionDate)}",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w500),
                           ),
-                          // Text(
-                          //   "${x.property?.description}",
-                          //   style: TextStyle(
-                          //     fontSize: 11.5,
-                          //   ),
-                          //   textAlign: TextAlign.center,
-                          // ),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // Container(
-                          //   width: 188,
-                          //   child: Text(
-                          //     "\$${x.property?.price}",
-                          //     style: TextStyle(
-                          //       fontSize: 11.5,
-                          //     ),
-                          //     textAlign: TextAlign.right,
-                          //   ),
-                          // ),
+                          Text(
+                            "Amount : \$${x.amount}",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w500),
+                          ),
                         ],
                       ),
                     )

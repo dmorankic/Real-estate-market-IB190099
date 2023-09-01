@@ -3,13 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/utils/util.dart';
-
-import '../model/advertise.dart';
 
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
@@ -177,46 +174,51 @@ class _RentState extends State<Rent> {
                   margin: EdgeInsets.all(6.0),
                   child: Row(
                     children: <Widget>[
-                      Column(
-                        children: [
-                          Container(
-                            width: 100.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.elliptical(10, 10)),
-                              child: SizedBox.fromSize(
-                                size: Size.fromRadius(35),
-                                child: x.property?.images.isEmpty
-                                    ? Image.asset("assets/images/logo2.png",
-                                        fit: BoxFit.cover)
-                                    : Image.network(
-                                        '$_baseUrl${x.property?.images[0]}',
-                                        fit: BoxFit.cover),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(24.0)),
+                              ),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.elliptical(10, 10)),
+                                child: SizedBox.fromSize(
+                                  size: Size.fromRadius(35),
+                                  child: x.property?.images.isEmpty
+                                      ? Image.asset("assets/images/NoImage.png",
+                                          fit: BoxFit.cover)
+                                      : Image.network(
+                                          '$_baseUrl${x.property?.images[0]}',
+                                          fit: BoxFit.cover),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Container(
                         height: 100.00,
                         width: 190.00,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
                               "${x.property?.name}",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                              "${x.property?.description}",
+                              "${x.property?.description.length > 93 ? x.property?.description.substring(0, 93) : x.property?.description}",
                               style: TextStyle(
                                 fontSize: 11.5,
                               ),

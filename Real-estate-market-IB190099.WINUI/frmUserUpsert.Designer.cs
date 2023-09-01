@@ -310,7 +310,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtFirstName);
             this.Name = "frmUserUpsert";
-            this.Text = "frmUserUpsert";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmUserUpsert_Load);
             ((System.ComponentModel.ISupportInitialize)(this.err)).EndInit();
             this.ResumeLayout(false);

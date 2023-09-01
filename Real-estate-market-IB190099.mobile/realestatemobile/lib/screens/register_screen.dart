@@ -31,6 +31,7 @@ class _RegisterState extends State<Register> {
   late UserProvider _userProvider;
 
   TextEditingController dateController = TextEditingController();
+  DateTime? dateVar;
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -289,12 +290,15 @@ class _RegisterState extends State<Register> {
                                   firstDate: DateTime(1920),
                                   lastDate: DateTime(2101));
                               setState(() {
-                                dateController.text = pickedDate.toString();
+                                dateController.text = DateFormat('dd-MM-yyyy')
+                                    .format(pickedDate!)
+                                    .toString();
+                                dateVar = pickedDate;
                               });
                               if (pickedDate != null) {
                                 tmpDate = pickedDate;
                                 String formattedDate =
-                                    DateFormat('dd-MM-yyyy').format(pickedDate);
+                                    DateFormat('dd-mm-yyyy').format(pickedDate);
                               }
                             }),
                       ),
@@ -499,7 +503,7 @@ class _RegisterState extends State<Register> {
       "lastName": lastNameController.text,
       "email": emailController.text,
       "phone": phoneController.text,
-      "dateOfBirth": dateController.text,
+      "dateOfBirth": dateVar.toString(),
       "gender": selectedGender!,
       "numberStreet": streetController.text,
       "city": cityController.text,

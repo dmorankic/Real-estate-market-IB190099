@@ -26,13 +26,13 @@ namespace Real_estate_market_IB190099.Controllers
 
             return Ok(recommendations);
         }
-        [AllowAnonymous]
+
         public override IEnumerable<AdvertiseModel> Get([FromQuery] AdvertiseSearchObject search = null)
         {
             return base.Get(search);
 
         }
-        [AllowAnonymous]
+
         public override AdvertiseModel GetById(int id)
         {
             return base.GetById(id);

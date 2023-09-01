@@ -220,6 +220,7 @@ class _CreateAdState extends State<CreateAd> {
                           SizedBox(
                             width: 300,
                             child: TextFormField(
+                              maxLength: 21,
                               controller: nameController,
                               style: TextStyle(
                                   fontSize: 15.0,
@@ -230,6 +231,9 @@ class _CreateAdState extends State<CreateAd> {
                                     value.isEmpty ||
                                     value.length < 3) {
                                   return 'Please enter property name';
+                                }
+                                if (value.length > 21) {
+                                  return 'Property name can not be longer than 21 character';
                                 }
                                 return null;
                               },

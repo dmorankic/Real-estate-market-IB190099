@@ -30,7 +30,6 @@ namespace Real_estate_market_IB190099.Controllers
         {
             return base.Insert(insert);
         }
-        [AllowAnonymous]
         [HttpPatch("{id}")]
         public  IActionResult PatchEmployee([FromRoute] int id, [FromBody] Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> userDocument)
         {

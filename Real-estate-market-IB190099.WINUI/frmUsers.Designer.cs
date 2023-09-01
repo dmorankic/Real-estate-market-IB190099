@@ -43,6 +43,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilterUsers = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnStatistics = new System.Windows.Forms.Button();
+            this.btnDemand = new System.Windows.Forms.Button();
+            this.btnRent = new System.Windows.Forms.Button();
+            this.btnSale = new System.Windows.Forms.Button();
+            this.btnMyprofile = new System.Windows.Forms.Button();
+            this.btnMessages = new System.Windows.Forms.Button();
+            this.btnPending = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,15 +62,14 @@
             this.LastName,
             this.Details,
             this.Actions});
-            this.dgvUsers.Location = new System.Drawing.Point(21, 127);
+            this.dgvUsers.Location = new System.Drawing.Point(125, 127);
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.RowHeadersWidth = 51;
             this.dgvUsers.RowTemplate.Height = 29;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(729, 367);
+            this.dgvUsers.Size = new System.Drawing.Size(625, 367);
             this.dgvUsers.TabIndex = 4;
             this.dgvUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellContentClick);
-           
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -167,7 +173,7 @@
             // 
             // txtFilterUsers
             // 
-            this.txtFilterUsers.Location = new System.Drawing.Point(21, 94);
+            this.txtFilterUsers.Location = new System.Drawing.Point(125, 94);
             this.txtFilterUsers.Name = "txtFilterUsers";
             this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
             this.txtFilterUsers.TabIndex = 6;
@@ -176,23 +182,97 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 71);
+            this.label2.Location = new System.Drawing.Point(125, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(219, 20);
             this.label2.TabIndex = 7;
             this.label2.Text = "Search by first and/or last name";
+            // 
+            // btnStatistics
+            // 
+            this.btnStatistics.Location = new System.Drawing.Point(12, 133);
+            this.btnStatistics.Name = "btnStatistics";
+            this.btnStatistics.Size = new System.Drawing.Size(94, 29);
+            this.btnStatistics.TabIndex = 8;
+            this.btnStatistics.Text = "Statistics";
+            this.btnStatistics.UseVisualStyleBackColor = true;
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
+            // 
+            // btnDemand
+            // 
+            this.btnDemand.Location = new System.Drawing.Point(12, 237);
+            this.btnDemand.Name = "btnDemand";
+            this.btnDemand.Size = new System.Drawing.Size(94, 29);
+            this.btnDemand.TabIndex = 9;
+            this.btnDemand.Text = "Demand";
+            this.btnDemand.UseVisualStyleBackColor = true;
+            // 
+            // btnRent
+            // 
+            this.btnRent.Location = new System.Drawing.Point(12, 182);
+            this.btnRent.Name = "btnRent";
+            this.btnRent.Size = new System.Drawing.Size(94, 29);
+            this.btnRent.TabIndex = 10;
+            this.btnRent.Text = "Rent";
+            this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
+            // 
+            // btnSale
+            // 
+            this.btnSale.Location = new System.Drawing.Point(12, 292);
+            this.btnSale.Name = "btnSale";
+            this.btnSale.Size = new System.Drawing.Size(94, 29);
+            this.btnSale.TabIndex = 11;
+            this.btnSale.Text = "Sale";
+            this.btnSale.UseVisualStyleBackColor = true;
+            this.btnSale.Click += new System.EventHandler(this.btnSale_Click);
+            // 
+            // btnMyprofile
+            // 
+            this.btnMyprofile.Location = new System.Drawing.Point(12, 452);
+            this.btnMyprofile.Name = "btnMyprofile";
+            this.btnMyprofile.Size = new System.Drawing.Size(94, 29);
+            this.btnMyprofile.TabIndex = 12;
+            this.btnMyprofile.Text = "My profile";
+            this.btnMyprofile.UseVisualStyleBackColor = true;
+            // 
+            // btnMessages
+            // 
+            this.btnMessages.Location = new System.Drawing.Point(12, 406);
+            this.btnMessages.Name = "btnMessages";
+            this.btnMessages.Size = new System.Drawing.Size(94, 29);
+            this.btnMessages.TabIndex = 13;
+            this.btnMessages.Text = "Messages";
+            this.btnMessages.UseVisualStyleBackColor = true;
+            // 
+            // btnPending
+            // 
+            this.btnPending.Location = new System.Drawing.Point(12, 339);
+            this.btnPending.Name = "btnPending";
+            this.btnPending.Size = new System.Drawing.Size(94, 48);
+            this.btnPending.TabIndex = 14;
+            this.btnPending.Text = "Pending requests";
+            this.btnPending.UseVisualStyleBackColor = true;
+            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
             // 
             // frmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 566);
+            this.Controls.Add(this.btnPending);
+            this.Controls.Add(this.btnMessages);
+            this.Controls.Add(this.btnMyprofile);
+            this.Controls.Add(this.btnSale);
+            this.Controls.Add(this.btnRent);
+            this.Controls.Add(this.btnDemand);
+            this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtFilterUsers);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvUsers);
             this.Name = "frmUsers";
-            this.Text = "Form1";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmUsers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             this.ResumeLayout(false);
@@ -220,5 +300,12 @@
         private DataGridViewButtonColumn Actions;
         private TextBox txtFilterUsers;
         private Label label2;
+        private Button btnStatistics;
+        private Button btnDemand;
+        private Button btnRent;
+        private Button btnSale;
+        private Button btnMyprofile;
+        private Button btnMessages;
+        private Button btnPending;
     }
 }

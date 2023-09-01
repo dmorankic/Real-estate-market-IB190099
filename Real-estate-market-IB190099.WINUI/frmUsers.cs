@@ -128,5 +128,32 @@ namespace Real_estate_market_IB190099.WINUI
             customizeDgvUsers();
         }
 
+        private void btnPending_Click(object sender, EventArgs e)
+        {
+            frmPending frm = new frmPending();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            frmRent frm = new frmRent();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnStatistics_Click(object sender, EventArgs e)
+        {
+            Hide();
+            frmCity frm=new frmCity();
+            frm.Show();
+        }
+
+        private void btnSale_Click(object sender, EventArgs e)
+        {
+            frmSale frm = new frmSale();
+            Hide();
+            frm.Show();
+        }
     }
 }

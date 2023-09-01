@@ -183,52 +183,58 @@ class _SavedAdsState extends State<SavedAds> {
                   margin: EdgeInsets.all(6.0),
                   child: Row(
                     children: <Widget>[
-                      Column(
-                        children: [
-                          Container(
-                            width: 100.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
+                      Padding(
+                        padding: EdgeInsets.only(right: 5),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(24.0)),
+                              ),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.elliptical(10, 10)),
+                                child: SizedBox.fromSize(
+                                    size: Size.fromRadius(35),
+                                    child: x.property?.images.isEmpty
+                                        ? Image.asset(
+                                            "assets/images/NoImage.png",
+                                            fit: BoxFit.cover)
+                                        : Image.network(
+                                            '$_baseUrl${x.property?.images[0]}',
+                                            fit: BoxFit.cover)),
+                              ),
                             ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.elliptical(10, 10)),
-                              child: SizedBox.fromSize(
-                                  size: Size.fromRadius(35),
-                                  child: x.property?.images.isEmpty
-                                      ? Image.asset("assets/images/logo2.png",
-                                          fit: BoxFit.cover)
-                                      : Image.network(
-                                          '$_baseUrl${x.property?.images[0]}',
-                                          fit: BoxFit.cover)),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Container(
                         height: 100.00,
                         width: 190.00,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
                               "${x.property?.name}",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
-                              "${x.property?.description}",
+                              "${x.property?.description.length > 93 ? x.property?.description.substring(0, 93) : x.property?.description}",
                               style: TextStyle(
                                 fontSize: 11.5,
                               ),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 10,
                             ),
                             Container(
                               width: 188,

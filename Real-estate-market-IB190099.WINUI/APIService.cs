@@ -20,9 +20,14 @@ namespace Real_estate_market_IB190099.WINUI
             _resource= resource;
         }
 
-        public async Task<T> Get<T>()
+        public async Task<T> Get<T>(string? queryString=null)
         {
-            var list = await $"{_url}{_resource}".WithBasicAuth(username,password).GetJsonAsync<T>();
+            string url=$"{_url}{_resource}";
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                url += $"?{queryString}";
+            }
+            var list = await $"{url}".WithBasicAuth(username,password).GetJsonAsync<T>();
             return list;
         }
 
@@ -47,12 +52,15 @@ namespace Real_estate_market_IB190099.WINUI
             {
                 var errors=await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
                 var stringBuilder=new StringBuilder();
-
-                foreach(var error in errors)
+                if(errors != null)
                 {
-                    stringBuilder.AppendLine($"{error.Key}, {string.Join(",",error.Value)}");
+                    foreach (var error in errors)
+                    {
+                        stringBuilder.AppendLine($"{error.Key}, {string.Join(",", error.Value)}");
+                    }
+                    MessageBox.Show(stringBuilder.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                MessageBox.Show(stringBuilder.ToString(),"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+               
                 return default(T);
             }
         }
