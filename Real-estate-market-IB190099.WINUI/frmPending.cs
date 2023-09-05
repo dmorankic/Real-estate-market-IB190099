@@ -42,7 +42,20 @@ namespace Real_estate_market_IB190099.WINUI
 
         private void dgvAds_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(e.ColumnIndex==4)
+            {
+                AdvertiseModel selectedAd = dgvAds.SelectedRows[0].DataBoundItem as AdvertiseModel;
+                frmAdDetails details = new frmAdDetails(selectedAd, "",$"Pending ad request for {selectedAd.Type} section");
+                details.FormClosed += detailsClose;
+                details.ShowDialog();
+            }
+        }
 
+
+        private async void detailsClose(object? sender, FormClosedEventArgs e)
+        {
+            await loadAds();
+            customizeDgvAds(filterAll());
         }
 
 
@@ -97,7 +110,7 @@ namespace Real_estate_market_IB190099.WINUI
         {
             filterAll();
         }
-        public void filterAll()
+        public List<AdvertiseModel> filterAll()
         {
         List<AdvertiseModel> filteredList = ads;
             if(!string.IsNullOrEmpty(txtFilterHeading.Text))
@@ -114,6 +127,7 @@ namespace Real_estate_market_IB190099.WINUI
             }
             dgvAds.DataSource = filteredList;
             customizeDgvAds(filteredList);
+            return filteredList;
         }
         private List<AdvertiseModel> filterAds(List<AdvertiseModel> list)
         {
@@ -130,7 +144,7 @@ namespace Real_estate_market_IB190099.WINUI
 
         private List<AdvertiseModel> filterSection(List<AdvertiseModel> list)
         {
-            list=list.Where(x=>x.Type==comboBox1.SelectedItem.ToString()).ToList(); 
+            list=list.Where(x=>x.Type.ToLower()==comboBox1.SelectedItem.ToString().ToLower()).ToList(); 
             return list;
         }
 
@@ -145,6 +159,60 @@ namespace Real_estate_market_IB190099.WINUI
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
            filterAll();
+        }
+
+        private void dgvAds_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void btnSale_Click(object sender, EventArgs e)
+        {
+            frmSale frm = new frmSale();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnStatistics_Click(object sender, EventArgs e)
+        {
+            frmStatistics frm = new frmStatistics();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            frmRent frm = new frmRent();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnDemand_Click(object sender, EventArgs e)
+        {
+            frmDemand frm = new frmDemand();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            frmUsers frm = new frmUsers();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnMessages_Click(object sender, EventArgs e)
+        {
+            frmMessages frm = new frmMessages();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnPending_Click(object sender, EventArgs e)
+        {
+            frmPending frm = new frmPending();
+            Hide();
+            frm.Show();
         }
     }
 }

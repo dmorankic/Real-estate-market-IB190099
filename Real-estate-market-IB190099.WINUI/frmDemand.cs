@@ -1,22 +1,28 @@
 ﻿using Real_estate_market_IB190099.Model;
-
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Real_estate_market_IB190099.WINUI
 {
-    public partial class frmRent : Form
+    public partial class frmDemand : Form
     {
-
         public APIService adService { get; set; } = new APIService("Advertise");
         List<AdvertiseModel> ads = null;
         public bool dateSelected { get; set; } = false;
-        public frmRent()
+        public frmDemand()
         {
             InitializeComponent();
-            dgvRent.AutoGenerateColumns = false;
-
+            dgvDemand.AutoGenerateColumns = false;
         }
 
-        private async void frmRent_Load(object sender, EventArgs e)
+        private async void frmDemand_Load(object sender, EventArgs e)
         {
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = " ";
@@ -24,36 +30,39 @@ namespace Real_estate_market_IB190099.WINUI
             customizeDgvAds();
         }
 
-        private void customizeDgvAds()
-        {
-
-            if (dgvRent.ColumnCount ==4)
-            {    
-                DataGridViewButtonColumn btnDetails = new DataGridViewButtonColumn();
-                btnDetails.HeaderText = "Action";
-
-                dgvRent.Columns.Add(btnDetails);
-                foreach (DataGridViewRow row in dgvRent.Rows)
-                {
-                    AdvertiseModel obj = row.DataBoundItem as AdvertiseModel;
-                    obj.Price = $"${obj.Price} per month";
-                }
-            }
-
-            foreach (DataGridViewRow row in dgvRent.Rows)
-            {
-                DataGridViewCell cell = row.Cells[4];
-                cell.Value = "Details";           
-            }
-        }
-
 
         private async Task<List<AdvertiseModel>> loadAds()
         {
-            var list = await adService.Get<List<AdvertiseModel>>("Type=rent&Status=approved");
+            var list = await adService.Get<List<AdvertiseModel>>("Type=demand&Status=approved");
             ads = list;
-            dgvRent.DataSource = list;
+            dgvDemand.DataSource = list;
             return list;
+        }
+
+        private void customizeDgvAds()
+        {
+
+            if (dgvDemand.ColumnCount == 4)
+            {
+                DataGridViewButtonColumn btnDetails = new DataGridViewButtonColumn();
+                btnDetails.HeaderText = "Action";
+
+                dgvDemand.Columns.Add(btnDetails);
+
+            }
+
+            foreach (DataGridViewRow row in dgvDemand.Rows)
+            {
+                DataGridViewCell cell = row.Cells[4];
+                cell.Value = "Details";
+
+
+                AdvertiseModel obj = row.DataBoundItem as AdvertiseModel;
+                if (!obj.Price.Contains("$"))
+                {
+                    obj.Price = $"${obj.Price}";
+                }
+            }
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -75,10 +84,11 @@ namespace Real_estate_market_IB190099.WINUI
             {
                 filteredList = filterDate(filteredList);
             }
-           
-            dgvRent.DataSource = filteredList;
+
+            dgvDemand.DataSource = filteredList;
             customizeDgvAds();
         }
+
 
         private List<AdvertiseModel> filterAds(List<AdvertiseModel> list)
         {
@@ -93,6 +103,11 @@ namespace Real_estate_market_IB190099.WINUI
             return list;
         }
 
+        private void txtFilterUsers_TextChanged(object sender, EventArgs e)
+        {
+            filterAll();    
+        }
+
         private void btnResetDate_Click(object sender, EventArgs e)
         {
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
@@ -101,73 +116,51 @@ namespace Real_estate_market_IB190099.WINUI
             filterAll();
         }
 
-        private void txtFilterUsers_TextChanged(object sender, EventArgs e)
+        private void btnPending_Click(object sender, EventArgs e)
         {
-            filterAll();
+            frmPending frm = new frmPending();
+            Hide();
+            frm.Show();
         }
 
-        private void dgvRent_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 4)
-            {
-                AdvertiseModel selectedAd = dgvRent.SelectedRows[0].DataBoundItem as AdvertiseModel;
-                frmAdDetails details = new frmAdDetails(selectedAd,"Rent");
-                details.FormClosed += detailsClose;
-                details.ShowDialog();
-            }
-        }
-
-        private async void detailsClose(object? sender, FormClosedEventArgs e)
-        {
-            await loadAds();
-            filterAll();
-            customizeDgvAds();
-        }
-
-        private void dgvRent_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void dgvDemand_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.Cancel = true;
         }
 
         private void btnStatistics_Click(object sender, EventArgs e)
         {
-            Hide();
             frmStatistics frm = new frmStatistics();
+            Hide();
             frm.Show();
         }
 
         private void btnUsers_Click(object sender, EventArgs e)
         {
-            Hide();
             frmUsers frm = new frmUsers();
+            Hide();
             frm.Show();
         }
 
-        private void btnDemand_Click(object sender, EventArgs e)
+        private void btnRent_Click(object sender, EventArgs e)
         {
+            frmRent frm = new frmRent();
             Hide();
-            frmDemand frm = new frmDemand();
             frm.Show();
         }
 
         private void btnSale_Click(object sender, EventArgs e)
         {
-            Hide();
             frmSale frm = new frmSale();
-            frm.Show();
-        }
-
-        private void btnPending_Click(object sender, EventArgs e)
-        {
             Hide();
-            frmPending frm = new frmPending();
             frm.Show();
         }
 
         private void btnMessages_Click(object sender, EventArgs e)
         {
-            Hide();
+
             frmMessages frm = new frmMessages();
+            Hide();
             frm.Show();
         }
     }

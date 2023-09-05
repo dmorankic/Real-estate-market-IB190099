@@ -45,11 +45,10 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.btnPending = new System.Windows.Forms.Button();
             this.btnMyprofile = new System.Windows.Forms.Button();
-            this.btnSale = new System.Windows.Forms.Button();
+            this.btnRent = new System.Windows.Forms.Button();
             this.btnUsers = new System.Windows.Forms.Button();
             this.btnDemand = new System.Windows.Forms.Button();
             this.btnStatistics = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtFilterUsers = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSale)).BeginInit();
@@ -63,6 +62,7 @@
             this.btnResetDate.TabIndex = 45;
             this.btnResetDate.Text = "Reset date";
             this.btnResetDate.UseVisualStyleBackColor = true;
+            this.btnResetDate.Click += new System.EventHandler(this.btnResetDate_Click);
             // 
             // label3
             // 
@@ -113,6 +113,7 @@
             this.btnMessages.TabIndex = 41;
             this.btnMessages.Text = "Messages";
             this.btnMessages.UseVisualStyleBackColor = true;
+            this.btnMessages.Click += new System.EventHandler(this.btnMessages_Click);
             // 
             // dgvSale
             // 
@@ -129,6 +130,8 @@
             this.dgvSale.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSale.Size = new System.Drawing.Size(625, 367);
             this.dgvSale.TabIndex = 32;
+            this.dgvSale.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSale_CellContentClick);
+            this.dgvSale.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSale_DataError);
             // 
             // ID
             // 
@@ -184,6 +187,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(236, 27);
             this.dateTimePicker1.TabIndex = 43;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // btnPending
             // 
@@ -193,6 +197,7 @@
             this.btnPending.TabIndex = 42;
             this.btnPending.Text = "Pending requests";
             this.btnPending.UseVisualStyleBackColor = true;
+            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
             // 
             // btnMyprofile
             // 
@@ -203,14 +208,15 @@
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
             // 
-            // btnSale
+            // btnRent
             // 
-            this.btnSale.Location = new System.Drawing.Point(31, 278);
-            this.btnSale.Name = "btnSale";
-            this.btnSale.Size = new System.Drawing.Size(94, 29);
-            this.btnSale.TabIndex = 39;
-            this.btnSale.Text = "Sale";
-            this.btnSale.UseVisualStyleBackColor = true;
+            this.btnRent.Location = new System.Drawing.Point(31, 278);
+            this.btnRent.Name = "btnRent";
+            this.btnRent.Size = new System.Drawing.Size(94, 29);
+            this.btnRent.TabIndex = 39;
+            this.btnRent.Text = "Rent";
+            this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // btnUsers
             // 
@@ -220,6 +226,7 @@
             this.btnUsers.TabIndex = 38;
             this.btnUsers.Text = "Users";
             this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             // 
             // btnDemand
             // 
@@ -229,6 +236,7 @@
             this.btnDemand.TabIndex = 37;
             this.btnDemand.Text = "Demand";
             this.btnDemand.UseVisualStyleBackColor = true;
+            this.btnDemand.Click += new System.EventHandler(this.btnDemand_Click);
             // 
             // btnStatistics
             // 
@@ -238,22 +246,16 @@
             this.btnStatistics.TabIndex = 36;
             this.btnStatistics.Text = "Statistics";
             this.btnStatistics.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(144, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 20);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "Search by heading";
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
             // 
             // txtFilterUsers
             // 
             this.txtFilterUsers.Location = new System.Drawing.Point(144, 80);
             this.txtFilterUsers.Name = "txtFilterUsers";
+            this.txtFilterUsers.PlaceholderText = "Search by heading";
             this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
             this.txtFilterUsers.TabIndex = 34;
+            this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
             // 
             // label1
             // 
@@ -277,11 +279,10 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.btnPending);
             this.Controls.Add(this.btnMyprofile);
-            this.Controls.Add(this.btnSale);
+            this.Controls.Add(this.btnRent);
             this.Controls.Add(this.btnUsers);
             this.Controls.Add(this.btnDemand);
             this.Controls.Add(this.btnStatistics);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtFilterUsers);
             this.Controls.Add(this.label1);
             this.Name = "frmSale";
@@ -312,11 +313,10 @@
         private DateTimePicker dateTimePicker1;
         private Button btnPending;
         private Button btnMyprofile;
-        private Button btnSale;
+        private Button btnRent;
         private Button btnUsers;
         private Button btnDemand;
         private Button btnStatistics;
-        private Label label2;
         private TextBox txtFilterUsers;
         private Label label1;
     }

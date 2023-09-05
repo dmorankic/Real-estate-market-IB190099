@@ -34,7 +34,8 @@ namespace Real_estate_market_IB190099.Services
         }
         public override IQueryable<Message> AddInclude(IQueryable<Message> query, IdSearchObject search = null)
         {
-            query = query.Include(x => x.Advertise.Property).OrderByDescending(x => x.Timestamp);
+            query = query.Include(x => x.Advertise.Property)
+                .Include(x=>x.Sender).OrderByDescending(x => x.Timestamp);
             
             return base.AddInclude(query, search);
         }

@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.WINUI.Properties;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ namespace Real_estate_market_IB190099.WINUI
     {
         public string _url = Settings.Default.ApiURLSecondary;
         public string _resource = null;
-        public static string username ;
-        public static string password;
+        public static string username="admin" ;
+        public static string password="admin";
+        public static UserModel loggedUser = null;
 
         public APIService(string resource) 
         {
@@ -42,6 +44,13 @@ namespace Real_estate_market_IB190099.WINUI
 
             return result;
         }
+
+        public async Task<T> Delete<T>(int id)
+        {
+            var item = await $"{_url}{_resource}/Remove/?id={id}".WithBasicAuth(username, password).DeleteAsync().ReceiveJson<T>();
+            return item;
+        }
+
         public async Task<T> Put<T>(int id,object request)
         {
             try

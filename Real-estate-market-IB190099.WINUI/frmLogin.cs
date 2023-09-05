@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Real_estate_market_IB190099.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,7 +27,19 @@ namespace Real_estate_market_IB190099.WINUI
 
             try
             {
-                var res=await _api.Get<dynamic>();
+                var res=await _api.Get<List<UserModel>>();
+                List<UserModel> users = res;
+                users.ForEach(user =>
+                {
+                    if (user.Username == APIService.username)
+                    {
+                        APIService.loggedUser = user;
+                        if (user.Role.Name == "User")
+                        {
+                            throw new UserException("Only employees are allowed to login");
+                        }
+                    }
+                });
 
                 frmUsers frm=new frmUsers();
                 Hide();
@@ -34,7 +47,19 @@ namespace Real_estate_market_IB190099.WINUI
 
             }catch(Exception ex)
             {
-                MessageBox.Show("Wrong username or password");
+                if(ex is UserException)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else if(ex.Message.Contains("401"))
+                {
+                    MessageBox.Show("Wrong username or password");
+                }
+                else
+                {
+                    MessageBox.Show("An error occured");
+
+                }
             }
         }
     }

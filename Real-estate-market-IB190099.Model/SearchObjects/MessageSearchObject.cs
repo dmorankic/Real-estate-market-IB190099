@@ -6,6 +6,6 @@ namespace Real_estate_market_IB190099.Model.SearchObjects
 {
     public class IdSearchObject : BaseSearchObject
     {
-        public int id { get; set; }
+        public int? id { get; set; } = null;
     }
 }

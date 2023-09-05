@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Data;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -252,9 +253,10 @@ namespace Real_estate_market_IB190099.Services
                 .Include(x => x.Property.Images)
                 .Include(x=>x.Property.Address.City)
                 .Include(x=>x.User)
-                .Include(x=>x.Property.Location);
+                .Include(x=>x.Property.Location)
+                .Include(x=>x.Property.Address);
 
-            return base.AddInclude(query, search);
+            return query;
         }
         
         public override AdvertiseModel GetById(int id)
@@ -388,6 +390,18 @@ namespace Real_estate_market_IB190099.Services
             });
 
             return listModel;
+        }
+
+        public AdvertiseModel Remove(int id)
+        {
+            var entity = Context.Advertises.Find(id);
+            if(entity != null)
+            {
+                _context.Advertises.Remove(entity);
+                _context.SaveChanges();
+                return Mapper.Map<AdvertiseModel>(entity);
+            }
+            return null;
         }
     }
 }

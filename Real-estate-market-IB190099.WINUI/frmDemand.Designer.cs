@@ -1,6 +1,6 @@
 ﻿namespace Real_estate_market_IB190099.WINUI
 {
-    partial class frmPending
+    partial class frmDemand
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnUsers = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.btnPending = new System.Windows.Forms.Button();
             this.btnMyprofile = new System.Windows.Forms.Button();
             this.btnSale = new System.Windows.Forms.Button();
+            this.btnUsers = new System.Windows.Forms.Button();
             this.btnRent = new System.Windows.Forms.Button();
-            this.btnDemand = new System.Windows.Forms.Button();
             this.btnStatistics = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,79 +43,93 @@
             this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnMessages = new System.Windows.Forms.Button();
-            this.txtFilterHeading = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dgvAds = new System.Windows.Forms.DataGridView();
+            this.dgvDemand = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnResetDate = new System.Windows.Forms.Button();
-            this.btnPending = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAds)).BeginInit();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtFilterUsers = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDemand)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnUsers
+            // dateTimePicker1
             // 
-            this.btnUsers.Location = new System.Drawing.Point(24, 282);
-            this.btnUsers.Name = "btnUsers";
-            this.btnUsers.Size = new System.Drawing.Size(94, 30);
-            this.btnUsers.TabIndex = 25;
-            this.btnUsers.Text = "Users";
-            this.btnUsers.UseVisualStyleBackColor = true;
-            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
+            this.dateTimePicker1.Location = new System.Drawing.Point(395, 94);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(236, 27);
+            this.dateTimePicker1.TabIndex = 57;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            // 
+            // btnPending
+            // 
+            this.btnPending.Location = new System.Drawing.Point(31, 339);
+            this.btnPending.Name = "btnPending";
+            this.btnPending.Size = new System.Drawing.Size(94, 48);
+            this.btnPending.TabIndex = 56;
+            this.btnPending.Text = "Pending requests";
+            this.btnPending.UseVisualStyleBackColor = true;
+            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
             // 
             // btnMyprofile
             // 
-            this.btnMyprofile.Location = new System.Drawing.Point(24, 456);
+            this.btnMyprofile.Location = new System.Drawing.Point(31, 452);
             this.btnMyprofile.Name = "btnMyprofile";
             this.btnMyprofile.Size = new System.Drawing.Size(94, 29);
-            this.btnMyprofile.TabIndex = 23;
+            this.btnMyprofile.TabIndex = 54;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
             // 
             // btnSale
             // 
-            this.btnSale.Location = new System.Drawing.Point(24, 235);
+            this.btnSale.Location = new System.Drawing.Point(31, 292);
             this.btnSale.Name = "btnSale";
             this.btnSale.Size = new System.Drawing.Size(94, 29);
-            this.btnSale.TabIndex = 22;
+            this.btnSale.TabIndex = 53;
             this.btnSale.Text = "Sale";
             this.btnSale.UseVisualStyleBackColor = true;
             this.btnSale.Click += new System.EventHandler(this.btnSale_Click);
             // 
+            // btnUsers
+            // 
+            this.btnUsers.Location = new System.Drawing.Point(31, 182);
+            this.btnUsers.Name = "btnUsers";
+            this.btnUsers.Size = new System.Drawing.Size(94, 29);
+            this.btnUsers.TabIndex = 52;
+            this.btnUsers.Text = "Users";
+            this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
+            // 
             // btnRent
             // 
-            this.btnRent.Location = new System.Drawing.Point(24, 142);
+            this.btnRent.Location = new System.Drawing.Point(31, 237);
             this.btnRent.Name = "btnRent";
             this.btnRent.Size = new System.Drawing.Size(94, 29);
-            this.btnRent.TabIndex = 21;
+            this.btnRent.TabIndex = 51;
             this.btnRent.Text = "Rent";
             this.btnRent.UseVisualStyleBackColor = true;
             this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
-            // btnDemand
-            // 
-            this.btnDemand.Location = new System.Drawing.Point(24, 188);
-            this.btnDemand.Name = "btnDemand";
-            this.btnDemand.Size = new System.Drawing.Size(94, 29);
-            this.btnDemand.TabIndex = 20;
-            this.btnDemand.Text = "Demand";
-            this.btnDemand.UseVisualStyleBackColor = true;
-            this.btnDemand.Click += new System.EventHandler(this.btnDemand_Click);
-            // 
             // btnStatistics
             // 
-            this.btnStatistics.Location = new System.Drawing.Point(24, 97);
+            this.btnStatistics.Location = new System.Drawing.Point(31, 133);
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(94, 29);
-            this.btnStatistics.TabIndex = 19;
+            this.btnStatistics.TabIndex = 50;
             this.btnStatistics.Text = "Statistics";
             this.btnStatistics.UseVisualStyleBackColor = true;
             this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(323, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(146, 39);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Demand";
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -165,49 +181,30 @@
             // 
             // btnMessages
             // 
-            this.btnMessages.Location = new System.Drawing.Point(24, 327);
+            this.btnMessages.Location = new System.Drawing.Point(31, 406);
             this.btnMessages.Name = "btnMessages";
             this.btnMessages.Size = new System.Drawing.Size(94, 29);
-            this.btnMessages.TabIndex = 24;
+            this.btnMessages.TabIndex = 55;
             this.btnMessages.Text = "Messages";
             this.btnMessages.UseVisualStyleBackColor = true;
             this.btnMessages.Click += new System.EventHandler(this.btnMessages_Click);
             // 
-            // txtFilterHeading
+            // dgvDemand
             // 
-            this.txtFilterHeading.Location = new System.Drawing.Point(137, 97);
-            this.txtFilterHeading.Name = "txtFilterHeading";
-            this.txtFilterHeading.PlaceholderText = "Search by heading";
-            this.txtFilterHeading.Size = new System.Drawing.Size(158, 27);
-            this.txtFilterHeading.TabIndex = 17;
-            this.txtFilterHeading.TextChanged += new System.EventHandler(this.txtFilterHeading_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(256, 1);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(282, 39);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Pending requests";
-            // 
-            // dgvAds
-            // 
-            this.dgvAds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAds.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvDemand.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDemand.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
+            this.Price,
             this.DateCreated});
-            this.dgvAds.Location = new System.Drawing.Point(137, 130);
-            this.dgvAds.Name = "dgvAds";
-            this.dgvAds.RowHeadersWidth = 51;
-            this.dgvAds.RowTemplate.Height = 29;
-            this.dgvAds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAds.Size = new System.Drawing.Size(625, 355);
-            this.dgvAds.TabIndex = 15;
-            this.dgvAds.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAds_CellContentClick);
-            this.dgvAds.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAds_DataError);
+            this.dgvDemand.Location = new System.Drawing.Point(144, 127);
+            this.dgvDemand.Name = "dgvDemand";
+            this.dgvDemand.RowHeadersWidth = 51;
+            this.dgvDemand.RowTemplate.Height = 29;
+            this.dgvDemand.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDemand.Size = new System.Drawing.Size(625, 367);
+            this.dgvDemand.TabIndex = 46;
+            this.dgvDemand.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDemand_DataError);
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -220,10 +217,18 @@
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.DataPropertyName = "PropName";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Article Heading";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Article heading";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // Price
+            // 
+            this.Price.DataPropertyName = "Price";
+            this.Price.HeaderText = "Price";
+            this.Price.MinimumWidth = 6;
+            this.Price.Name = "Price";
+            this.Price.Width = 125;
             // 
             // DateCreated
             // 
@@ -231,94 +236,58 @@
             this.DateCreated.HeaderText = "Date created";
             this.DateCreated.MinimumWidth = 6;
             this.DateCreated.Name = "DateCreated";
-            this.DateCreated.ReadOnly = true;
             this.DateCreated.Width = 125;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(320, 96);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(236, 27);
-            this.dateTimePicker1.TabIndex = 26;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(320, 68);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 20);
-            this.label3.TabIndex = 27;
-            this.label3.Text = "Date created";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "",
-            "Rent",
-            "Sale",
-            "Demand"});
-            this.comboBox1.Location = new System.Drawing.Point(589, 96);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(173, 28);
-            this.comboBox1.TabIndex = 28;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(611, 73);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 20);
-            this.label4.TabIndex = 29;
-            this.label4.Text = "Section";
             // 
             // btnResetDate
             // 
-            this.btnResetDate.Location = new System.Drawing.Point(458, 68);
+            this.btnResetDate.Location = new System.Drawing.Point(533, 65);
             this.btnResetDate.Name = "btnResetDate";
             this.btnResetDate.Size = new System.Drawing.Size(98, 27);
-            this.btnResetDate.TabIndex = 30;
+            this.btnResetDate.TabIndex = 59;
             this.btnResetDate.Text = "Reset date";
             this.btnResetDate.UseVisualStyleBackColor = true;
             this.btnResetDate.Click += new System.EventHandler(this.btnResetDate_Click);
             // 
-            // btnPending
+            // label3
             // 
-            this.btnPending.Location = new System.Drawing.Point(24, 372);
-            this.btnPending.Name = "btnPending";
-            this.btnPending.Size = new System.Drawing.Size(94, 57);
-            this.btnPending.TabIndex = 31;
-            this.btnPending.Text = "Pending requests";
-            this.btnPending.UseVisualStyleBackColor = true;
-            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(395, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(95, 20);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Date created";
             // 
-            // frmPending
+            // txtFilterUsers
+            // 
+            this.txtFilterUsers.Location = new System.Drawing.Point(144, 94);
+            this.txtFilterUsers.Name = "txtFilterUsers";
+            this.txtFilterUsers.PlaceholderText = "Search by heading";
+            this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
+            this.txtFilterUsers.TabIndex = 48;
+            this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
+            // 
+            // frmDemand
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 563);
-            this.Controls.Add(this.btnPending);
-            this.Controls.Add(this.btnResetDate);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label3);
+            this.ClientSize = new System.Drawing.Size(800, 515);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.btnUsers);
+            this.Controls.Add(this.btnPending);
             this.Controls.Add(this.btnMyprofile);
             this.Controls.Add(this.btnSale);
+            this.Controls.Add(this.btnUsers);
             this.Controls.Add(this.btnRent);
-            this.Controls.Add(this.btnDemand);
             this.Controls.Add(this.btnStatistics);
-            this.Controls.Add(this.btnMessages);
-            this.Controls.Add(this.txtFilterHeading);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dgvAds);
-            this.Name = "frmPending";
-            this.Text = "Real estate market";
-            this.Load += new System.EventHandler(this.frmPending_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAds)).EndInit();
+            this.Controls.Add(this.btnMessages);
+            this.Controls.Add(this.dgvDemand);
+            this.Controls.Add(this.btnResetDate);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtFilterUsers);
+            this.Name = "frmDemand";
+            this.Text = "frmDemand";
+            this.Load += new System.EventHandler(this.frmDemand_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDemand)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -326,12 +295,14 @@
 
         #endregion
 
-        private Button btnUsers;
+        private DateTimePicker dateTimePicker1;
+        private Button btnPending;
         private Button btnMyprofile;
         private Button btnSale;
+        private Button btnUsers;
         private Button btnRent;
-        private Button btnDemand;
         private Button btnStatistics;
+        private Label label1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -339,18 +310,13 @@
         private DataGridViewTextBoxColumn FirstName;
         private DataGridViewTextBoxColumn ID;
         private Button btnMessages;
-        private TextBox txtFilterHeading;
-        private Label label1;
-        private DataGridView dgvAds;
-        private DateTimePicker dateTimePicker1;
-        private Label label3;
-        private ComboBox comboBox1;
-        private Label label4;
+        private DataGridView dgvDemand;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn Price;
         private DataGridViewTextBoxColumn DateCreated;
-        private DataGridViewButtonColumn Action;
         private Button btnResetDate;
-        private Button btnPending;
+        private Label label3;
+        private TextBox txtFilterUsers;
     }
 }

@@ -145,13 +145,33 @@ namespace Real_estate_market_IB190099.WINUI
         private void btnStatistics_Click(object sender, EventArgs e)
         {
             Hide();
-            frmCity frm=new frmCity();
+            frmStatistics frm=new frmStatistics();
             frm.Show();
         }
 
         private void btnSale_Click(object sender, EventArgs e)
         {
             frmSale frm = new frmSale();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnDemand_Click(object sender, EventArgs e)
+        {
+            frmDemand frm = new frmDemand();
+            Hide();
+            frm.Show();
+
+        }
+
+        private void dgvUsers_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void btnMessages_Click(object sender, EventArgs e)
+        {
+            frmMessages frm = new frmMessages();
             Hide();
             frm.Show();
         }

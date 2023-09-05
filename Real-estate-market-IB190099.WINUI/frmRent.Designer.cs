@@ -34,7 +34,6 @@
             this.btnUsers = new System.Windows.Forms.Button();
             this.btnDemand = new System.Windows.Forms.Button();
             this.btnStatistics = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtFilterUsers = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,6 +62,7 @@
             this.btnPending.TabIndex = 25;
             this.btnPending.Text = "Pending requests";
             this.btnPending.UseVisualStyleBackColor = true;
+            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
             // 
             // btnMyprofile
             // 
@@ -81,6 +81,7 @@
             this.btnSale.TabIndex = 22;
             this.btnSale.Text = "Sale";
             this.btnSale.UseVisualStyleBackColor = true;
+            this.btnSale.Click += new System.EventHandler(this.btnSale_Click);
             // 
             // btnUsers
             // 
@@ -90,6 +91,7 @@
             this.btnUsers.TabIndex = 21;
             this.btnUsers.Text = "Users";
             this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             // 
             // btnDemand
             // 
@@ -99,6 +101,7 @@
             this.btnDemand.TabIndex = 20;
             this.btnDemand.Text = "Demand";
             this.btnDemand.UseVisualStyleBackColor = true;
+            this.btnDemand.Click += new System.EventHandler(this.btnDemand_Click);
             // 
             // btnStatistics
             // 
@@ -108,20 +111,13 @@
             this.btnStatistics.TabIndex = 19;
             this.btnStatistics.Text = "Statistics";
             this.btnStatistics.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(143, 73);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 20);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "Search by heading";
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
             // 
             // txtFilterUsers
             // 
             this.txtFilterUsers.Location = new System.Drawing.Point(143, 95);
             this.txtFilterUsers.Name = "txtFilterUsers";
+            this.txtFilterUsers.PlaceholderText = "Search by heading";
             this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
             this.txtFilterUsers.TabIndex = 17;
             this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
@@ -192,6 +188,7 @@
             this.btnMessages.TabIndex = 24;
             this.btnMessages.Text = "Messages";
             this.btnMessages.UseVisualStyleBackColor = true;
+            this.btnMessages.Click += new System.EventHandler(this.btnMessages_Click);
             // 
             // dgvRent
             // 
@@ -208,6 +205,8 @@
             this.dgvRent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRent.Size = new System.Drawing.Size(625, 367);
             this.dgvRent.TabIndex = 15;
+            this.dgvRent.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRent_CellContentClick);
+            this.dgvRent.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvRent_DataError);
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -282,7 +281,6 @@
             this.Controls.Add(this.btnUsers);
             this.Controls.Add(this.btnDemand);
             this.Controls.Add(this.btnStatistics);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtFilterUsers);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnMessages);
@@ -304,7 +302,6 @@
         private Button btnUsers;
         private Button btnDemand;
         private Button btnStatistics;
-        private Label label2;
         private TextBox txtFilterUsers;
         private Label label1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;

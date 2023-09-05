@@ -16,7 +16,7 @@ namespace Real_estate_market_IB190099.WINUI
             ApplicationConfiguration.Initialize();
             
 
-            Application.Run(new frmLogin());
+            Application.Run(new frmUsers());
         }
     }
 }
