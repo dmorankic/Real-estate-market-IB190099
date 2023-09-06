@@ -23,6 +23,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User()
   ..savedAdvertisesIds = (json['savedAdvertisesIds'] as List<dynamic>?)
       ?.map((e) => e as int)
       .toList()
+  ..savedDemandAdvertisesIds =
+      (json['savedDemandAdvertisesIds'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList()
   ..address = json['address'] == null
       ? null
       : Address.fromJson(json['address'] as Map<String, dynamic>);
@@ -38,5 +42,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'dateRegistered': instance.dateRegistered?.toIso8601String(),
       'gender': instance.gender,
       'savedAdvertisesIds': instance.savedAdvertisesIds,
+      'savedDemandAdvertisesIds': instance.savedDemandAdvertisesIds,
       'address': instance.address,
     };

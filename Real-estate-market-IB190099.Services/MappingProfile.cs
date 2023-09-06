@@ -43,6 +43,14 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<Location, LocationModel>();
             CreateMap<Payment, PaymentModel>();
             CreateMap<PaymentUpsertRequest, Payment>();
+            CreateMap<DemandAdvertiseInsertRequest, DemandAdvertise>();
+            CreateMap<DemandAdvertise, DemandAdvertiseModel>();
+            CreateMap<DemandMessage, DemandMessageModel>();
+            CreateMap<DemandMessageInsertRequest, DemandMessage>();
+            CreateMap<SavedDemandAdvertiseInsertRequest, SavedDemandAdvertise>();
+            CreateMap<SavedDemandAdvertise, SavedDemandAdvertiseModel>();
+
+
 
 
 

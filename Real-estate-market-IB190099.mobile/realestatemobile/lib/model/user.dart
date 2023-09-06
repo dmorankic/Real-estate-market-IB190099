@@ -15,6 +15,8 @@ class User {
   DateTime? dateRegistered;
   String? gender;
   List<int>? savedAdvertisesIds;
+  List<int>? savedDemandAdvertisesIds;
+
   Address? address;
   User() {}
 

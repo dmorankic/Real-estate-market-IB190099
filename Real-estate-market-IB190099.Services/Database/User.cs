@@ -35,6 +35,10 @@ public partial class User
 
     public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
 
+    public virtual ICollection<DemandAdvertise> DemandAdvertises { get; set; } = new List<DemandAdvertise>();
+
+    public virtual ICollection<DemandMessage> DemandMessages { get; set; } = new List<DemandMessage>();
+
     public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
@@ -44,4 +48,6 @@ public partial class User
     public virtual Role? Role { get; set; }
 
     public virtual ICollection<SavedAdvertise> SavedAdvertises { get; set; } = new List<SavedAdvertise>();
+
+    public virtual ICollection<SavedDemandAdvertise> SavedDemandAdvertises { get; set; } = new List<SavedDemandAdvertise>();
 }

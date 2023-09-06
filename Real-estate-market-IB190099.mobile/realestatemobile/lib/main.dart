@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/providers/advertise_provider.dart';
+import 'package:realestatemobile/providers/demand_advertise_provider.dart';
+import 'package:realestatemobile/providers/demand_message_provider.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
 import 'package:realestatemobile/providers/local_image_provider.dart';
 import 'package:realestatemobile/providers/payment_provider.dart';
@@ -12,6 +14,7 @@ import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/screens/create_ad.dart';
 import 'package:realestatemobile/screens/demand.dart';
+import 'package:realestatemobile/screens/demand_advertise_details.dart';
 import 'package:realestatemobile/screens/inbox.dart';
 import 'package:realestatemobile/screens/inbox_details.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
@@ -60,6 +63,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => MessageProvider()),
           ChangeNotifierProvider(create: (_) => LocalImageProvider()),
           ChangeNotifierProvider(create: (_) => PaymentProvider()),
+          ChangeNotifierProvider(create: (_) => DemandMessageProvider()),
+          ChangeNotifierProvider(create: (_) => DemandAdvertiseProvider()),
         ],
         child: BlocProvider(
           create: (context) => PaymentBloc(),
@@ -119,6 +124,14 @@ class MyApp extends StatelessWidget {
                 var id = uri.pathSegments[1];
                 return MaterialPageRoute(
                     builder: (context) => AdvertiseDetails(id: id));
+              }
+
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" ==
+                      DemandAdvertiseDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => DemandAdvertiseDetails(id: id));
               }
 
               if (uri.pathSegments.length == 2 &&

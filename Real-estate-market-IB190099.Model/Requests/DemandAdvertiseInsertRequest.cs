@@ -4,27 +4,28 @@ using System.Text;
 
 namespace Real_estate_market_IB190099.Model.Requests
 {
-    public class AdvertiseInsertRequest
+    public class DemandAdvertiseInsertRequest
     {
         public string Status { get; set; }
         public string Type { get; set; }
         public int UserId { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
         public int Floors { get; set; }
+        public double MinQuadrature { get; set; }
+                     
+        public double MaxQuadrature { get; set; }
+        public string Location { get; set; }
         public string PropertyType { get; set; }
         public int? Rooms { get; set; }
-        public int? YearOfConstruction { get; set; }
+
         public byte? Parking { get; set; }
+
         public byte? Water { get; set; }
+
         public byte? Electricity { get; set; }
-        public int? Price { get; set; }
-        public double? Quadrature { get; set; }
-        public double? Latitude { get; set; }
-        public double? Longitude { get; set; }
-        public virtual ICollection<int> Images { get; set; } = new List<int>();
-        public string CitytName { get; set; }
-        public string NumberStreet { get; set; }
-        public int ZipCode { get; set; }
+        public DateTime? DateCreated { get; set; }
+
+
+
     }
 }

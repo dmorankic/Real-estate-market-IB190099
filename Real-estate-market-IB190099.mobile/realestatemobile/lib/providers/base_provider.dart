@@ -76,7 +76,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
         headers: headers,
         body: jsonEncode(<String, String>{
           "userId": Authorization.loggedUser!.id.toString(),
-          "advertiseId": advertiseId
+          "${endpoint}Id": advertiseId
         }));
 
     if (isValidResponseCode(response)) {

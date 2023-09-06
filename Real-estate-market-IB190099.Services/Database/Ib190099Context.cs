@@ -21,6 +21,10 @@ public partial class Ib190099Context : DbContext
 
     public virtual DbSet<City> Cities { get; set; }
 
+    public virtual DbSet<DemandAdvertise> DemandAdvertises { get; set; }
+
+    public virtual DbSet<DemandMessage> DemandMessages { get; set; }
+
     public virtual DbSet<Image> Images { get; set; }
 
     public virtual DbSet<Location> Locations { get; set; }
@@ -36,6 +40,8 @@ public partial class Ib190099Context : DbContext
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<SavedAdvertise> SavedAdvertises { get; set; }
+
+    public virtual DbSet<SavedDemandAdvertise> SavedDemandAdvertises { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -95,6 +101,54 @@ public partial class Ib190099Context : DbContext
             entity.Property(e => e.ZipCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<DemandAdvertise>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DemandAd__3214EC079DADA222");
+
+            entity.ToTable("DemandAdvertise");
+
+            entity.Property(e => e.DateCreated).HasColumnType("datetime");
+            entity.Property(e => e.Description)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Location)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.PropertyType)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.User).WithMany(p => p.DemandAdvertises)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_DemandAdvertiseUsers");
+        });
+
+        modelBuilder.Entity<DemandMessage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__DemandMe__3214EC07C30126C7");
+
+            entity.ToTable("DemandMessage");
+
+            entity.Property(e => e.Content)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Timestamp).HasColumnType("datetime");
+
+            entity.HasOne(d => d.DemandAdvertise).WithMany(p => p.DemandMessages)
+                .HasForeignKey(d => d.DemandAdvertiseId)
+                .HasConstraintName("FK_MessageDemandAdvertise");
+
+            entity.HasOne(d => d.Sender).WithMany(p => p.DemandMessages)
+                .HasForeignKey(d => d.SenderId)
+                .HasConstraintName("FK_DemandMessageSender");
         });
 
         modelBuilder.Entity<Image>(entity =>
@@ -225,6 +279,23 @@ public partial class Ib190099Context : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SavedAdvertise_User");
+        });
+
+        modelBuilder.Entity<SavedDemandAdvertise>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__SavedDem__3214EC07870EE3F9");
+
+            entity.ToTable("SavedDemandAdvertise");
+
+            entity.HasOne(d => d.DemandAdvertise).WithMany(p => p.SavedDemandAdvertises)
+                .HasForeignKey(d => d.DemandAdvertiseId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SavedDemandAdvertise_DemandAdvertise");
+
+            entity.HasOne(d => d.User).WithMany(p => p.SavedDemandAdvertises)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SavedDemandAdvertise_User");
         });
 
         modelBuilder.Entity<User>(entity =>

@@ -167,7 +167,9 @@ namespace Real_estate_market_IB190099.Services
 
             var query = Context.Users.Include(x=>x.Address).Include(x=>x.Address.City).Include(x=>x.Role).ToList();
             var mappedQuery=Mapper.Map<List<UserModel>>(query);
+            var savedDemandAds = Context.SavedDemandAdvertises.Include(x=>x.DemandAdvertise).ToList();
             var savedAds = Context.SavedAdvertises.Include(x=>x.Advertise).ToList();
+
             for(int i=0; i<mappedQuery.Count;i++)
             {
                 savedAds.ForEach(x => {
@@ -176,7 +178,14 @@ namespace Real_estate_market_IB190099.Services
                         mappedQuery[i].SavedAdvertisesIds.Add(x.Advertise.Id);
                     }
                 });
-                
+
+                savedDemandAds.ForEach(x => {
+                    if (x.UserId == mappedQuery[i].Id)
+                    {
+                        mappedQuery[i].SavedDemandAdvertisesIds.Add(x.DemandAdvertise.Id);
+                    }
+                });
+
             }
             return mappedQuery;
         }

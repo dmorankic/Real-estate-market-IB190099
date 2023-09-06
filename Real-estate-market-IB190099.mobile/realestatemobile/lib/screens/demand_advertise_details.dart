@@ -1,56 +1,44 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:realestatemobile/model/advertise.dart';
-import 'package:realestatemobile/providers/message_provider.dart';
-import 'package:realestatemobile/screens/stripe_payment.dart';
 import 'package:realestatemobile/utils/util.dart';
-import '../providers/advertise_provider.dart';
+import '../model/demand_advertise.dart';
+import '../providers/demand_advertise_provider.dart';
+import '../providers/demand_message_provider.dart';
 
-class AdvertiseDetails extends StatefulWidget {
-  static const String routeName = "/advertise_details";
+class DemandAdvertiseDetails extends StatefulWidget {
+  static const String routeName = "/demand_advertise_details";
   String? id;
-  AdvertiseDetails({this.id, super.key});
+  DemandAdvertiseDetails({this.id, super.key});
 
   @override
-  State<AdvertiseDetails> createState() => _AdvertiseDetailsState();
+  State<DemandAdvertiseDetails> createState() => _DemandAdvertiseDetailsState();
 }
 
-class _AdvertiseDetailsState extends State<AdvertiseDetails> {
-  List<String> defaultImages = [
-    "assets/images/logo.png",
-    "assets/images/logo2.png"
-  ];
-  List<String> images = [];
+class _DemandAdvertiseDetailsState extends State<DemandAdvertiseDetails> {
   final String _baseUrl = 'https://10.0.2.2:7006/';
-  final CarouselController _carouselController = CarouselController();
-  TextEditingController messageController = TextEditingController();
-  AdvertiseProvider? _advertiseProvider = null;
-  Future<Advertise>? data;
-  String saved = "Save";
-  MessageProvider? _messageProvider;
-  final _formKey = GlobalKey<FormState>();
 
-  GoogleMapController? mapController;
-  Set<Marker> markers = Set();
-  LatLng showLocation = LatLng(0, 0);
+  TextEditingController messageController = TextEditingController();
+  DemandAdvertiseProvider? _demandAdvertiseProvider = null;
+  Future<DemandAdvertise>? data;
+  String saved = "Save";
+  DemandMessageProvider? _demandMessageProvider;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    _advertiseProvider = context.read<AdvertiseProvider>();
-    _messageProvider = context.read<MessageProvider>();
+    _demandAdvertiseProvider = context.read<DemandAdvertiseProvider>();
+    _demandMessageProvider = context.read<DemandMessageProvider>();
 
     loadData();
   }
 
   Future loadData() async {
-    data = Future.value(
-        await _advertiseProvider?.getById(this.widget.id!, "Advertise"));
+    data = Future.value(await _demandAdvertiseProvider?.getById(
+        this.widget.id!, "DemandAdvertise"));
 
     setState(() {
       data = data;
@@ -60,27 +48,13 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<Advertise>(
+      body: FutureBuilder<DemandAdvertise>(
         future: data,
-        builder: (BuildContext context, AsyncSnapshot<Advertise> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<DemandAdvertise> snapshot) {
           Widget child;
           if (snapshot.hasData) {
-            if (snapshot.data?.property?.location != null) {
-              showLocation = LatLng(
-                  snapshot!.data!.property!.location!.latitude!,
-                  snapshot!.data!.property!.location!.longitude!);
-              markers.add(Marker(
-                markerId: MarkerId(showLocation.toString()),
-                position: showLocation!,
-                infoWindow: InfoWindow(
-                  title: 'Insert location',
-                  snippet: 'Location of your property',
-                ),
-                icon: BitmapDescriptor.defaultMarker,
-              ));
-            }
-
-            Authorization.loggedUser?.savedAdvertisesIds?.forEach((x) => {
+            Authorization.loggedUser?.savedDemandAdvertisesIds?.forEach((x) => {
                   if (x == snapshot.data?.id) {saved = "Remove from saved"}
                 });
             child = SafeArea(
@@ -89,31 +63,20 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 child: Column(
                   children: [
                     _buildNav(snapshot.data!.id.toString()),
-                    _buildSlider(snapshot.data!),
                     Column(
                       children: [
                         Container(
                           child: Text(
-                            snapshot.data!.property!.name!,
+                            "Demand",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                          child: Text(
-                            "\$${snapshot.data!.property?.price}",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 35),
                           child: Text(
-                            "${snapshot.data!.property?.description}",
+                            "${snapshot.data!.description}",
                             style: TextStyle(
                               fontSize: 13,
                             ),
@@ -131,7 +94,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Quadrature : ${snapshot.data!.property?.quadrature}m²",
+                              "Min. Quadrature : ${snapshot.data!.minQuadrature}m²",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -140,7 +103,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Address : ${snapshot.data?.property?.address != null ? "${snapshot.data!.property!.address!.numberStreet!}, ${snapshot.data!.property!.address!.city!.name!}" : 'not provided'}",
+                              "Max. Quadrature : ${snapshot.data!.maxQuadrature}m²",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -149,7 +112,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Floors : ${snapshot.data!.property?.floors}",
+                              "Location : ${snapshot.data!.location}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -158,7 +121,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Property type: ${snapshot.data!.property?.propertyType}",
+                              "Floors : ${snapshot.data!.floors}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -167,7 +130,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Rooms : ${snapshot.data!.property?.rooms}",
+                              "Property type: ${snapshot.data!.propertyType}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -176,7 +139,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Year of construction : ${snapshot.data!.property?.yearOfConstruction}",
+                              "Rooms : ${snapshot.data!.rooms}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -185,7 +148,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Parking : ${snapshot.data!.property?.parking == 0 ? "No" : "Yes"}",
+                              "Parking : ${snapshot.data!.parking == 0 ? "No" : "Yes"}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -194,7 +157,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Water : ${snapshot.data!.property?.water == 0 ? "No" : "Yes"}",
+                              "Water : ${snapshot.data!.water == 0 ? "No" : "Yes"}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -203,16 +166,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Electricity : ${snapshot.data!.property?.electricity == 0 ? "No" : "Yes"}",
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Text(
-                              "Price : \$${snapshot.data!.type == "rent" ? "${snapshot.data!.property?.price} per month" : "${snapshot.data!.property?.price}"}",
+                              "Electricity : ${snapshot.data!.electricity == 0 ? "No" : "Yes"}",
                               style: TextStyle(
                                 fontSize: 13,
                               ),
@@ -220,38 +174,6 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                           ),
                           SizedBox(
                             height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: SizedBox(
-                              width: 300,
-                              height: 200,
-                              child: snapshot.data?.property?.location != null
-                                  ? GoogleMap(
-                                      zoomGesturesEnabled: true,
-                                      initialCameraPosition: CameraPosition(
-                                        target: showLocation!,
-                                        zoom: 15.0,
-                                      ),
-                                      markers: markers,
-                                      mapType: MapType.normal,
-                                      onMapCreated: (controller) {
-                                        setState(() {
-                                          mapController = controller;
-                                        });
-                                      },
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("Location is not inserted"),
-                                      ],
-                                    ),
-                            ),
                           ),
                           SizedBox(
                             height: 10,
@@ -268,10 +190,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                         ],
                       ),
                     ),
-                    _buildDetailsBottom(
-                        snapshot.data!.property?.name!,
-                        snapshot.data!.id!.toString(),
-                        snapshot.data!.property?.price),
+                    _buildDetailsBottom(snapshot.data!.id!.toString())
                   ],
                 ),
               ),
@@ -307,59 +226,6 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     );
   }
 
-  CarouselSlider _buildSlider(Advertise data) {
-    return CarouselSlider(
-      carouselController: _carouselController,
-      options: CarouselOptions(
-        height: 200.0,
-        enlargeCenterPage: true,
-        autoPlay: false,
-        aspectRatio: 16 / 9,
-        autoPlayCurve: Curves.fastOutSlowIn,
-        enableInfiniteScroll: false,
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        viewportFraction: 0.8,
-      ),
-      items: _buildImages(data),
-    );
-  }
-
-  List<Widget> _buildImages(Advertise data) {
-    if (data.property != null &&
-        data.property!.images != null &&
-        data.property!.images!.isNotEmpty) {
-      return data.property!.images!.map((imgLoc) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Image.network(
-                '$_baseUrl$imgLoc',
-                fit: BoxFit.cover,
-              ),
-            );
-          },
-        );
-      }).toList();
-    } else {
-      return defaultImages.map((url) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Image.asset(
-                url,
-                fit: BoxFit.cover,
-              ),
-            );
-          },
-        );
-      }).toList();
-    }
-  }
-
   Container _buildNav(String advertiseId) {
     return Container(
       margin: EdgeInsets.all(20),
@@ -389,11 +255,11 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
 
               if (saved == "Remove from saved") {
                 try {
-                  var response = await _advertiseProvider?.removeFromSaved(
-                      advertiseId, "Advertise");
+                  var response = await _demandAdvertiseProvider
+                      ?.removeFromSaved(advertiseId, "DemandAdvertise");
 
                   setState(() {
-                    Authorization.loggedUser?.savedAdvertisesIds
+                    Authorization.loggedUser?.savedDemandAdvertisesIds
                         ?.remove(int.parse(advertiseId));
                     saved = "Save";
                   });
@@ -426,11 +292,11 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 }
               } else if (saved == "Save") {
                 try {
-                  var response = await _advertiseProvider?.saveAd(
-                      advertiseId, "Advertise");
+                  var response = await _demandAdvertiseProvider?.saveAd(
+                      advertiseId, "DemandAdvertise");
 
                   setState(() {
-                    Authorization.loggedUser?.savedAdvertisesIds
+                    Authorization.loggedUser?.savedDemandAdvertisesIds
                         ?.add(int.parse(advertiseId));
                     saved = "Remove from saved";
                   });
@@ -472,8 +338,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     );
   }
 
-  Container _buildDetailsBottom(
-      String? propertyName, String? advertiseId, int? price) {
+  Container _buildDetailsBottom(String? advertiseId) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -490,7 +355,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => SimpleDialog(
-                    title: Text('Send message for article $propertyName'),
+                    title: Text('Send message for article'),
                     children: <Widget>[
                       Form(
                         key: _formKey,
@@ -586,18 +451,6 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                       MaterialStateProperty.all<Color>(Colors.blue.shade900)),
             ),
           ),
-          OutlinedButton(
-            child: Text(
-              "Pay in advance",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, "${StripePayment.routeName}/$price");
-            },
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.blue.shade900)),
-          )
         ],
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
       ),
@@ -609,12 +462,12 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       "content": messageController.text,
       "senderId": Authorization.loggedUser!.id!.toString(),
       "timestamp": DateTime.now().toString(),
-      "advertiseId": advertiseId!,
+      "demandAdvertiseId": advertiseId!,
       "isEmployee": "0"
     };
 
     messageController.text = "";
-    var response = await _messageProvider!.send(body);
+    var response = await _demandMessageProvider!.send(body);
     return response;
   }
 }

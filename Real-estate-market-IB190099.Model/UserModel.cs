@@ -21,6 +21,8 @@ namespace Real_estate_market_IB190099.Model
         public virtual RoleModel Role { get; set; }
         public virtual AddressModel Address { get; set; }
         public virtual ICollection<int> SavedAdvertisesIds  { get; set; } = new List<int>();
+        public virtual ICollection<int> SavedDemandAdvertisesIds { get; set; } = new List<int>();
+
 
     }
 }
