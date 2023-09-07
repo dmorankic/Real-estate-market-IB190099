@@ -53,6 +53,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnResetDate = new System.Windows.Forms.Button();
             this.btnPending = new System.Windows.Forms.Button();
+            this.btnDmdReqs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAds)).BeginInit();
             this.SuspendLayout();
             // 
@@ -257,8 +258,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "",
             "Rent",
-            "Sale",
-            "Demand"});
+            "Sale"});
             this.comboBox1.Location = new System.Drawing.Point(589, 96);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(173, 28);
@@ -294,11 +294,22 @@
             this.btnPending.UseVisualStyleBackColor = true;
             this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
             // 
+            // btnDmdReqs
+            // 
+            this.btnDmdReqs.Location = new System.Drawing.Point(602, 32);
+            this.btnDmdReqs.Name = "btnDmdReqs";
+            this.btnDmdReqs.Size = new System.Drawing.Size(160, 27);
+            this.btnDmdReqs.TabIndex = 32;
+            this.btnDmdReqs.Text = "Demand requests";
+            this.btnDmdReqs.UseVisualStyleBackColor = true;
+            this.btnDmdReqs.Click += new System.EventHandler(this.btnDmdReqs_Click);
+            // 
             // frmPending
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 563);
+            this.Controls.Add(this.btnDmdReqs);
             this.Controls.Add(this.btnPending);
             this.Controls.Add(this.btnResetDate);
             this.Controls.Add(this.label4);
@@ -352,5 +363,6 @@
         private DataGridViewButtonColumn Action;
         private Button btnResetDate;
         private Button btnPending;
+        private Button btnDmdReqs;
     }
 }

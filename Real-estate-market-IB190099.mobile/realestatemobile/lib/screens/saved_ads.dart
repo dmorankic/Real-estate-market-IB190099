@@ -8,6 +8,9 @@ import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/utils/util.dart';
 
+import '../providers/demand_advertise_provider.dart';
+import 'demand_advertise_details.dart';
+
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -22,7 +25,11 @@ class SavedAds extends StatefulWidget {
 
 class _SavedAdsState extends State<SavedAds> {
   AdvertiseProvider? _advertiseProvider = null;
+  DemandAdvertiseProvider? _demandAdvertiseProvider = null;
+
   dynamic data = {};
+  dynamic demandData = {};
+
   TextEditingController searchController = TextEditingController();
   final String _baseUrl = 'https://10.0.2.2:7006/';
 
@@ -30,21 +37,26 @@ class _SavedAdsState extends State<SavedAds> {
   void initState() {
     super.initState();
     _advertiseProvider = context.read<AdvertiseProvider>();
+    _demandAdvertiseProvider = context.read<DemandAdvertiseProvider>();
     loadData();
   }
 
   Future loadData() async {
     var tmpData;
+    var tmpDemand;
 
     if (Authorization.loggedUser == null) {
       tmpData = "Not logged in";
     } else {
       tmpData = await _advertiseProvider?.getSaved(
           "Advertise/SavedAdv?userId=${Authorization.loggedUser!.id}");
+      tmpDemand = await _demandAdvertiseProvider?.getSaved(
+          "DemandAdvertise/SavedAdv?userId=${Authorization.loggedUser!.id}");
     }
 
     setState(() {
       data = tmpData;
+      demandData = tmpDemand;
     });
   }
 
@@ -95,6 +107,9 @@ class _SavedAdsState extends State<SavedAds> {
                 SizedBox(height: 8),
                 Column(
                   children: buildAdvertisesCardList(),
+                ),
+                Column(
+                  children: buildDemandAdvertisesCardList(),
                 ),
                 SizedBox(
                   height: 8,
@@ -155,7 +170,7 @@ class _SavedAdsState extends State<SavedAds> {
   }
 
   List<Widget> buildAdvertisesCardList() {
-    if (data.length == 0) {
+    if (data.length == 0 && demandData.length == 0) {
       return [Text("You have not saved any advertise")];
     }
     if (data == null) {
@@ -249,6 +264,94 @@ class _SavedAdsState extends State<SavedAds> {
                           ],
                         ),
                       )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+        .cast<Widget>()
+        .toList();
+    return list;
+  }
+
+  List<Widget> buildDemandAdvertisesCardList() {
+    if (demandData.length == 0 && data.length == 0) {
+      return [Text("You have not saved any advertise")];
+    }
+    if (demandData == null) {
+      return [Text("Loading...")];
+    }
+    if (demandData == "Not logged in") {
+      return [Text(demandData)];
+    }
+    List<Widget> list = demandData
+        .map(
+          (x) => GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                      context, "${DemandAdvertiseDetails.routeName}/${x.id}")
+                  .then((value) => {loadData()});
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  border: Border.all(color: Colors.black)),
+              margin: EdgeInsets.only(bottom: 10),
+              child: Card(
+                child: Container(
+                  width: 300,
+                  margin: EdgeInsets.all(6.0),
+                  child: Row(
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${x.type}",
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "${x.propertyType}",
+                                style: TextStyle(
+                                  fontSize: 11.5,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Description : ${x.description?.length > 79 ? x.description.substring(0, 93) : x.description}",
+                            style: TextStyle(
+                              fontSize: 11.5,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Location : ${x.location}",
+                            style: TextStyle(
+                              fontSize: 11.5,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

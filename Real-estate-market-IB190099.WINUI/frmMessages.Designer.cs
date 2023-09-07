@@ -42,6 +42,7 @@
             this.Content = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnDemandMessages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMessages)).BeginInit();
             this.SuspendLayout();
             // 
@@ -182,11 +183,22 @@
             this.txtSearch.TabIndex = 52;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
+            // btnDemandMessages
+            // 
+            this.btnDemandMessages.Location = new System.Drawing.Point(534, 52);
+            this.btnDemandMessages.Name = "btnDemandMessages";
+            this.btnDemandMessages.Size = new System.Drawing.Size(192, 29);
+            this.btnDemandMessages.TabIndex = 53;
+            this.btnDemandMessages.Text = "View demand messages";
+            this.btnDemandMessages.UseVisualStyleBackColor = true;
+            this.btnDemandMessages.Click += new System.EventHandler(this.btnDemandMessages_Click);
+            // 
             // frmMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 480);
+            this.Controls.Add(this.btnDemandMessages);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvMessages);
@@ -222,5 +234,6 @@
         private DataGridViewTextBoxColumn Property;
         private DataGridViewTextBoxColumn Timestamp;
         private DataGridViewTextBoxColumn Content;
+        private Button btnDemandMessages;
     }
 }

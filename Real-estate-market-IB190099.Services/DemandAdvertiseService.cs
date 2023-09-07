@@ -25,7 +25,7 @@ namespace Real_estate_market_IB190099.Services
 
         public IEnumerable<DemandAdvertiseModel> GetSavedDemandAdvertises(int userId)
         {
-            var advertises = Context.SavedDemandAdvertises
+            var advertises = Context.SavedDemandAdvertises.Include(x=>x.DemandAdvertise)
                .Where(x => x.UserId == userId).ToList();
 
             List<DemandAdvertiseModel> mappedAdvertises = new List<DemandAdvertiseModel>();
@@ -45,6 +45,33 @@ namespace Real_estate_market_IB190099.Services
         }
         public DemandAdvertiseModel Remove(int id)
         {
+
+            List<DemandMessage> messagesToRemove = new List<DemandMessage>();
+            var messages = Context.DemandMessages.ToList();
+            foreach (var message in messages)
+            {
+                if (message.DemandAdvertiseId == id)
+                {
+                    messagesToRemove.Add(message);
+                }
+            }
+            if(messagesToRemove.Count > 0)
+            {
+                messagesToRemove.ForEach(x => { Context.DemandMessages.Remove(x); });
+            }
+            List<SavedDemandAdvertise> toRemove= new List<SavedDemandAdvertise>();
+            var savedAds = Context.SavedDemandAdvertises.ToList();
+            foreach (var advertise in savedAds)
+            {
+                if (advertise.DemandAdvertiseId == id)
+                {
+                    toRemove.Add(advertise);
+                }
+            }
+            if(toRemove.Count > 0)
+            {
+                toRemove.ForEach(x=>{ Context.SavedDemandAdvertises.Remove(x); });
+            }
             var entity = Context.DemandAdvertises.Find(id);
             if (entity != null)
             {
@@ -79,6 +106,21 @@ namespace Real_estate_market_IB190099.Services
             Context.SavedDemandAdvertises.Add(insertReq);
             Context.SaveChanges();
             return insert;
+        }
+
+        public override IQueryable<DemandAdvertise> AddFilter(IQueryable<DemandAdvertise> query, AdvertiseSearchObject search = null)
+        {
+            var filteredQuery = base.AddFilter(query, search);
+            if (!string.IsNullOrEmpty(search.PropertyName))
+            {
+                filteredQuery=filteredQuery.Where(x=>x.Location.ToLower().Contains(search.PropertyName.ToLower()));
+            }
+            if(!string.IsNullOrEmpty(search.Status))
+            {
+                filteredQuery=filteredQuery.Where(x=>x.Status==search.Status);
+            }
+            return filteredQuery;
+
         }
     }
 }

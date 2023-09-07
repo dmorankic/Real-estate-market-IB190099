@@ -70,7 +70,6 @@ namespace Real_estate_market_IB190099.WINUI
                 cmbType.HeaderText = "Section";
                 cmbType.Items.Add("Rent");
                 cmbType.Items.Add("Sale");
-                cmbType.Items.Add("Demand");
                 cmbType.Name = "cmbType";
 
                 dgvAds.Columns.Add(cmbType);
@@ -213,6 +212,12 @@ namespace Real_estate_market_IB190099.WINUI
             frmPending frm = new frmPending();
             Hide();
             frm.Show();
+        }
+
+        private void btnDmdReqs_Click(object sender, EventArgs e)
+        {
+            frmPendingDemand frm = new frmPendingDemand();
+            frm.ShowDialog();
         }
     }
 }

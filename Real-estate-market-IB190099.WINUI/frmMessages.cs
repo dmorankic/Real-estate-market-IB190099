@@ -130,6 +130,12 @@ namespace Real_estate_market_IB190099.WINUI
             Hide();
             frm.Show();
         }
+
+        private void btnDemandMessages_Click(object sender, EventArgs e)
+        {
+            frmDemandMessages frm=new frmDemandMessages();
+            frm.ShowDialog();
+        }
     }
 
 

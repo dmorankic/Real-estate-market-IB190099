@@ -13,8 +13,8 @@ namespace Real_estate_market_IB190099.WINUI
 {
     public partial class frmDemand : Form
     {
-        public APIService adService { get; set; } = new APIService("Advertise");
-        List<AdvertiseModel> ads = null;
+        public APIService adService { get; set; } = new APIService("DemandAdvertise");
+        List<DemandAdvertiseModel> ads = null;
         public bool dateSelected { get; set; } = false;
         public frmDemand()
         {
@@ -31,9 +31,9 @@ namespace Real_estate_market_IB190099.WINUI
         }
 
 
-        private async Task<List<AdvertiseModel>> loadAds()
+        private async Task<List<DemandAdvertiseModel>> loadAds()
         {
-            var list = await adService.Get<List<AdvertiseModel>>("Type=demand&Status=approved");
+            var list = await adService.Get<List<DemandAdvertiseModel>>("Status=approved");
             ads = list;
             dgvDemand.DataSource = list;
             return list;
@@ -42,7 +42,7 @@ namespace Real_estate_market_IB190099.WINUI
         private void customizeDgvAds()
         {
 
-            if (dgvDemand.ColumnCount == 4)
+            if (dgvDemand.ColumnCount == 3)
             {
                 DataGridViewButtonColumn btnDetails = new DataGridViewButtonColumn();
                 btnDetails.HeaderText = "Action";
@@ -53,15 +53,8 @@ namespace Real_estate_market_IB190099.WINUI
 
             foreach (DataGridViewRow row in dgvDemand.Rows)
             {
-                DataGridViewCell cell = row.Cells[4];
+                DataGridViewCell cell = row.Cells[3];
                 cell.Value = "Details";
-
-
-                AdvertiseModel obj = row.DataBoundItem as AdvertiseModel;
-                if (!obj.Price.Contains("$"))
-                {
-                    obj.Price = $"${obj.Price}";
-                }
             }
         }
 
@@ -75,7 +68,7 @@ namespace Real_estate_market_IB190099.WINUI
 
         public void filterAll()
         {
-            List<AdvertiseModel> filteredList = ads;
+            List<DemandAdvertiseModel> filteredList = ads;
             if (!string.IsNullOrEmpty(txtFilterUsers.Text))
             {
                 filteredList = filterAds(filteredList);
@@ -90,14 +83,14 @@ namespace Real_estate_market_IB190099.WINUI
         }
 
 
-        private List<AdvertiseModel> filterAds(List<AdvertiseModel> list)
+        private List<DemandAdvertiseModel> filterAds(List<DemandAdvertiseModel> list)
         {
             var filtered = list.Where(x =>
-             x.PropName.ToLower().Contains(txtFilterUsers.Text.ToLower())).ToList();
+             x.Location.ToLower().Contains(txtFilterUsers.Text.ToLower())).ToList();
             return filtered;
         }
 
-        private List<AdvertiseModel> filterDate(List<AdvertiseModel> list)
+        private List<DemandAdvertiseModel> filterDate(List<DemandAdvertiseModel> list)
         {
             list = list.Where(x => x.DateCreated.Value.Date == dateTimePicker1.Value.Date).ToList();
             return list;
@@ -162,6 +155,23 @@ namespace Real_estate_market_IB190099.WINUI
             frmMessages frm = new frmMessages();
             Hide();
             frm.Show();
+        }
+
+        private void dgvDemand_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 3)
+            {
+                DemandAdvertiseModel selectedAd = dgvDemand.SelectedRows[0].DataBoundItem as DemandAdvertiseModel;
+                frmDemandDetails details = new frmDemandDetails(selectedAd,selectedAd.Type);
+                details.FormClosed += detailsClose;
+                details.ShowDialog();
+            }
+        }
+        private async void detailsClose(object? sender, FormClosedEventArgs e)
+        {
+            await loadAds();
+            filterAll();
+            customizeDgvAds();
         }
     }
 }

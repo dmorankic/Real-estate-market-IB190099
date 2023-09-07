@@ -1,12 +1,15 @@
 // ignore_for_file: sized_box_for_whitespace, unused_local_variable, avoid_init_to_null
 
 import 'package:flutter/material.dart';
-import 'package:realestatemobile/providers/advertise_provider.dart';
+import 'package:realestatemobile/providers/demand_advertise_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:realestatemobile/screens/advertise_details.dart';
 import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/utils/util.dart';
+
+import 'demand_advertise_details.dart';
+
 // ignore_for_file: use_build_context_synchronously
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
@@ -20,7 +23,7 @@ class Demand extends StatefulWidget {
 }
 
 class _DemandState extends State<Demand> {
-  AdvertiseProvider? _advertiseProvider = null;
+  DemandAdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
   final String _baseUrl = 'https://10.0.2.2:7006/';
@@ -28,14 +31,13 @@ class _DemandState extends State<Demand> {
   @override
   void initState() {
     super.initState();
-    _advertiseProvider = context.read<AdvertiseProvider>();
+    _advertiseProvider = context.read<DemandAdvertiseProvider>();
 
     loadData();
   }
 
   Future loadData() async {
-    var tmpData =
-        await _advertiseProvider?.get({'Type': 'demand'}, "Advertise");
+    var tmpData = await _advertiseProvider?.get(null, "DemandAdvertise");
 
     setState(() {
       data = tmpData;
@@ -113,7 +115,7 @@ class _DemandState extends State<Demand> {
             controller: searchController,
             onSubmitted: (value) async {
               var tmpData = await _advertiseProvider
-                  ?.get({'PropertyName': value, 'Type': type}, "Advertise");
+                  ?.get({'PropertyName': value}, "DemandAdvertise");
 
               setState(() {
                 data = tmpData;
@@ -122,7 +124,7 @@ class _DemandState extends State<Demand> {
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(top: 2),
               border: InputBorder.none,
-              hintText: "Search",
+              hintText: "Search by location",
               prefixIcon: Icon(
                 Icons.search,
                 color: Colors.grey,
@@ -137,8 +139,7 @@ class _DemandState extends State<Demand> {
           icon: Icon(Icons.filter_list),
           onPressed: () async {
             var tmpData = await _advertiseProvider?.get(
-                {'PropertyName': searchController.text, 'Type': type},
-                "Advertise");
+                {'PropertyName': searchController.text}, "DemandAdvertise");
 
             setState(() {
               data = tmpData;
@@ -162,7 +163,7 @@ class _DemandState extends State<Demand> {
           (x) => GestureDetector(
             onTap: () {
               Navigator.pushNamed(
-                  context, "${AdvertiseDetails.routeName}/${x.id}");
+                  context, "${DemandAdvertiseDetails.routeName}/${x.id}");
             },
             child: Container(
               decoration: BoxDecoration(
@@ -175,51 +176,39 @@ class _DemandState extends State<Demand> {
                   margin: EdgeInsets.all(6.0),
                   child: Row(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 100.0,
-                              height: 80.0,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(24.0)),
-                              ),
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.elliptical(10, 10)),
-                                child: SizedBox.fromSize(
-                                  size: Size.fromRadius(35),
-                                  child: x.property?.images.isEmpty
-                                      ? Image.asset("assets/images/NoImage.png",
-                                          fit: BoxFit.cover)
-                                      : Image.network(
-                                          '$_baseUrl${x.property?.images[0]}',
-                                          fit: BoxFit.cover),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       Container(
                         height: 100.00,
                         width: 190.00,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              "${x.property?.name}",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${x.type}",
+                                  style: TextStyle(
+                                    fontSize: 11.5,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "${x.propertyType}",
+                                  style: TextStyle(
+                                    fontSize: 11.5,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
                             Text(
-                              "${x.property?.description.length > 93 ? x.property?.description.substring(0, 93) : x.property?.description}",
+                              "Description : ${x.description?.length > 79 ? x.description.substring(0, 93) : x.description}",
                               style: TextStyle(
                                 fontSize: 11.5,
                               ),
@@ -228,15 +217,12 @@ class _DemandState extends State<Demand> {
                             SizedBox(
                               height: 15,
                             ),
-                            Container(
-                              width: 188,
-                              child: Text(
-                                "\$${x.property?.price}",
-                                style: TextStyle(
-                                  fontSize: 11.5,
-                                ),
-                                textAlign: TextAlign.right,
+                            Text(
+                              "Location : ${x.location}",
+                              style: TextStyle(
+                                fontSize: 11.5,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),

@@ -7,6 +7,15 @@
     <Compile Update="frmDemand.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmDemandDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmDemandMessageDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmDemandMessages.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -17,6 +26,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmPending.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmPendingDemand.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmRent.cs">

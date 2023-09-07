@@ -15,6 +15,7 @@ import 'package:realestatemobile/screens/burger.dart';
 import 'package:realestatemobile/screens/create_ad.dart';
 import 'package:realestatemobile/screens/demand.dart';
 import 'package:realestatemobile/screens/demand_advertise_details.dart';
+import 'package:realestatemobile/screens/demand_inbox_details.dart';
 import 'package:realestatemobile/screens/inbox.dart';
 import 'package:realestatemobile/screens/inbox_details.dart';
 import 'package:realestatemobile/screens/login_screen.dart';
@@ -139,6 +140,14 @@ class MyApp extends StatelessWidget {
                 var id = uri.pathSegments[1];
                 return MaterialPageRoute(
                     builder: (context) => InboxDetails(id: id));
+              }
+
+              if (uri.pathSegments.length == 2 &&
+                  "/${uri.pathSegments.first}" ==
+                      DemandInboxDetails.routeName) {
+                var id = uri.pathSegments[1];
+                return MaterialPageRoute(
+                    builder: (context) => DemandInboxDetails(id: id));
               }
 
               if (uri.pathSegments.length == 2 &&

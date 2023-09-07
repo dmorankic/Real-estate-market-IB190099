@@ -44,13 +44,12 @@
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnMessages = new System.Windows.Forms.Button();
             this.dgvDemand = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnResetDate = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.txtFilterUsers = new System.Windows.Forms.TextBox();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDemand)).BeginInit();
             this.SuspendLayout();
             // 
@@ -195,7 +194,6 @@
             this.dgvDemand.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
-            this.Price,
             this.DateCreated});
             this.dgvDemand.Location = new System.Drawing.Point(144, 127);
             this.dgvDemand.Name = "dgvDemand";
@@ -204,39 +202,8 @@
             this.dgvDemand.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDemand.Size = new System.Drawing.Size(625, 367);
             this.dgvDemand.TabIndex = 46;
+            this.dgvDemand.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDemand_CellContentClick);
             this.dgvDemand.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDemand_DataError);
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
-            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "PropName";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Article heading";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 125;
-            // 
-            // Price
-            // 
-            this.Price.DataPropertyName = "Price";
-            this.Price.HeaderText = "Price";
-            this.Price.MinimumWidth = 6;
-            this.Price.Name = "Price";
-            this.Price.Width = 125;
-            // 
-            // DateCreated
-            // 
-            this.DateCreated.DataPropertyName = "DateCreated";
-            this.DateCreated.HeaderText = "Date created";
-            this.DateCreated.MinimumWidth = 6;
-            this.DateCreated.Name = "DateCreated";
-            this.DateCreated.Width = 125;
             // 
             // btnResetDate
             // 
@@ -261,10 +228,34 @@
             // 
             this.txtFilterUsers.Location = new System.Drawing.Point(144, 94);
             this.txtFilterUsers.Name = "txtFilterUsers";
-            this.txtFilterUsers.PlaceholderText = "Search by heading";
+            this.txtFilterUsers.PlaceholderText = "Search by location";
             this.txtFilterUsers.Size = new System.Drawing.Size(219, 27);
             this.txtFilterUsers.TabIndex = 48;
             this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Location";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Location";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.DateCreated.DataPropertyName = "DateCreated";
+            this.DateCreated.HeaderText = "Date created";
+            this.DateCreated.MinimumWidth = 6;
+            this.DateCreated.Name = "DateCreated";
             // 
             // frmDemand
             // 
@@ -311,12 +302,11 @@
         private DataGridViewTextBoxColumn ID;
         private Button btnMessages;
         private DataGridView dgvDemand;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn Price;
-        private DataGridViewTextBoxColumn DateCreated;
         private Button btnResetDate;
         private Label label3;
         private TextBox txtFilterUsers;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn DateCreated;
     }
 }
