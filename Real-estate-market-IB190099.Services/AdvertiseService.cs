@@ -254,7 +254,8 @@ namespace Real_estate_market_IB190099.Services
                 .Include(x=>x.Property.Address.City)
                 .Include(x=>x.User)
                 .Include(x=>x.Property.Location)
-                .Include(x=>x.Property.Address);
+                .Include(x=>x.Property.Address)
+                .Include(x=>x.Employee);
 
             return query;
         }

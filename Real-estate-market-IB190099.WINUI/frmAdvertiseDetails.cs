@@ -102,9 +102,30 @@ namespace Real_estate_market_IB190099.WINUI
             {
                 await deleteAd();
             }
-            
-     
-       
+         
+        }
+
+        private async Task setEmployee(int employeeId)
+        {
+            PatchObject[] updateReq = new PatchObject[]
+             {
+                    new PatchObject()
+                    {
+                        path = "/EmployeeId",
+                        op = "replace",
+                        value = employeeId
+                    } };
+
+            try
+            {
+                _advertise = await adService.Patch<AdvertiseModel>(_advertise.Id, updateReq);
+
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private async Task changeAdStatus(string newStatus,string message)
@@ -143,6 +164,7 @@ namespace Real_estate_market_IB190099.WINUI
             else
             {
                 await changeAdStatus("approved", "Advertise approved.");
+                await setEmployee(APIService.loggedUser.Id);
             }
         }
 

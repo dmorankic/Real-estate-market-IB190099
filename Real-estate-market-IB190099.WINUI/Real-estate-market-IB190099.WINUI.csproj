@@ -12,8 +12,20 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="C1.Win.FlexChart" Version="6.0.20232.611" />
     <PackageReference Include="Flurl" Version="3.0.7" />
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
+    <PackageReference Include="Microcharts" Version="0.9.5.9" />
+    <PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
+    <PackageReference Include="Microsoft.Chart.Controls" Version="4.7.2046" />
+    <PackageReference Include="ScottPlot" Version="4.1.67" />
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.67" />
+    <PackageReference Include="ScottPlot.WPF" Version="4.1.67" />
+    <PackageReference Include="SkiaSharp" Version="2.88.5" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.88.5" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.5" />
+    <PackageReference Include="SkiaSharp.Views.Forms.WPF" Version="2.88.5" />
+    <PackageReference Include="XtraReportsControls" Version="17.2.5" />
   </ItemGroup>
 
   <ItemGroup>

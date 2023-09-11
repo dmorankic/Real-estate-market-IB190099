@@ -41,7 +41,5 @@ public partial class Property
 
     public virtual Location? Location { get; set; }
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
-
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 }

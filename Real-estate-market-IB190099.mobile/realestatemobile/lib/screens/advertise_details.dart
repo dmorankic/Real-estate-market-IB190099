@@ -268,10 +268,13 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                         ],
                       ),
                     ),
-                    _buildDetailsBottom(
-                        snapshot.data!.property?.name!,
-                        snapshot.data!.id!.toString(),
-                        snapshot.data!.property?.price),
+                    snapshot.data!.employeeId != null
+                        ? _buildDetailsBottom(
+                            snapshot.data!.property?.name!,
+                            snapshot.data!.id!.toString(),
+                            snapshot.data!.property?.price,
+                            snapshot.data!.employeeId!)
+                        : SizedBox(height: 1),
                   ],
                 ),
               ),
@@ -473,7 +476,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   }
 
   Container _buildDetailsBottom(
-      String? propertyName, String? advertiseId, int? price) {
+      String? propertyName, String? advertiseId, int? price, int? employeeId) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
@@ -592,7 +595,8 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, "${StripePayment.routeName}/$price");
+              Navigator.pushNamed(context,
+                  "${StripePayment.routeName}/$price/$advertiseId/$employeeId");
             },
             style: ButtonStyle(
                 backgroundColor:

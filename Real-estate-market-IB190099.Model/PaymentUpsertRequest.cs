@@ -10,8 +10,9 @@ namespace Real_estate_market_IB190099.Model
         public double Amount { get; set; }
 
         public int? UserId { get; set; }
+        public int? EmployeeId { get; set; }
 
-        public int? PropertyId { get; set; }
+        public int? AdvertiseId { get; set; }
 
         public DateTime? TransactionDate { get; set; }
     }

@@ -19,6 +19,7 @@ class Advertise {
   DateTime? dateCreated;
   Property? property;
   User? user;
+  int? employeeId;
 
   factory Advertise.fromJson(Map<String, dynamic> json) =>
       _$AdvertiseFromJson(json);

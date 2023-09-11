@@ -150,12 +150,17 @@ class MyApp extends StatelessWidget {
                     builder: (context) => DemandInboxDetails(id: id));
               }
 
-              if (uri.pathSegments.length == 2 &&
+              if (uri.pathSegments.length == 4 &&
                   "/${uri.pathSegments.first}" == StripePayment.routeName) {
                 var totalPrice = double.tryParse(uri.pathSegments[1]);
+                var advertiseId = int.tryParse(uri.pathSegments[2]);
+                var employeeId = int.tryParse(uri.pathSegments[3]);
+
                 return MaterialPageRoute(
-                    builder: (context) =>
-                        StripePayment(totalPrice: totalPrice));
+                    builder: (context) => StripePayment(
+                        totalPrice: totalPrice,
+                        advertiseId: advertiseId,
+                        employeeId: employeeId));
               }
             },
             theme: ThemeData(

@@ -37,7 +37,8 @@ class _DemandState extends State<Demand> {
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get(null, "DemandAdvertise");
+    var tmpData = await _advertiseProvider
+        ?.get({'Status': 'approved'}, "DemandAdvertise");
 
     setState(() {
       data = tmpData;

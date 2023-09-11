@@ -20,7 +20,8 @@ Advertise _$AdvertiseFromJson(Map<String, dynamic> json) => Advertise()
       : Property.fromJson(json['property'] as Map<String, dynamic>)
   ..user = json['user'] == null
       ? null
-      : User.fromJson(json['user'] as Map<String, dynamic>);
+      : User.fromJson(json['user'] as Map<String, dynamic>)
+  ..employeeId = json['employeeId'] as int?;
 
 Map<String, dynamic> _$AdvertiseToJson(Advertise instance) => <String, dynamic>{
       'id': instance.id,
@@ -31,4 +32,5 @@ Map<String, dynamic> _$AdvertiseToJson(Advertise instance) => <String, dynamic>{
       'dateCreated': instance.dateCreated?.toIso8601String(),
       'property': instance.property,
       'user': instance.user,
+      'employeeId': instance.employeeId,
     };

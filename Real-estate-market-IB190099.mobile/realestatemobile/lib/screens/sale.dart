@@ -34,7 +34,8 @@ class _SaleState extends State<Sale> {
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get({'Type': 'sale'}, "Advertise");
+    var tmpData = await _advertiseProvider
+        ?.get({'Type': 'sale', 'Status': 'approved'}, "Advertise");
 
     setState(() {
       data = tmpData;

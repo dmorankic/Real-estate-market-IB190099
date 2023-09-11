@@ -33,7 +33,9 @@ public partial class User
 
     public virtual Address? Address { get; set; }
 
-    public virtual ICollection<Advertise> Advertises { get; set; } = new List<Advertise>();
+    public virtual ICollection<Advertise> AdvertiseEmployees { get; set; } = new List<Advertise>();
+
+    public virtual ICollection<Advertise> AdvertiseUsers { get; set; } = new List<Advertise>();
 
     public virtual ICollection<DemandAdvertise> DemandAdvertises { get; set; } = new List<DemandAdvertise>();
 
@@ -41,7 +43,9 @@ public partial class User
 
     public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public virtual ICollection<Payment> PaymentEmployees { get; set; } = new List<Payment>();
+
+    public virtual ICollection<Payment> PaymentUsers { get; set; } = new List<Payment>();
 
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 

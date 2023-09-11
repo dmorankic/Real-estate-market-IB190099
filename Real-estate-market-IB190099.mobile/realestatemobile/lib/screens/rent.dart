@@ -35,7 +35,8 @@ class _RentState extends State<Rent> {
   }
 
   Future loadData() async {
-    var tmpData = await _advertiseProvider?.get({'Type': 'rent'}, "Advertise");
+    var tmpData = await _advertiseProvider
+        ?.get({'Type': 'rent', 'Status': 'approved'}, "Advertise");
     setState(() {
       data = tmpData!;
     });

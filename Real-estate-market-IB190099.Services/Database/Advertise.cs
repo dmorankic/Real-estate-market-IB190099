@@ -17,7 +17,13 @@ public partial class Advertise
 
     public DateTime? DateCreated { get; set; }
 
+    public int? EmployeeId { get; set; }
+
+    public virtual User? Employee { get; set; }
+
     public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual Property? Property { get; set; }
 

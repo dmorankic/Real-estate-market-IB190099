@@ -11,11 +11,15 @@ public partial class Payment
 
     public int? UserId { get; set; }
 
-    public int? PropertyId { get; set; }
-
     public DateTime? TransactionDate { get; set; }
 
-    public virtual Property? Property { get; set; }
+    public int? AdvertiseId { get; set; }
+
+    public int? EmployeeId { get; set; }
+
+    public virtual Advertise? Advertise { get; set; }
+
+    public virtual User? Employee { get; set; }
 
     public virtual User? User { get; set; }
 }

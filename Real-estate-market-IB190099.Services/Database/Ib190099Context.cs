@@ -80,11 +80,15 @@ public partial class Ib190099Context : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
 
+            entity.HasOne(d => d.Employee).WithMany(p => p.AdvertiseEmployees)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_AdvertiseEmployee");
+
             entity.HasOne(d => d.Property).WithMany(p => p.Advertises)
                 .HasForeignKey(d => d.PropertyId)
                 .HasConstraintName("FK_AdvertiseProperty");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Advertises)
+            entity.HasOne(d => d.User).WithMany(p => p.AdvertiseUsers)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_AdvertiseUsers");
         });
@@ -200,11 +204,15 @@ public partial class Ib190099Context : DbContext
 
             entity.Property(e => e.TransactionDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Property).WithMany(p => p.Payments)
-                .HasForeignKey(d => d.PropertyId)
-                .HasConstraintName("FK_PaymentProperty");
+            entity.HasOne(d => d.Advertise).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.AdvertiseId)
+                .HasConstraintName("FK_PaymentAdvertise");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Payments)
+            entity.HasOne(d => d.Employee).WithMany(p => p.PaymentEmployees)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_PaymentEmployee");
+
+            entity.HasOne(d => d.User).WithMany(p => p.PaymentUsers)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FK_PaymentUsers");
         });

@@ -22,6 +22,9 @@ namespace Real_estate_market_IB190099.Model
         public int? UserId { get; set; }
         public virtual UserModel User { get; set; }
 
+        public int? EmployeeId { get; set; }
+        public virtual UserModel Employee { get; set; }
+
         public DateTime? DateCreated { get; set; }
 
         public virtual PropertyOutput Property { get; set; }

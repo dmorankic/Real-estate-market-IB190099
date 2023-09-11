@@ -146,7 +146,7 @@ namespace Real_estate_market_IB190099.WINUI
         {
             Hide();
             frmStatistics frm=new frmStatistics();
-            frm.Show();
+            frm.ShowDialog();
         }
 
         private void btnSale_Click(object sender, EventArgs e)

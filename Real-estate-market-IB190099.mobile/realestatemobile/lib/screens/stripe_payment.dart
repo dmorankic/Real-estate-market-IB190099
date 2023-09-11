@@ -10,8 +10,12 @@ import '../providers/payment_provider.dart';
 import '../utils/util.dart';
 
 class StripePayment extends StatefulWidget {
-  StripePayment({this.totalPrice, super.key});
+  StripePayment(
+      {this.totalPrice, this.advertiseId, this.employeeId, super.key});
   double? totalPrice;
+  int? advertiseId;
+  int? employeeId;
+
   static const String routeName = "/stripe-payment";
 
   @override
@@ -157,7 +161,8 @@ class _StripePaymentState extends State<StripePayment> {
       "amount": amount,
       "userId": Authorization.loggedUser!.id!.toString(),
       "transactionDate": DateTime.now().toString(),
-      "propertyId": 4004
+      "advertiseId": widget.advertiseId,
+      "employeeId": widget.employeeId
     };
 
     var response = await _paymentProvider!.create(body);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
@@ -28,6 +29,13 @@ namespace Real_estate_market_IB190099.Services
             }
 
             return filteredQuery;
+        }
+
+        public override IQueryable<Payment> AddInclude(IQueryable<Payment> query, IdSearchObject search = null)
+        {
+
+            query = query.Include(x => x.Advertise).Include(x=>x.Employee);
+            return query;
         }
 
 
