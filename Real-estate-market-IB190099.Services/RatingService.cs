@@ -1,4 +1,5 @@
-﻿using Real_estate_market_IB190099.Model;
+﻿using AutoMapper;
+using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
@@ -10,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface IUserService : ICRUDService<Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>
+    public class RatingService : BaseCRUDService<Rating, RatingModel, NameSearchObject, RatingUpsertRequest, RatingUpsertRequest>
+        , IRatingService
     {
-        UserModel Login(string username, string password);
-        //UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user);
+        public RatingService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
+        {
+        }
     }
 }

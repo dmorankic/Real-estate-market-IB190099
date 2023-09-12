@@ -10,15 +10,12 @@ using Real_estate_market_IB190099.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers(
     x=> x.Filters.Add<ErrorFilter>()
 
     )
     .AddNewtonsoftJson().AddDataAnnotationsLocalization(); 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -53,6 +50,8 @@ builder.Services.AddTransient<IImageWriter, ImageWriter>();
 builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddTransient<IDemandAdvertiseService, DemandAdvertiseService>();
 builder.Services.AddTransient<IDemandMessageService, DemandMessageService>();
+builder.Services.AddTransient<IRatingService, RatingService>();
+
 
 
 

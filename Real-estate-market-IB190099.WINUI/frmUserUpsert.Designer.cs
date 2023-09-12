@@ -79,13 +79,13 @@
             // 
             // lblHeading
             // 
-            this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(296, 29);
+            this.lblHeading.Location = new System.Drawing.Point(106, 29);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(81, 35);
+            this.lblHeading.Size = new System.Drawing.Size(657, 35);
             this.lblHeading.TabIndex = 2;
             this.lblHeading.Text = "label1";
+            this.lblHeading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -246,7 +246,6 @@
             this.dtBirth.Name = "dtBirth";
             this.dtBirth.Size = new System.Drawing.Size(175, 27);
             this.dtBirth.TabIndex = 23;
-            this.dtBirth.ValueChanged += new System.EventHandler(this.dtBirth_ValueChanged);
             // 
             // label11
             // 

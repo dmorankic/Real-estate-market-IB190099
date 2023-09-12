@@ -141,11 +141,53 @@ namespace Real_estate_market_IB190099.WINUI
 
 
             pictureBox3.ImageLocation = pltDonut.SaveFig("pie_donut.png"); 
-            pictureBox3.Width = 800;
+            pictureBox3.Width = 600;
             pictureBox3.Height = 600;
 
         }
 
+        private void btnSale_Click(object sender, EventArgs e)
+        {
+            frmSale frm = new frmSale();
+            Hide();
+            frm.Show();
+        }
 
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            frmUsers frm = new frmUsers();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnDemand_Click(object sender, EventArgs e)
+        {
+            frmDemand frm = new frmDemand();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            frmRent frm = new frmRent();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnPending_Click(object sender, EventArgs e)
+        {
+            frmPending frm = new frmPending();
+            Hide();
+            frm.Show();
+        }
+
+        private void btnMessages_Click(object sender, EventArgs e)
+        {
+            frmMessages frm = new frmMessages();
+            Hide();
+            frm.Show();
+        }
+
+       
     }
 }

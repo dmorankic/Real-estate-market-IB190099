@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
+import 'package:realestatemobile/providers/rating_provider.dart';
 import 'package:realestatemobile/screens/stripe_payment.dart';
 import 'package:realestatemobile/utils/util.dart';
 import '../providers/advertise_provider.dart';
@@ -22,14 +24,17 @@ class AdvertiseDetails extends StatefulWidget {
 
 class _AdvertiseDetailsState extends State<AdvertiseDetails> {
   List<String> defaultImages = [
-    "assets/images/logo.png",
-    "assets/images/logo2.png"
+    "assets/images/NoImage.png",
   ];
   List<String> images = [];
   final String _baseUrl = 'https://10.0.2.2:7006/';
   final CarouselController _carouselController = CarouselController();
   TextEditingController messageController = TextEditingController();
+  TextEditingController ratingController = TextEditingController();
+
   AdvertiseProvider? _advertiseProvider = null;
+  RatingProvider? _ratingProvider = null;
+
   Future<Advertise>? data;
   String saved = "Save";
   MessageProvider? _messageProvider;
@@ -44,6 +49,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     super.initState();
     _advertiseProvider = context.read<AdvertiseProvider>();
     _messageProvider = context.read<MessageProvider>();
+    _ratingProvider = context.read<RatingProvider>();
 
     loadData();
   }
@@ -88,7 +94,8 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               child: Center(
                 child: Column(
                   children: [
-                    _buildNav(snapshot.data!.id.toString()),
+                    _buildNav(snapshot.data!.id.toString(),
+                        snapshot.data!.property!.id.toString()),
                     _buildSlider(snapshot.data!),
                     Column(
                       children: [
@@ -363,12 +370,118 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     }
   }
 
-  Container _buildNav(String advertiseId) {
+  Container _buildNav(String advertiseId, String propertyId) {
     return Container(
       margin: EdgeInsets.all(20),
       child: Row(
         children: [
           BackButton(),
+          OutlinedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => SimpleDialog(
+                  title: Text('Rate property'),
+                  children: <Widget>[
+                    Form(
+                      key: _formKey,
+                      child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                double.parse(value) < 1.0 ||
+                                double.parse(value) > 10.0) {
+                              return 'You did not insert rating';
+                            }
+                            return null;
+                          },
+                          controller: ratingController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: "Insert number 1.0-10.0")),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        OutlinedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue.shade900))),
+                        OutlinedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                try {
+                                  var response = await rate(propertyId);
+                                  if (response.statusCode == 200) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: Text("Rating successfull"),
+                                              content: Text(
+                                                  "You rated this property"),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () => {
+                                                          Navigator.pop(
+                                                              context),
+                                                          Navigator.pop(
+                                                              context),
+                                                        },
+                                                    child: Text("Ok"))
+                                              ],
+                                            ));
+                                  }
+                                } on Exception catch (e) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Text("No action done"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text("Ok"))
+                                            ],
+                                          ));
+                                }
+                              }
+                            },
+                            child: Text(
+                              "Rate",
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue.shade900)))
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+            child: Text(
+              "Rate this property",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue.shade900)),
+          ),
           OutlinedButton(
             child: Text(
               saved,
@@ -619,6 +732,18 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
 
     messageController.text = "";
     var response = await _messageProvider!.send(body);
+    return response;
+  }
+
+  Future<Response> rate(String? propertyId) async {
+    Map<String, dynamic> body = {
+      "userId": Authorization.loggedUser!.id!.toString(),
+      "propertyId": propertyId,
+      "rating1": double.parse(ratingController.text)
+    };
+
+    ratingController.text = "";
+    var response = await _ratingProvider!.rate(body);
     return response;
   }
 }

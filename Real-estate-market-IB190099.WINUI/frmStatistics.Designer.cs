@@ -35,6 +35,13 @@
             this.lblMonth = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lblEmp = new System.Windows.Forms.Label();
+            this.btnMessages = new System.Windows.Forms.Button();
+            this.btnPending = new System.Windows.Forms.Button();
+            this.btnMyprofile = new System.Windows.Forms.Button();
+            this.btnRent = new System.Windows.Forms.Button();
+            this.btnUsers = new System.Windows.Forms.Button();
+            this.btnDemand = new System.Windows.Forms.Button();
+            this.btnSale = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -42,7 +49,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(18, 140);
+            this.pictureBox1.Location = new System.Drawing.Point(766, 798);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(348, 315);
             this.pictureBox1.TabIndex = 2;
@@ -50,7 +57,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(465, 140);
+            this.pictureBox2.Location = new System.Drawing.Point(349, 139);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(324, 315);
             this.pictureBox2.TabIndex = 3;
@@ -59,7 +66,7 @@
             // lblYear
             // 
             this.lblYear.AutoSize = true;
-            this.lblYear.Location = new System.Drawing.Point(34, 105);
+            this.lblYear.Location = new System.Drawing.Point(836, 759);
             this.lblYear.Name = "lblYear";
             this.lblYear.Size = new System.Drawing.Size(208, 20);
             this.lblYear.TabIndex = 4;
@@ -78,7 +85,7 @@
             // lblMonth
             // 
             this.lblMonth.AutoSize = true;
-            this.lblMonth.Location = new System.Drawing.Point(710, 105);
+            this.lblMonth.Location = new System.Drawing.Point(594, 104);
             this.lblMonth.Name = "lblMonth";
             this.lblMonth.Size = new System.Drawing.Size(204, 20);
             this.lblMonth.TabIndex = 18;
@@ -86,20 +93,89 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(217, 731);
+            this.pictureBox3.Location = new System.Drawing.Point(170, 798);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(529, 270);
+            this.pictureBox3.Size = new System.Drawing.Size(332, 270);
             this.pictureBox3.TabIndex = 19;
             this.pictureBox3.TabStop = false;
             // 
             // lblEmp
             // 
             this.lblEmp.AutoSize = true;
-            this.lblEmp.Location = new System.Drawing.Point(362, 692);
+            this.lblEmp.Location = new System.Drawing.Point(227, 759);
             this.lblEmp.Name = "lblEmp";
             this.lblEmp.Size = new System.Drawing.Size(227, 20);
             this.lblEmp.TabIndex = 20;
             this.lblEmp.Text = "Revenue by employees for year : ";
+            // 
+            // btnMessages
+            // 
+            this.btnMessages.Location = new System.Drawing.Point(30, 379);
+            this.btnMessages.Name = "btnMessages";
+            this.btnMessages.Size = new System.Drawing.Size(94, 29);
+            this.btnMessages.TabIndex = 48;
+            this.btnMessages.Text = "Messages";
+            this.btnMessages.UseVisualStyleBackColor = true;
+            this.btnMessages.Click += new System.EventHandler(this.btnMessages_Click);
+            // 
+            // btnPending
+            // 
+            this.btnPending.Location = new System.Drawing.Point(30, 312);
+            this.btnPending.Name = "btnPending";
+            this.btnPending.Size = new System.Drawing.Size(94, 48);
+            this.btnPending.TabIndex = 49;
+            this.btnPending.Text = "Pending requests";
+            this.btnPending.UseVisualStyleBackColor = true;
+            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
+            // 
+            // btnMyprofile
+            // 
+            this.btnMyprofile.Location = new System.Drawing.Point(30, 425);
+            this.btnMyprofile.Name = "btnMyprofile";
+            this.btnMyprofile.Size = new System.Drawing.Size(94, 29);
+            this.btnMyprofile.TabIndex = 47;
+            this.btnMyprofile.Text = "My profile";
+            this.btnMyprofile.UseVisualStyleBackColor = true;
+            // 
+            // btnRent
+            // 
+            this.btnRent.Location = new System.Drawing.Point(30, 265);
+            this.btnRent.Name = "btnRent";
+            this.btnRent.Size = new System.Drawing.Size(94, 29);
+            this.btnRent.TabIndex = 46;
+            this.btnRent.Text = "Rent";
+            this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
+            // 
+            // btnUsers
+            // 
+            this.btnUsers.Location = new System.Drawing.Point(30, 155);
+            this.btnUsers.Name = "btnUsers";
+            this.btnUsers.Size = new System.Drawing.Size(94, 29);
+            this.btnUsers.TabIndex = 45;
+            this.btnUsers.Text = "Users";
+            this.btnUsers.UseVisualStyleBackColor = true;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
+            // 
+            // btnDemand
+            // 
+            this.btnDemand.Location = new System.Drawing.Point(30, 210);
+            this.btnDemand.Name = "btnDemand";
+            this.btnDemand.Size = new System.Drawing.Size(94, 29);
+            this.btnDemand.TabIndex = 44;
+            this.btnDemand.Text = "Demand";
+            this.btnDemand.UseVisualStyleBackColor = true;
+            this.btnDemand.Click += new System.EventHandler(this.btnDemand_Click);
+            // 
+            // btnSale
+            // 
+            this.btnSale.Location = new System.Drawing.Point(30, 105);
+            this.btnSale.Name = "btnSale";
+            this.btnSale.Size = new System.Drawing.Size(94, 29);
+            this.btnSale.TabIndex = 50;
+            this.btnSale.Text = "Sale";
+            this.btnSale.UseVisualStyleBackColor = true;
+            this.btnSale.Click += new System.EventHandler(this.btnSale_Click);
             // 
             // frmStatistics
             // 
@@ -107,6 +183,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1311, 775);
+            this.Controls.Add(this.btnSale);
+            this.Controls.Add(this.btnMessages);
+            this.Controls.Add(this.btnPending);
+            this.Controls.Add(this.btnMyprofile);
+            this.Controls.Add(this.btnRent);
+            this.Controls.Add(this.btnUsers);
+            this.Controls.Add(this.btnDemand);
             this.Controls.Add(this.lblEmp);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.lblMonth);
@@ -133,5 +216,12 @@
         private Label lblMonth;
         private PictureBox pictureBox3;
         private Label lblEmp;
+        private Button btnMessages;
+        private Button btnPending;
+        private Button btnMyprofile;
+        private Button btnRent;
+        private Button btnUsers;
+        private Button btnDemand;
+        private Button btnSale;
     }
 }

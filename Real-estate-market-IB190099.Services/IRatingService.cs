@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
-    public interface IUserService : ICRUDService<Model.UserModel, UserSearchObject, UserInsertRequest, UserUpdateRequest>
+    public interface IRatingService : ICRUDService<RatingModel, NameSearchObject, RatingUpsertRequest, RatingUpsertRequest>
     {
-        UserModel Login(string username, string password);
-        //UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user);
+
     }
 }

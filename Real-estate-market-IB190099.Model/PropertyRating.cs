@@ -8,9 +8,9 @@ namespace Real_estate_market_IB190099.Model
     public class PropertyRating
     {
 
-        [KeyType(count: 27)]
+        [KeyType(count: 4123)]
         public uint userId { get; set; }
-        [KeyType(count: 27)]
+        [KeyType(count: 4123)]
         public uint propertyId { get; set; }
         public float Label { get; set; }
     }

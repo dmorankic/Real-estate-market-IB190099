@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                     top: MediaQuery.of(context).size.height * 0.15),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/images/logo.png"),
+                  image: AssetImage("assets/images/logoReal.png"),
                 )),
               ),
               SizedBox(height: 17),
@@ -137,7 +137,7 @@ class _LoginState extends State<Login> {
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
                                     title: Text("Error"),
-                                    content: Text(e.toString()),
+                                    content: Text("Incorrect credentials"),
                                     actions: [
                                       ElevatedButton(
                                           onPressed: () =>

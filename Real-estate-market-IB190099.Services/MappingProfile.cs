@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Services.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -49,16 +43,8 @@ namespace Real_estate_market_IB190099.Services
             CreateMap<DemandMessageInsertRequest, DemandMessage>();
             CreateMap<SavedDemandAdvertiseInsertRequest, SavedDemandAdvertise>();
             CreateMap<SavedDemandAdvertise, SavedDemandAdvertiseModel>();
-
-
-
-
-
-
-
-
-
-
+            CreateMap<RatingUpsertRequest, Rating>();
+            CreateMap<Rating, RatingModel>();
         }
     }
 }

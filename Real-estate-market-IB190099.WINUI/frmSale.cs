@@ -47,6 +47,8 @@ namespace Real_estate_market_IB190099.WINUI
             {
                 DataGridViewButtonColumn btnDetails = new DataGridViewButtonColumn();
                 btnDetails.HeaderText = "Action";
+                btnDetails.AutoSizeMode= DataGridViewAutoSizeColumnMode.Fill;
+
 
                 dgvSale.Columns.Add(btnDetails);
                 

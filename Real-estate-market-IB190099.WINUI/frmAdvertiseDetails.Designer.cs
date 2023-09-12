@@ -66,26 +66,23 @@
             // 
             // lblCaption
             // 
-            this.lblCaption.AutoSize = true;
             this.lblCaption.Font = new System.Drawing.Font("Segoe UI", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblCaption.Location = new System.Drawing.Point(364, 31);
+            this.lblCaption.Location = new System.Drawing.Point(83, 31);
             this.lblCaption.Name = "lblCaption";
-            this.lblCaption.Size = new System.Drawing.Size(165, 40);
+            this.lblCaption.Size = new System.Drawing.Size(774, 40);
             this.lblCaption.TabIndex = 1;
             this.lblCaption.Text = "Rent details";
-
+            this.lblCaption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblHeading
             // 
-            this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 21F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(350, 71);
+            this.lblHeading.Location = new System.Drawing.Point(83, 71);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(200, 47);
+            this.lblHeading.Size = new System.Drawing.Size(774, 47);
             this.lblHeading.TabIndex = 2;
             this.lblHeading.Text = "Rent details";
-            this.lblHeading.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-
+            this.lblHeading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblUser
             // 
@@ -96,7 +93,6 @@
             this.lblUser.Size = new System.Drawing.Size(58, 23);
             this.lblUser.TabIndex = 3;
             this.lblUser.Text = "User : ";
-
             // 
             // lblDateCreated
             // 
@@ -107,7 +103,6 @@
             this.lblDateCreated.Size = new System.Drawing.Size(84, 23);
             this.lblDateCreated.TabIndex = 4;
             this.lblDateCreated.Text = "Created : ";
-
             // 
             // lblDesc
             // 
@@ -118,7 +113,6 @@
             this.lblDesc.TabIndex = 5;
             this.lblDesc.Text = resources.GetString("lblDesc.Text");
             this.lblDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
             // 
             // lblQuad
             // 
@@ -129,7 +123,6 @@
             this.lblQuad.Size = new System.Drawing.Size(112, 23);
             this.lblQuad.TabIndex = 6;
             this.lblQuad.Text = "Quadrature : ";
-
             // 
             // lblAddress
             // 
@@ -140,7 +133,6 @@
             this.lblAddress.Size = new System.Drawing.Size(84, 23);
             this.lblAddress.TabIndex = 7;
             this.lblAddress.Text = "Address : ";
-
             // 
             // lblFloors
             // 
@@ -151,7 +143,6 @@
             this.lblFloors.Size = new System.Drawing.Size(69, 23);
             this.lblFloors.TabIndex = 8;
             this.lblFloors.Text = "Floors : ";
-
             // 
             // lblType
             // 
@@ -162,7 +153,6 @@
             this.lblType.Size = new System.Drawing.Size(127, 23);
             this.lblType.TabIndex = 9;
             this.lblType.Text = "Property type : ";
-
             // 
             // lblRooms
             // 
@@ -173,7 +163,6 @@
             this.lblRooms.Size = new System.Drawing.Size(76, 23);
             this.lblRooms.TabIndex = 10;
             this.lblRooms.Text = "Rooms : ";
-
             // 
             // lblWater
             // 
@@ -184,7 +173,6 @@
             this.lblWater.Size = new System.Drawing.Size(69, 23);
             this.lblWater.TabIndex = 12;
             this.lblWater.Text = "Water : ";
-
             // 
             // lblParking
             // 
@@ -195,7 +183,6 @@
             this.lblParking.Size = new System.Drawing.Size(80, 23);
             this.lblParking.TabIndex = 13;
             this.lblParking.Text = "Parking : ";
-
             // 
             // lblYearConst
             // 
@@ -206,7 +193,6 @@
             this.lblYearConst.Size = new System.Drawing.Size(176, 23);
             this.lblYearConst.TabIndex = 14;
             this.lblYearConst.Text = "Year of construction : ";
- 
             // 
             // lblElectricity
             // 
@@ -217,7 +203,6 @@
             this.lblElectricity.Size = new System.Drawing.Size(96, 23);
             this.lblElectricity.TabIndex = 15;
             this.lblElectricity.Text = "Electricity : ";
-
             // 
             // lblPrice
             // 
@@ -229,7 +214,6 @@
             this.lblPrice.Size = new System.Drawing.Size(61, 23);
             this.lblPrice.TabIndex = 16;
             this.lblPrice.Text = "Price : ";
-
             // 
             // btnRemove
             // 
@@ -289,14 +273,13 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 23);
             this.label3.TabIndex = 22;
-
             // 
             // frmAdDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(912, 1049);
+            this.ClientSize = new System.Drawing.Size(938, 1020);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnImgFwd);
             this.Controls.Add(this.btnImgBack);

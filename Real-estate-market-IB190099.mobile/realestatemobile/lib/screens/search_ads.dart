@@ -30,7 +30,7 @@ class _SearchAdsState extends State<SearchAds> {
                     top: MediaQuery.of(context).size.height * 0.08),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/images/logo.png"),
+                  image: AssetImage("assets/images/logoReal.png"),
                 )),
               ),
               SizedBox(height: 17),

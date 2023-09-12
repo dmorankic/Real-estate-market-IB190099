@@ -13,7 +13,7 @@ namespace Real_estate_market_IB190099.Services
 {
     public interface IAdvertiseService:ICRUDService<AdvertiseModel, AdvertiseSearchObject, AdvertiseInsertRequest, AdvertiseInsertRequest>
     {
-        List<PropertyOutput> Recommend(int userId);
+        List<AdvertiseModel> Recommend(int userId,string type);
         public SavedAdvertiseInsertRequest SaveAdvertise(SavedAdvertiseInsertRequest insert);
         public SavedAdvertiseInsertRequest RemoveFromSaved(SavedAdvertiseInsertRequest insert);
         public IEnumerable<AdvertiseModel> GetSavedAdvertises(int userId);

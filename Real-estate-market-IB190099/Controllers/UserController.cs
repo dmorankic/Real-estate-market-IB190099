@@ -33,7 +33,8 @@ namespace Real_estate_market_IB190099.Controllers
         [HttpPatch("{id}")]
         public  IActionResult PatchEmployee([FromRoute] int id, [FromBody] Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> userDocument)
         {
-            var userQuery = _context.Users.Find(id);
+            var userQuery = _context.Users.Include(x=>x.Address.City).Include(x=>x.Role).FirstOrDefault(x=>x.Id==id);
+            
             if (userQuery == null)
             {
                 return BadRequest(_mapper.Map<UserModel>(userQuery));

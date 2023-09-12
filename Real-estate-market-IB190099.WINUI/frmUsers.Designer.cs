@@ -66,7 +66,7 @@
             this.dgvUsers.RowHeadersWidth = 51;
             this.dgvUsers.RowTemplate.Height = 29;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(625, 367);
+            this.dgvUsers.Size = new System.Drawing.Size(755, 367);
             this.dgvUsers.TabIndex = 4;
             this.dgvUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellContentClick);
             this.dgvUsers.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvUsers_DataError);
@@ -165,7 +165,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(304, 20);
+            this.label1.Location = new System.Drawing.Point(397, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(106, 39);
             this.label1.TabIndex = 5;
@@ -228,6 +228,7 @@
             this.btnMyprofile.TabIndex = 12;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
+            this.btnMyprofile.Click += new System.EventHandler(this.btnMyprofile_Click);
             // 
             // btnMessages
             // 
@@ -253,7 +254,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 566);
+            this.ClientSize = new System.Drawing.Size(903, 566);
             this.Controls.Add(this.btnPending);
             this.Controls.Add(this.btnMessages);
             this.Controls.Add(this.btnMyprofile);

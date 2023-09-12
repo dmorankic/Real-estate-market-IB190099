@@ -68,7 +68,7 @@ namespace Real_estate_market_IB190099.Services
 
         public override UserModel Update(int id, UserUpdateRequest update)
         {
-            var user=Context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
+            var user=Context.Users.Include(x=>x.Address.City).Include(x=>x.Role).FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
                 return null;
@@ -140,20 +140,20 @@ namespace Real_estate_market_IB190099.Services
             return query;
         }
 
-        public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
-        {
+        //public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
+        //{
 
-            var userQuery = _context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
-            if (userQuery == null)
-            {
-                return Mapper.Map<UserModel>(userQuery);
-            }
+        //    var userQuery = _context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
+        //    if (userQuery == null)
+        //    {
+        //        return Mapper.Map<UserModel>(userQuery);
+        //    }
 
-            user.ApplyTo(userQuery);
-            Context.SaveChanges();
+        //    user.ApplyTo(userQuery);
+        //    Context.SaveChanges();
 
-            return Mapper.Map<UserModel>(userQuery);
-        }
+        //    return Mapper.Map<UserModel>(userQuery);
+        //}
    
         public override UserModel GetById(int id)
         {

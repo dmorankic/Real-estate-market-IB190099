@@ -32,75 +32,6 @@ namespace Real_estate_market_IB190099.Services
             _AddresService = AddresService;
         }
 
-        //public List<int> Recommend(int id)
-        //{
-        //    var mlContext = new MLContext();
-        //    var dbData = Context.Ratings.ToList();
-        //    var data =_mapper.Map<List<RatingMLModel>>(dbData);
-
-        //    var allPropertyIds = Context.Properties.Select(x => x.Id).Distinct().ToList();
-        //    var allUserIds = Context.Ratings.Select(x => x.UserId).Distinct().ToList();
-
-        //    var dataView = mlContext.Data.LoadFromEnumerable(data);
-
-        //    {
-        //        //var propertyIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("PropertyIdEncoded");
-        //        //var userIdPipeline = mlContext.Transforms.Conversion.MapKeyToValue("UserIdEncoded");
-        //        //var pipeline = propertyIdPipeline.Append(userIdPipeline);
-        //        //
-        //        //var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
-        //    }
-
-        //    //var pipeline = mlContext.Transforms.Conversion.MapValueToKey("PropertyId")
-        //    //    .Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"))
-        //    //    .Append(mlContext.Transforms.Conversion.MapValueToKey("Rating"))
-        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("PropertyId"))
-        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("UserId"))
-        //    //    .Append(mlContext.Transforms.Conversion.MapKeyToValue("Rating"));
-        //    //    //.Append(mlContext.Transforms.Conversion.MapValueToKey("PropertyId"))
-        //    //    //.Append(mlContext.Transforms.Conversion.MapValueToKey("UserId"));
-
-
-        //    //var transformedDataView = pipeline.Fit(dataView).Transform(dataView);
-
-        //    var split = mlContext.Data.TrainTestSplit(dataView, testFraction: 0.2);
-
-        //    {
-        //        //var options = new MatrixFactorizationTrainer.Options
-        //        //{
-        //        //    MatrixColumnIndexColumnName = "PropertyId",
-        //        //    MatrixRowIndexColumnName = "UserId",
-        //        //    LabelColumnName = "Rating",
-        //        //    NumberOfIterations = 20,
-        //        //    ApproximationRank = 100
-        //        //};
-
-        //        //var trainer = mlContext.Recommendation().Trainers.MatrixFactorization(options);
-        //        //var model = trainer.Fit(transformedData);
-        //    }
-        //    ITransformer model = BuildAndTrainModel(mlContext, split.TrainSet);
-
-        //    EvaluateModel(mlContext, split.TestSet, model);
-        //    return UseModelForSinglePrediction(mlContext, model,id);
-
-        //    {
-        //        //var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingMLModel, PropertyPrediction>(model);
-
-        //        //var userId = id; // User for whom we want to make recommendations
-        //        //var propertiesToScore =_mapper.Map<List<RatingMLModel>>(Context.Ratings.ToList());
-
-        //        //var scores = propertiesToScore.Select(property => predictionEngine.Predict(property));
-
-        //        //var recommendations = propertiesToScore.Zip(scores, (property, score) => new PredictionResult
-        //        //{
-        //        //    PropertyId = property.PropertyId,
-        //        //    Score = score.Score
-        //        //}).OrderByDescending(p => p.Score).ToList();
-        //    }
-
-        //    //return new List<PredictionResult>();
-        //}
-
         public override IQueryable<Advertise> AddFilter(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
         {
             var filteredQuery = base.AddFilter(query, search);
@@ -117,16 +48,14 @@ namespace Real_estate_market_IB190099.Services
             {
                 filteredQuery = filteredQuery.Where(x => x!.Status==search.Status);
             }
-
-
-
             return filteredQuery;
         }
+
         static object isLocked = new object();
         static MLContext mlContext = null;
         static ITransformer model = null;
 
-        public List<PropertyOutput> Recommend(int userId)
+        public List<AdvertiseModel> Recommend(int userId,string type)
         {
             lock (isLocked)
             {
@@ -148,11 +77,10 @@ namespace Real_estate_market_IB190099.Services
 
                     foreach (var item in tmpData)
                     {
-                        item.Rating1 = (int)item.Rating1;
                         data.Add(new PropertyRating { userId = (uint)item.UserId, propertyId = (uint)item.PropertyId, Label =(float)item.Rating1 });
                     }
 
-                    IDataView dataView = mlContext.Data.LoadFromEnumerable<PropertyRating>(data);
+                    IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
                     
                     model = BuildAndTrainModel(mlContext, dataView);
                 }
@@ -181,7 +109,7 @@ namespace Real_estate_market_IB190099.Services
 
             List<Property> allPropsExtended=new List<Property>();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 allPropsExtended.AddRange(allProps);
             }
@@ -198,10 +126,16 @@ namespace Real_estate_market_IB190099.Services
                 predictionResult.Add(new Tuple<Property, float>(item, prediction.Score));
             }
             var finalResult = predictionResult.OrderByDescending(x => x.Item2)
-                .Select(x => x.Item1).Distinct().Take(5).ToList();
+                .Select(x => x.Item1).Distinct().ToList();
 
-
-            return Mapper.Map< List<PropertyOutput>>(finalResult);
+            
+            
+            var advertises = new List<Advertise>();
+            finalResult.ForEach(x => {
+                advertises.Add(Context.Advertises.Include(x=>x.Property.Images).FirstOrDefault(y=>y.PropertyId==x.Id));
+            });
+            advertises = advertises.Where(x => x.Status.ToLower() == "approved").Where(x=>x.Type.ToLower()==type.ToLower()).ToList();
+            return Mapper.Map< List<AdvertiseModel>>(advertises);
         }
 
 
@@ -210,10 +144,6 @@ namespace Real_estate_market_IB190099.Services
             IEstimator<ITransformer> estimator = mlContext.Transforms.Conversion
                 .MapValueToKey(outputColumnName: "userIdEncoded", inputColumnName: "userId")
             .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: "propertyIdEncoded", inputColumnName: "propertyId"));
-
-            //var trans = estimator.Fit(trainingDataView).Transform(trainingDataView);
-
-
 
             var options = new MatrixFactorizationTrainer.Options
             {
@@ -226,7 +156,6 @@ namespace Real_estate_market_IB190099.Services
                 Lambda = 0.025,
                 Alpha = 0.01,
                 LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass,
-
             };
 
             var trainerEstimator = estimator.Append(mlContext.Recommendation().Trainers.MatrixFactorization(options));

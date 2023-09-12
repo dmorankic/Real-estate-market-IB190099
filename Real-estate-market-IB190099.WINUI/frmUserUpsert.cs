@@ -21,11 +21,13 @@ namespace Real_estate_market_IB190099.WINUI
     public partial class frmUserUpsert : Form
     {
         public UserModel _user = null;
+        public bool _isMyProfile=false;
         public APIService usersService { get; set; } = new APIService("User");
-        public frmUserUpsert(UserModel user=null)
+        public frmUserUpsert(UserModel user=null,bool isMyProfile=false)
         {
             InitializeComponent();
             _user= user;    
+            _isMyProfile= isMyProfile;
         }
 
         private void frmUserUpsert_Load(object sender, EventArgs e)
@@ -38,6 +40,7 @@ namespace Real_estate_market_IB190099.WINUI
             if (_user != null)
             {
                 lblHeading.Text = "User ID " + _user.Id + " details";
+                if(_isMyProfile) { lblHeading.Text = "My profile"; }
                 txtFirstName.Text = _user.FirstName;
                 txtLastName.Text = _user.LastName;
                 txtEmail.Text = _user.Email;
@@ -55,11 +58,6 @@ namespace Real_estate_market_IB190099.WINUI
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void dtBirth_ValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
@@ -123,6 +121,14 @@ namespace Real_estate_market_IB190099.WINUI
                     try
                     {
                         _user = await usersService.Put<UserModel>(_user.Id, AddressUpdateReq);
+                        if(_isMyProfile)
+                        {
+                            APIService.loggedUser= _user;
+                        }
+                        if (_user.Id == APIService.loggedUser.Id)
+                        {
+                            APIService.loggedUser = _user;
+                        }
 
                     }
                     catch (Exception ex)
@@ -135,6 +141,14 @@ namespace Real_estate_market_IB190099.WINUI
                         if (_user != null)
                         {
                             _user = await usersService.Patch<UserModel>(_user.Id, updateReq);
+                            if (_isMyProfile)
+                            {
+                                APIService.loggedUser = _user;
+                            }
+                            if (_user.Id == APIService.loggedUser.Id)
+                            {
+                                APIService.loggedUser = _user;
+                            }
                             if (_user != null)
                             {
                                 MessageBox.Show("User data updated");
@@ -258,8 +272,10 @@ namespace Real_estate_market_IB190099.WINUI
 
        private bool isValidPhoneNumber()
         {
-            string pattern = @"^\d|\s{9,10}$";
+            string pattern = @"^\d{3}\s\d{8,9}$";
             return Regex.IsMatch(txtPhone.Text, pattern);
         }
+
+    
     }
 }
