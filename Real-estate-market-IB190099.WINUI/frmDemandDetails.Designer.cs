@@ -266,7 +266,7 @@
             this.Controls.Add(this.lblCaption);
             this.Controls.Add(this.btnBack);
             this.Name = "frmDemandDetails";
-            this.Text = "frmDemandDetails";
+            this.Text = "Real estate market";
             this.ResumeLayout(false);
             this.PerformLayout();
 

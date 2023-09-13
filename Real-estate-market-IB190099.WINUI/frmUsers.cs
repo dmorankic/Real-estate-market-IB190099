@@ -1,12 +1,4 @@
-using AutoMapper;
-using Flurl.Http;
 using Real_estate_market_IB190099.Model;
-using Real_estate_market_IB190099.Model.Requests;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using Microsoft.AspNetCore.JsonPatch.Internal;
 
 namespace Real_estate_market_IB190099.WINUI
 {
@@ -79,6 +71,11 @@ namespace Real_estate_market_IB190099.WINUI
             }
             if(e.ColumnIndex == 4)
             {
+                if (APIService.loggedUser.RoleId != 3)
+                {
+                    MessageBox.Show("Only admin is allowed to change roles");
+                    return;
+                }
                 if(selectedUser.RoleId==3)
                 {
                     return;

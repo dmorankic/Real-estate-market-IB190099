@@ -238,7 +238,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 180,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle button 3 press
                       Navigator.pushNamed(context, SearchAds.routeName);
                     },
                     child: Text('Continue unregistered'),

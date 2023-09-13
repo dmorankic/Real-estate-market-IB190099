@@ -31,7 +31,7 @@ class _SavedAdsState extends State<SavedAds> {
   dynamic demandData = {};
 
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'https://10.0.2.2:7006/';
+  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -85,7 +85,7 @@ class _SavedAdsState extends State<SavedAds> {
                               height: 33,
                               margin: EdgeInsets.only(top: 15.0),
                               child: Image.asset(
-                                "assets/images/logo.png",
+                                "assets/images/logoReal.png",
                                 width: 40,
                                 height: 42,
                               ),

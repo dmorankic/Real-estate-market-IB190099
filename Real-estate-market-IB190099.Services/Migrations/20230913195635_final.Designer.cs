@@ -12,8 +12,8 @@ using Real_estate_market_IB190099.Services.Database;
 namespace Real_estate_market_IB190099.Services.Migrations
 {
     [DbContext(typeof(Ib190099Context))]
-    [Migration("20230530143422_Init")]
-    partial class Init
+    [Migration("20230913195635_final")]
+    partial class final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,9 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PropertyId")
                         .HasColumnType("int");
 
@@ -78,6 +81,8 @@ namespace Real_estate_market_IB190099.Services.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK__Advertis__3214EC0784B5E11B");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("PropertyId");
 
@@ -110,6 +115,133 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.ToTable("City", (string)null);
                 });
 
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.DemandAdvertise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<byte?>("Electricity")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("Floors")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<double?>("MaxQuadrature")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("MinQuadrature")
+                        .HasColumnType("float");
+
+                    b.Property<byte?>("Parking")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PropertyType")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("Rooms")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("Water")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id")
+                        .HasName("PK__DemandAd__3214EC079DADA222");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DemandAdvertise", (string)null);
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.DemandMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("DemandAdvertiseId")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("IsEmployee")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Timestamp")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id")
+                        .HasName("PK__DemandMe__3214EC07C30126C7");
+
+                    b.HasIndex("DemandAdvertiseId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("DemandMessage", (string)null);
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.Property<int?>("PropertyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Image__3214EC0726650A03");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("Image", (string)null);
+                });
+
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -138,14 +270,17 @@ namespace Real_estate_market_IB190099.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdvertiseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int?>("RecieverId")
-                        .HasColumnType("int");
+                    b.Property<byte?>("IsEmployee")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("SenderId")
                         .HasColumnType("int");
@@ -156,11 +291,46 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Message__3214EC0771273B95");
 
-                    b.HasIndex("RecieverId");
+                    b.HasIndex("AdvertiseId");
 
                     b.HasIndex("SenderId");
 
                     b.ToTable("Message", (string)null);
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AdvertiseId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TransactionDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Payment__3214EC078403829A");
+
+                    b.HasIndex("AdvertiseId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Property", b =>
@@ -213,10 +383,8 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.Property<byte?>("Water")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("YearOfConstruction")
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                    b.Property<int?>("YearOfConstruction")
+                        .HasColumnType("int");
 
                     b.HasKey("Id")
                         .HasName("PK__Property__3214EC076C938934");
@@ -226,6 +394,34 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.HasIndex("LocationId");
 
                     b.ToTable("Property", (string)null);
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Rating1")
+                        .HasColumnType("float")
+                        .HasColumnName("Rating");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Rating__3214EC071832FC3F");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rating", (string)null);
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Role", b =>
@@ -272,6 +468,30 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.ToTable("SavedAdvertise", (string)null);
                 });
 
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.SavedDemandAdvertise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DemandAdvertiseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__SavedDem__3214EC07870EE3F9");
+
+                    b.HasIndex("DemandAdvertiseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavedDemandAdvertise", (string)null);
+                });
+
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.User", b =>
                 {
                     b.Property<int>("Id")
@@ -295,7 +515,6 @@ namespace Real_estate_market_IB190099.Services.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)");
@@ -348,6 +567,7 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.HasOne("Real_estate_market_IB190099.Services.Database.City", "City")
                         .WithMany("Addresses")
                         .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_AddressCity");
 
                     b.Navigation("City");
@@ -355,36 +575,112 @@ namespace Real_estate_market_IB190099.Services.Migrations
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Advertise", b =>
                 {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "Employee")
+                        .WithMany("AdvertiseEmployees")
+                        .HasForeignKey("EmployeeId")
+                        .HasConstraintName("FK_AdvertiseEmployee");
+
                     b.HasOne("Real_estate_market_IB190099.Services.Database.Property", "Property")
                         .WithMany("Advertises")
                         .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_AdvertiseProperty");
 
                     b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
-                        .WithMany("Advertises")
+                        .WithMany("AdvertiseUsers")
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK_AdvertiseUsers");
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Property");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Message", b =>
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.DemandAdvertise", b =>
                 {
-                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "Reciever")
-                        .WithMany("MessageRecievers")
-                        .HasForeignKey("RecieverId")
-                        .HasConstraintName("FK_MessageReciever");
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
+                        .WithMany("DemandAdvertises")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_DemandAdvertiseUsers");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.DemandMessage", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.DemandAdvertise", "DemandAdvertise")
+                        .WithMany("DemandMessages")
+                        .HasForeignKey("DemandAdvertiseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_MessageDemandAdvertise");
 
                     b.HasOne("Real_estate_market_IB190099.Services.Database.User", "Sender")
-                        .WithMany("MessageSenders")
+                        .WithMany("DemandMessages")
                         .HasForeignKey("SenderId")
-                        .HasConstraintName("FK_MessageSender");
+                        .HasConstraintName("FK_DemandMessageSender");
 
-                    b.Navigation("Reciever");
+                    b.Navigation("DemandAdvertise");
 
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Image", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.Property", "Property")
+                        .WithMany("Images")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Image_Property");
+
+                    b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Message", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.Advertise", "Advertise")
+                        .WithMany("Messages")
+                        .HasForeignKey("AdvertiseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Message_Advertise");
+
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_MessageSender");
+
+                    b.Navigation("Advertise");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Payment", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.Advertise", "Advertise")
+                        .WithMany("Payments")
+                        .HasForeignKey("AdvertiseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_PaymentAdvertise");
+
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "Employee")
+                        .WithMany("PaymentEmployees")
+                        .HasForeignKey("EmployeeId")
+                        .HasConstraintName("FK_PaymentEmployee");
+
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
+                        .WithMany("PaymentUsers")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_PaymentUsers");
+
+                    b.Navigation("Advertise");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Property", b =>
@@ -404,21 +700,63 @@ namespace Real_estate_market_IB190099.Services.Migrations
                     b.Navigation("Location");
                 });
 
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Rating", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.Property", "Property")
+                        .WithMany("Ratings")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Rating_Property");
+
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Rating_User");
+
+                    b.Navigation("Property");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.SavedAdvertise", b =>
                 {
                     b.HasOne("Real_estate_market_IB190099.Services.Database.Advertise", "Advertise")
                         .WithMany("SavedAdvertises")
                         .HasForeignKey("AdvertiseId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_SavedAdvertise_Advertise");
 
                     b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
                         .WithMany("SavedAdvertises")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_SavedAdvertise_User");
 
                     b.Navigation("Advertise");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.SavedDemandAdvertise", b =>
+                {
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.DemandAdvertise", "DemandAdvertise")
+                        .WithMany("SavedDemandAdvertises")
+                        .HasForeignKey("DemandAdvertiseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_SavedDemandAdvertise_DemandAdvertise");
+
+                    b.HasOne("Real_estate_market_IB190099.Services.Database.User", "User")
+                        .WithMany("SavedDemandAdvertises")
+                        .HasForeignKey("UserId")
+                        .IsRequired()
+                        .HasConstraintName("FK_SavedDemandAdvertise_User");
+
+                    b.Navigation("DemandAdvertise");
 
                     b.Navigation("User");
                 });
@@ -449,12 +787,23 @@ namespace Real_estate_market_IB190099.Services.Migrations
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Advertise", b =>
                 {
+                    b.Navigation("Messages");
+
+                    b.Navigation("Payments");
+
                     b.Navigation("SavedAdvertises");
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.City", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.DemandAdvertise", b =>
+                {
+                    b.Navigation("DemandMessages");
+
+                    b.Navigation("SavedDemandAdvertises");
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Location", b =>
@@ -465,6 +814,10 @@ namespace Real_estate_market_IB190099.Services.Migrations
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Property", b =>
                 {
                     b.Navigation("Advertises");
+
+                    b.Navigation("Images");
+
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.Role", b =>
@@ -474,13 +827,25 @@ namespace Real_estate_market_IB190099.Services.Migrations
 
             modelBuilder.Entity("Real_estate_market_IB190099.Services.Database.User", b =>
                 {
-                    b.Navigation("Advertises");
+                    b.Navigation("AdvertiseEmployees");
 
-                    b.Navigation("MessageRecievers");
+                    b.Navigation("AdvertiseUsers");
 
-                    b.Navigation("MessageSenders");
+                    b.Navigation("DemandAdvertises");
+
+                    b.Navigation("DemandMessages");
+
+                    b.Navigation("Messages");
+
+                    b.Navigation("PaymentEmployees");
+
+                    b.Navigation("PaymentUsers");
+
+                    b.Navigation("Ratings");
 
                     b.Navigation("SavedAdvertises");
+
+                    b.Navigation("SavedDemandAdvertises");
                 });
 #pragma warning restore 612, 618
         }

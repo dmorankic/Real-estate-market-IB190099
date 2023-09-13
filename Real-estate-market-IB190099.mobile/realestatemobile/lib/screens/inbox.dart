@@ -61,7 +61,7 @@ class _InboxState extends State<Inbox> {
                         height: 33,
                         margin: EdgeInsets.only(top: 15.0),
                         child: Image.asset(
-                          "assets/images/logo.png",
+                          "assets/images/logoReal.png",
                           width: 40,
                           height: 42,
                         ),
@@ -90,8 +90,8 @@ class _InboxState extends State<Inbox> {
   }
 
   List<Widget> _buildMessages() {
-    if (data.length == 0 && demandData.length == 0) {
-      return [Text("No messages to show")];
+    if (data.length == 0) {
+      return [Text("No messages for rent/sale to show")];
     }
     if (data == null) {
       return [Text("Loading...")];
@@ -207,8 +207,8 @@ class _InboxState extends State<Inbox> {
   }
 
   List<Widget> _buildDemandMessages() {
-    if (demandData.length == 0 && data.length == 0) {
-      return [Text("No messages to show")];
+    if (demandData.length == 0) {
+      return [Text("No messages for demand to show")];
     }
     if (demandData == null) {
       return [Text("Loading...")];
@@ -325,15 +325,17 @@ class _InboxState extends State<Inbox> {
   }
 
   Future loadData() async {
-    var tmpData = await _messageProvider
+    data = await _messageProvider
         ?.get({'id': Authorization.loggedUser!.id}, "Message");
 
-    var tmpDemand = await _demandMessageProvider
+    demandData = await _demandMessageProvider
         ?.get({'id': Authorization.loggedUser!.id}, "DemandMessage");
 
-    setState(() {
-      data = tmpData;
-      demandData = tmpDemand;
-    });
+    if (mounted) {
+      setState(() {
+        data = data;
+        demandData = demandData;
+      });
+    }
   }
 }

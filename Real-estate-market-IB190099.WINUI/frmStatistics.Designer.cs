@@ -68,9 +68,8 @@
             this.lblYear.AutoSize = true;
             this.lblYear.Location = new System.Drawing.Point(836, 759);
             this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(208, 20);
+            this.lblYear.Size = new System.Drawing.Size(0, 20);
             this.lblYear.TabIndex = 4;
-            this.lblYear.Text = "Revenue by sections for year : ";
             // 
             // label1
             // 
@@ -87,9 +86,8 @@
             this.lblMonth.AutoSize = true;
             this.lblMonth.Location = new System.Drawing.Point(594, 104);
             this.lblMonth.Name = "lblMonth";
-            this.lblMonth.Size = new System.Drawing.Size(204, 20);
+            this.lblMonth.Size = new System.Drawing.Size(0, 20);
             this.lblMonth.TabIndex = 18;
-            this.lblMonth.Text = "Revenue by months for year : ";
             // 
             // pictureBox3
             // 
@@ -104,9 +102,8 @@
             this.lblEmp.AutoSize = true;
             this.lblEmp.Location = new System.Drawing.Point(227, 759);
             this.lblEmp.Name = "lblEmp";
-            this.lblEmp.Size = new System.Drawing.Size(227, 20);
+            this.lblEmp.Size = new System.Drawing.Size(0, 20);
             this.lblEmp.TabIndex = 20;
-            this.lblEmp.Text = "Revenue by employees for year : ";
             // 
             // btnMessages
             // 
@@ -136,6 +133,7 @@
             this.btnMyprofile.TabIndex = 47;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
+            this.btnMyprofile.Click += new System.EventHandler(this.btnMyprofile_Click);
             // 
             // btnRent
             // 
@@ -198,7 +196,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Name = "frmStatistics";
-            this.Text = "frmStatistics";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmStatistics_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

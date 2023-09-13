@@ -134,6 +134,7 @@ namespace Real_estate_market_IB190099.Services
             finalResult.ForEach(x => {
                 advertises.Add(Context.Advertises.Include(x=>x.Property.Images).FirstOrDefault(y=>y.PropertyId==x.Id));
             });
+            advertises.RemoveAll(x => x == null);
             advertises = advertises.Where(x => x.Status.ToLower() == "approved").Where(x=>x.Type.ToLower()==type.ToLower()).ToList();
             return Mapper.Map< List<AdvertiseModel>>(advertises);
         }
@@ -324,7 +325,7 @@ namespace Real_estate_market_IB190099.Services
 
         public AdvertiseModel Remove(int id)
         {
-            var entity = Context.Advertises.Find(id);
+            var entity = _context.Advertises.Find(id);
             if(entity != null)
             {
                 _context.Advertises.Remove(entity);

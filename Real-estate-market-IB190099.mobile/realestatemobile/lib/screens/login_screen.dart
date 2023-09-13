@@ -95,21 +95,6 @@ class _LoginState extends State<Login> {
                   ]),
                 ),
               ),
-              Stack(
-                children: [
-                  Align(
-                    alignment: Alignment(0.55, 0.01),
-                    child: Text(
-                      "Forgot password?",
-                      style: TextStyle(
-                          color: Color.fromRGBO(0, 0, 255, 1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          decoration: TextDecoration.underline),
-                    ),
-                  )
-                ],
-              ),
               SizedBox(height: 15),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

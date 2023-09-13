@@ -12,7 +12,7 @@ import 'base_provider.dart';
 
 class LocalImageProvider extends BaseProvider<LocalImage> {
   LocalImageProvider() : super("Image");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
   @override
   LocalImage fromJson(data) {
     return LocalImage.fromJson(data);
@@ -33,11 +33,11 @@ class LocalImageProvider extends BaseProvider<LocalImage> {
   }
 
   Future<Response> getImageFromServer() async {
-    return httpClient.get(Uri.parse('https://10.0.2.2:7006/Image'));
+    return httpClient.get(Uri.parse('http://10.0.2.2:7006/Image'));
   }
 
   Future<String> uploadImage(String filePath) async {
-    var uri = "https://10.0.2.2:7006/Image/UploadImage";
+    var uri = "http://10.0.2.2:7006/Image/UploadImage";
     httpClient.MultipartRequest request =
         httpClient.MultipartRequest("POST", Uri.parse(uri));
 

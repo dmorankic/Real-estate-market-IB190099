@@ -5,7 +5,7 @@ import 'base_provider.dart';
 
 class PaymentProvider extends BaseProvider<Payment> {
   PaymentProvider() : super("Payment");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   Payment fromJson(data) {

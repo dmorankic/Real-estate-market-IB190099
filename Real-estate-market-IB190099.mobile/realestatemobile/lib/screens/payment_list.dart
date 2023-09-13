@@ -63,7 +63,7 @@ class _PaymentListState extends State<PaymentList> {
                               height: 33,
                               margin: EdgeInsets.only(top: 15.0),
                               child: Image.asset(
-                                "assets/images/logo.png",
+                                "assets/images/logoReal.png",
                                 width: 40,
                                 height: 42,
                               ),
@@ -125,17 +125,17 @@ class _PaymentListState extends State<PaymentList> {
                           Text(
                             "Reciever : Real estate market",
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
+                                fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                           Text(
                             "Date : ${DateFormat().format(x.transactionDate)}",
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
+                                fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                           Text(
                             "Amount : \$${x.amount}",
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
+                                fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),

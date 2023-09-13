@@ -8,7 +8,7 @@ import 'base_provider.dart';
 
 class UserProvider extends BaseProvider<User> {
   UserProvider() : super("User");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   User fromJson(data) {

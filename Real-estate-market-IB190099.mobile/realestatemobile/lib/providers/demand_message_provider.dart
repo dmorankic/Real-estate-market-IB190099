@@ -7,7 +7,7 @@ import 'base_provider.dart';
 
 class DemandMessageProvider extends BaseProvider<DemandMessage> {
   DemandMessageProvider() : super("DemandMessage");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   DemandMessage fromJson(data) {

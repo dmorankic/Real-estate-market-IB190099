@@ -1,25 +1,4 @@
-﻿using Microcharts;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Microcharts.Forms;
-using SkiaSharp.Views.Forms;
-using System.Drawing.Imaging;
-using DevExpress.XtraCharts;
-using DevExpress.CodeParser;
-using System.Numerics;
-using Xamarin.Forms;
-using SkiaSharp.Views.Desktop;
-using System.Drawing;
-using System.Windows.Forms;
-using Real_estate_market_IB190099.Services;
+﻿using System.Data;
 using Real_estate_market_IB190099.Model;
 using DevExpress.DataProcessing;
 
@@ -50,11 +29,17 @@ namespace Real_estate_market_IB190099.WINUI
 
         private async void frmStatistics_Load(object sender, EventArgs e)
         {
-            lblYear.Text += DateTime.Now.Year;
-            lblMonth.Text += DateTime.Now.Year;
-            lblEmp.Text += DateTime.Now.Year;
+            
 
             _payments = await paymentService.Get<List<PaymentModel>>();
+            if (_payments.Count == 0)
+            {
+                MessageBox.Show("There is not enough data to display statistics");
+                return;
+            }
+            lblYear.Text = $"Revenue by sections for year : {DateTime.Now.Year}";
+            lblMonth.Text = $"Revenue by months for year : {DateTime.Now.Year}";
+            lblEmp.Text = $"Revenue by employees for year : {DateTime.Now.Year}";
             _salePayments = _payments
                 .Where(x=>x.TransactionDate.Value.Year==DateTime.Now.Year)
                 .Where(x => x.Advertise.Type.ToLower() == "sale").ToList();
@@ -188,6 +173,11 @@ namespace Real_estate_market_IB190099.WINUI
             frm.Show();
         }
 
-       
+        private void btnMyprofile_Click(object sender, EventArgs e)
+        {
+            frmUserUpsert frm = new frmUserUpsert(APIService.loggedUser, true);
+            frm.ShowDialog();
+        }
+     
     }
 }

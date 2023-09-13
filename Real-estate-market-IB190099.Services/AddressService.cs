@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -36,7 +30,7 @@ namespace Real_estate_market_IB190099.Services
                 {
                     if (!(city.Name == insert.CityName && city.ZipCode == insert.ZipCode))
                     {
-                        throw new UserException("City or zip code provided already exists");
+                        throw new UserException("City or zip code provided already exists in another combination");
                     }
                 }
                 if (city == null)

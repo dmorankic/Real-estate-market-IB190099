@@ -25,13 +25,11 @@ class CreateAd extends StatefulWidget {
   const CreateAd({super.key});
   static const String routeName = "/create-ad";
 
-
   @override
   State<CreateAd> createState() => _CreateAdState();
 }
 
 class _CreateAdState extends State<CreateAd> {
-
   XFile? image;
   List _images = [];
   List _imageIds = [];
@@ -105,8 +103,6 @@ class _CreateAdState extends State<CreateAd> {
         });
   }
 
-    
-
   @override
   void initState() {
     markers.add(Marker(
@@ -118,8 +114,6 @@ class _CreateAdState extends State<CreateAd> {
       ),
       icon: BitmapDescriptor.defaultMarker,
     ));
-
-
 
     super.initState();
   }
@@ -193,7 +187,7 @@ class _CreateAdState extends State<CreateAd> {
                               height: 33,
                               margin: EdgeInsets.only(top: 15.0),
                               child: Image.asset(
-                                "assets/images/logo.png",
+                                "assets/images/logoReal.png",
                                 width: 40,
                                 height: 42,
                               ),
@@ -1014,6 +1008,7 @@ class _CreateAdState extends State<CreateAd> {
                                             ));
                                   }
                                 }
+                                _imageIds = [];
                               },
                               child: Text('Create advertise'),
                             ),

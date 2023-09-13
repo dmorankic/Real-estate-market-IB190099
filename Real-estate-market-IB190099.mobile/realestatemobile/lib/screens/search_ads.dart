@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:realestatemobile/screens/create_ad.dart';
 import 'package:realestatemobile/screens/demand.dart';
 import 'package:realestatemobile/screens/sale.dart';
+import 'package:realestatemobile/utils/util.dart';
 import 'rent.dart';
 
 // ignore_for_file: use_build_context_synchronously
@@ -97,19 +98,22 @@ class _SearchAdsState extends State<SearchAds> {
                           ),
                         ),
                         SizedBox(width: 20),
-                        Container(
-                          width: 120,
-                          height: 40,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, CreateAd.routeName);
-                            },
-                            child: Text(
-                              'Create ad request',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
+                        Authorization.loggedUser != null
+                            ? Container(
+                                width: 120,
+                                height: 40,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, CreateAd.routeName);
+                                  },
+                                  child: Text(
+                                    'Create ad request',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ]),

@@ -279,7 +279,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(938, 1020);
+            this.ClientSize = new System.Drawing.Size(938, 731);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnImgFwd);
             this.Controls.Add(this.btnImgBack);
@@ -304,7 +304,7 @@
             this.Controls.Add(this.btnBack);
             this.Name = "frmAdDetails";
             this.Padding = new System.Windows.Forms.Padding(15);
-            this.Text = "frmRentDetails";
+            this.Text = "Real estate market";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

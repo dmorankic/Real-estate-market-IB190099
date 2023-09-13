@@ -17,7 +17,7 @@ import 'base_provider.dart';
 
 class DemandAdvertiseProvider extends BaseProvider<DemandAdvertise> {
   DemandAdvertiseProvider() : super("DemandAdvertise");
-  static String _baseUrl = "https://10.0.2.2:7006/";
+  static String _baseUrl = "http://10.0.2.2:7006/";
   @override
   DemandAdvertise fromJson(data) {
     return DemandAdvertise.fromJson(data);

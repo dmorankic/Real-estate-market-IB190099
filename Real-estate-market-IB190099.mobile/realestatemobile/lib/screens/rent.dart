@@ -27,7 +27,7 @@ class _RentState extends State<Rent> {
   AdvertiseProvider? _advertiseProvider = null;
   Future<List<Advertise>>? data;
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'https://10.0.2.2:7006/';
+  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -37,12 +37,19 @@ class _RentState extends State<Rent> {
   }
 
   Future loadData() async {
-    data = Future.value(await _advertiseProvider?.get(
-        {'Type': 'rent', 'UserId': Authorization.loggedUser!.id},
-        "Advertise/recommendations"));
-    setState(() {
-      data = data;
-    });
+    if (Authorization.loggedUser == null) {
+      data = Future.value(await _advertiseProvider
+          ?.get({'Type': 'sale', 'Status': 'approved'}, "Advertise"));
+    } else {
+      data = Future.value(await _advertiseProvider?.get(
+          {'Type': 'rent', 'UserId': Authorization.loggedUser!.id},
+          "Advertise/recommendations"));
+    }
+    if (mounted) {
+      setState(() {
+        data = data;
+      });
+    }
   }
 
   @override
@@ -126,17 +133,24 @@ class _RentState extends State<Rent> {
                 );
               } else {
                 child = SafeArea(
-                    child: Row(children: [
-                  SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: CircularProgressIndicator(),
+                    child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(children: [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+                          child: Text('Loading ads...'),
+                        ),
+                      ]),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 16),
-                    child: Text('Awaiting result...'),
-                  ),
-                ]));
+                ));
               }
               return child;
             }));
@@ -152,12 +166,14 @@ class _RentState extends State<Rent> {
           child: TextField(
             controller: searchController,
             onSubmitted: (value) async {
-              data = Future.value(await _advertiseProvider
-                  ?.get({'PropertyName': value, 'Type': type}, "Advertise"));
-
-              setState(() {
-                data = data;
-              });
+              data = Future.value(await _advertiseProvider?.get(
+                  {'PropertyName': value, 'Type': type, 'Status': 'approved'},
+                  "Advertise"));
+              if (mounted) {
+                setState(() {
+                  data = data;
+                });
+              }
             },
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(top: 2),
@@ -176,13 +192,17 @@ class _RentState extends State<Rent> {
         IconButton(
           icon: Icon(Icons.filter_list),
           onPressed: () async {
-            data = Future.value(await _advertiseProvider?.get(
-                {'PropertyName': searchController.text, 'Type': type},
-                "Advertise"));
+            data = Future.value(await _advertiseProvider?.get({
+              'PropertyName': searchController.text,
+              'Type': type,
+              'Status': 'approved'
+            }, "Advertise"));
 
-            setState(() {
-              data = data;
-            });
+            if (mounted) {
+              setState(() {
+                data = data;
+              });
+            }
           },
         ),
       ],

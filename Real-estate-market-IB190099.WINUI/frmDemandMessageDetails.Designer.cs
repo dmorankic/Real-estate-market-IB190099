@@ -118,7 +118,7 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.textBox1);
             this.Name = "frmDemandMessageDetails";
-            this.Text = "frmDemandMessageDetails";
+            this.Text = "Real estate market";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

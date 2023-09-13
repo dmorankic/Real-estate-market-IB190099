@@ -115,7 +115,7 @@
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.label1);
             this.Name = "frmDemandMessages";
-            this.Text = "frmDemandMessages";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmDemandMessages_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMessages)).EndInit();
             this.ResumeLayout(false);

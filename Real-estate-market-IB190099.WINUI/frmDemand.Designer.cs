@@ -44,12 +44,12 @@
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnMessages = new System.Windows.Forms.Button();
             this.dgvDemand = new System.Windows.Forms.DataGridView();
-            this.btnResetDate = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtFilterUsers = new System.Windows.Forms.TextBox();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnResetDate = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtFilterUsers = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDemand)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,6 +79,7 @@
             this.btnMyprofile.TabIndex = 54;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
+            this.btnMyprofile.Click += new System.EventHandler(this.btnMyprofile_Click);
             // 
             // btnSale
             // 
@@ -205,6 +206,30 @@
             this.dgvDemand.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDemand_CellContentClick);
             this.dgvDemand.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDemand_DataError);
             // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Location";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Location";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.DateCreated.DataPropertyName = "DateCreated";
+            this.DateCreated.HeaderText = "Date created";
+            this.DateCreated.MinimumWidth = 6;
+            this.DateCreated.Name = "DateCreated";
+            // 
             // btnResetDate
             // 
             this.btnResetDate.Location = new System.Drawing.Point(533, 65);
@@ -233,30 +258,6 @@
             this.txtFilterUsers.TabIndex = 48;
             this.txtFilterUsers.TextChanged += new System.EventHandler(this.txtFilterUsers_TextChanged);
             // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
-            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Location";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Location";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 125;
-            // 
-            // DateCreated
-            // 
-            this.DateCreated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DateCreated.DataPropertyName = "DateCreated";
-            this.DateCreated.HeaderText = "Date created";
-            this.DateCreated.MinimumWidth = 6;
-            this.DateCreated.Name = "DateCreated";
-            // 
             // frmDemand
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -276,7 +277,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtFilterUsers);
             this.Name = "frmDemand";
-            this.Text = "frmDemand";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmDemand_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDemand)).EndInit();
             this.ResumeLayout(false);

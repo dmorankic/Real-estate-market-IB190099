@@ -46,8 +46,12 @@ public partial class Ib190099Context : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=localhost, 1435;Initial Catalog=IB190099; user=sa; Password=QWEasd123!; TrustServerCertificate=True");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer("Data Source=localhost, 1433;Initial Catalog=IB190099; user=sa; Password=QWElkj132!; TrustServerCertificate=True");
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -63,6 +67,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.City).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.CityId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_AddressCity");
         });
 
@@ -86,6 +91,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Property).WithMany(p => p.Advertises)
                 .HasForeignKey(d => d.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_AdvertiseProperty");
 
             entity.HasOne(d => d.User).WithMany(p => p.AdvertiseUsers)
@@ -132,6 +138,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.DemandAdvertises)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_DemandAdvertiseUsers");
         });
 
@@ -148,6 +155,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.DemandAdvertise).WithMany(p => p.DemandMessages)
                 .HasForeignKey(d => d.DemandAdvertiseId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_MessageDemandAdvertise");
 
             entity.HasOne(d => d.Sender).WithMany(p => p.DemandMessages)
@@ -165,6 +173,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Property).WithMany(p => p.Images)
                 .HasForeignKey(d => d.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Image_Property");
         });
 
@@ -188,11 +197,11 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Advertise).WithMany(p => p.Messages)
                 .HasForeignKey(d => d.AdvertiseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Message_Advertise");
 
             entity.HasOne(d => d.Sender).WithMany(p => p.Messages)
                 .HasForeignKey(d => d.SenderId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_MessageSender");
         });
 
@@ -206,6 +215,7 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Advertise).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.AdvertiseId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PaymentAdvertise");
 
             entity.HasOne(d => d.Employee).WithMany(p => p.PaymentEmployees)
@@ -252,7 +262,6 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Property).WithMany(p => p.Ratings)
                 .HasForeignKey(d => d.PropertyId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Rating_Property");
 
             entity.HasOne(d => d.User).WithMany(p => p.Ratings)
@@ -280,12 +289,10 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.Advertise).WithMany(p => p.SavedAdvertises)
                 .HasForeignKey(d => d.AdvertiseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SavedAdvertise_Advertise");
 
             entity.HasOne(d => d.User).WithMany(p => p.SavedAdvertises)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SavedAdvertise_User");
         });
 
@@ -297,7 +304,6 @@ public partial class Ib190099Context : DbContext
 
             entity.HasOne(d => d.DemandAdvertise).WithMany(p => p.SavedDemandAdvertises)
                 .HasForeignKey(d => d.DemandAdvertiseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SavedDemandAdvertise_DemandAdvertise");
 
             entity.HasOne(d => d.User).WithMany(p => p.SavedDemandAdvertises)

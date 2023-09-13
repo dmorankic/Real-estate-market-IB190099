@@ -171,5 +171,11 @@ namespace Real_estate_market_IB190099.WINUI
             frmMessages frm = new frmMessages();
             frm.Show();
         }
+
+        private void btnMyprofile_Click(object sender, EventArgs e)
+        {
+            frmUserUpsert frm = new frmUserUpsert(APIService.loggedUser, true);
+            frm.ShowDialog();
+        }
     }
 }

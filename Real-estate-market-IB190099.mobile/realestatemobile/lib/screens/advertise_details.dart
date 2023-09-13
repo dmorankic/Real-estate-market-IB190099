@@ -27,7 +27,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     "assets/images/NoImage.png",
   ];
   List<String> images = [];
-  final String _baseUrl = 'https://10.0.2.2:7006/';
+  final String _baseUrl = 'http://10.0.2.2:7006/';
   final CarouselController _carouselController = CarouselController();
   TextEditingController messageController = TextEditingController();
   TextEditingController ratingController = TextEditingController();
@@ -378,6 +378,20 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
           BackButton(),
           OutlinedButton(
             onPressed: () {
+              if (Authorization.loggedUser == null) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: Text("Not logged in"),
+                          content: Text("Please log in for further actions"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Ok"))
+                          ],
+                        ));
+                return;
+              }
               showDialog(
                 context: context,
                 builder: (BuildContext context) => SimpleDialog(
@@ -603,6 +617,20 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 textAlign: TextAlign.center,
               ),
               onPressed: () {
+                if (Authorization.loggedUser == null) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("Not logged in"),
+                            content: Text("Please log in for further actions"),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                  return;
+                }
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => SimpleDialog(
@@ -708,6 +736,20 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
+              if (Authorization.loggedUser == null) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: Text("Not logged in"),
+                          content: Text("Please log in for further actions"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Ok"))
+                          ],
+                        ));
+                return;
+              }
               Navigator.pushNamed(context,
                   "${StripePayment.routeName}/$price/$advertiseId/$employeeId");
             },

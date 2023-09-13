@@ -118,7 +118,7 @@
             this.Controls.Add(this.lblHeading);
             this.Controls.Add(this.button1);
             this.Name = "frmMessageDetails";
-            this.Text = "frmMessageDetails";
+            this.Text = "Real estate market";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

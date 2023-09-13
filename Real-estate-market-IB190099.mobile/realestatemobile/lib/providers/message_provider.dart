@@ -7,7 +7,7 @@ import 'base_provider.dart';
 
 class MessageProvider extends BaseProvider<Message> {
   MessageProvider() : super("Message");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   Message fromJson(data) {

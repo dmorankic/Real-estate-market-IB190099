@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
 using Real_estate_market_IB190099.Model.SearchObjects;
 using Real_estate_market_IB190099.Services.Database;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -139,21 +132,6 @@ namespace Real_estate_market_IB190099.Services
 
             return query;
         }
-
-        //public UserModel UpdateUserPatchAsync(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<User> user)
-        //{
-
-        //    var userQuery = _context.Users.Include(x=>x.Address.City).FirstOrDefault(x => x.Id == id);
-        //    if (userQuery == null)
-        //    {
-        //        return Mapper.Map<UserModel>(userQuery);
-        //    }
-
-        //    user.ApplyTo(userQuery);
-        //    Context.SaveChanges();
-
-        //    return Mapper.Map<UserModel>(userQuery);
-        //}
    
         public override UserModel GetById(int id)
         {

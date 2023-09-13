@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Details = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +44,11 @@
             this.btnMyprofile = new System.Windows.Forms.Button();
             this.btnMessages = new System.Windows.Forms.Button();
             this.btnPending = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Details = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,48 +70,6 @@
             this.dgvUsers.TabIndex = 4;
             this.dgvUsers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellContentClick);
             this.dgvUsers.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvUsers_DataError);
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
-            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "FirstName";
-            this.dataGridViewTextBoxColumn6.HeaderText = "First Name";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 125;
-            // 
-            // LastName
-            // 
-            this.LastName.DataPropertyName = "LastName";
-            this.LastName.HeaderText = "Last Name";
-            this.LastName.MinimumWidth = 6;
-            this.LastName.Name = "LastName";
-            this.LastName.Width = 125;
-            // 
-            // Details
-            // 
-            this.Details.HeaderText = "Details";
-            this.Details.MinimumWidth = 6;
-            this.Details.Name = "Details";
-            this.Details.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Details.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Details.Width = 125;
-            // 
-            // Actions
-            // 
-            this.Actions.HeaderText = "Actions";
-            this.Actions.MinimumWidth = 6;
-            this.Actions.Name = "Actions";
-            this.Actions.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Actions.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Actions.Width = 250;
             // 
             // ID
             // 
@@ -249,6 +207,48 @@
             this.btnPending.Text = "Pending requests";
             this.btnPending.UseVisualStyleBackColor = true;
             this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "FirstName";
+            this.dataGridViewTextBoxColumn6.HeaderText = "First Name";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // LastName
+            // 
+            this.LastName.DataPropertyName = "LastName";
+            this.LastName.HeaderText = "Last Name";
+            this.LastName.MinimumWidth = 6;
+            this.LastName.Name = "LastName";
+            this.LastName.Width = 125;
+            // 
+            // Details
+            // 
+            this.Details.HeaderText = "Details";
+            this.Details.MinimumWidth = 6;
+            this.Details.Name = "Details";
+            this.Details.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Details.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Details.Width = 125;
+            // 
+            // Actions
+            // 
+            this.Actions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Actions.HeaderText = "Actions";
+            this.Actions.MinimumWidth = 6;
+            this.Actions.Name = "Actions";
+            this.Actions.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Actions.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // frmUsers
             // 

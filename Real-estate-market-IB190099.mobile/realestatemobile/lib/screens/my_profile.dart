@@ -96,7 +96,7 @@ class _MyProfileState extends State<MyProfile> {
                                 height: 33,
                                 margin: EdgeInsets.only(top: 15.0),
                                 child: Image.asset(
-                                  "assets/images/logo.png",
+                                  "assets/images/logoReal.png",
                                   width: 40,
                                   height: 42,
                                 ),

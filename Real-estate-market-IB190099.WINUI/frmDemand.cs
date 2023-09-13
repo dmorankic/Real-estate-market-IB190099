@@ -1,13 +1,5 @@
 ﻿using Real_estate_market_IB190099.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Real_estate_market_IB190099.WINUI
 {
@@ -172,6 +164,12 @@ namespace Real_estate_market_IB190099.WINUI
             await loadAds();
             filterAll();
             customizeDgvAds();
+        }
+
+        private void btnMyprofile_Click(object sender, EventArgs e)
+        {
+            frmUserUpsert frm = new frmUserUpsert(APIService.loggedUser, true);
+            frm.ShowDialog();
         }
     }
 }

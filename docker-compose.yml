@@ -7,7 +7,7 @@ services:
     container_name: real-estate-market-ib190099-sql
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=QWEdsa123!
+      - SA_PASSWORD=QWElkj132!
       - MSSQL_PID=Developer
     ports:
       - 1401:1433
@@ -22,10 +22,10 @@ services:
       context: .
     container_name: real-estate-market-ib190099-api
     environment:
-      - ConnectionStrings:DefaultConnection=Server=real-estate-market-ib190099-sql,1433;Database=IB190099;User=sa;Password=QWEdsa123!;ConnectRetryCount=0;TrustServerCertificate=True
+      - ConnectionStrings:DefaultConnection=Server=real-estate-market-ib190099-sql, 1433;Database=IB190099;User=sa;Password=QWElkj132!;ConnectRetryCount=0;TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - 5192:5192
+      - 7006:7006
     networks:
       - realestatemarket2022
     links:

@@ -7,7 +7,7 @@ import 'base_provider.dart';
 
 class RatingProvider extends BaseProvider<Rating> {
   RatingProvider() : super("Rating");
-  static String baseUrl = "https://10.0.2.2:7006/";
+  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   Rating fromJson(data) {

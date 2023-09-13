@@ -7,6 +7,7 @@ using Real_estate_market_IB190099.Services;
 using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Validators;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Real_estate_market_IB190099.Controllers
 {
@@ -38,6 +39,16 @@ namespace Real_estate_market_IB190099.Controllers
             {
                 return NotFound();
             }
+        }
+        [AllowAnonymous]
+        public override IEnumerable<DemandAdvertiseModel> Get([FromQuery] AdvertiseSearchObject search = null)
+        {
+            return base.Get(search);
+        }
+        [AllowAnonymous]
+        public override DemandAdvertiseModel GetById(int id)
+        {
+            return base.GetById(id);
         }
 
         [HttpPost]

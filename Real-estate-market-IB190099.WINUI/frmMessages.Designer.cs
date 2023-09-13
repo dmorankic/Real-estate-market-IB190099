@@ -74,6 +74,7 @@
             this.btnMyprofile.TabIndex = 47;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
+            this.btnMyprofile.Click += new System.EventHandler(this.btnMyprofile_Click);
             // 
             // btnSale
             // 
@@ -210,7 +211,7 @@
             this.Controls.Add(this.btnDemand);
             this.Controls.Add(this.btnStatistics);
             this.Name = "frmMessages";
-            this.Text = "frmMessages";
+            this.Text = "Real estate market";
             this.Load += new System.EventHandler(this.frmMessages_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMessages)).EndInit();
             this.ResumeLayout(false);

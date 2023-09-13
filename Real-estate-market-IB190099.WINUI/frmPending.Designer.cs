@@ -52,7 +52,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnResetDate = new System.Windows.Forms.Button();
-            this.btnPending = new System.Windows.Forms.Button();
             this.btnDmdReqs = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAds)).BeginInit();
             this.SuspendLayout();
@@ -69,12 +68,13 @@
             // 
             // btnMyprofile
             // 
-            this.btnMyprofile.Location = new System.Drawing.Point(24, 456);
+            this.btnMyprofile.Location = new System.Drawing.Point(24, 371);
             this.btnMyprofile.Name = "btnMyprofile";
             this.btnMyprofile.Size = new System.Drawing.Size(94, 29);
             this.btnMyprofile.TabIndex = 23;
             this.btnMyprofile.Text = "My profile";
             this.btnMyprofile.UseVisualStyleBackColor = true;
+            this.btnMyprofile.Click += new System.EventHandler(this.btnMyprofile_Click);
             // 
             // btnSale
             // 
@@ -284,16 +284,6 @@
             this.btnResetDate.UseVisualStyleBackColor = true;
             this.btnResetDate.Click += new System.EventHandler(this.btnResetDate_Click);
             // 
-            // btnPending
-            // 
-            this.btnPending.Location = new System.Drawing.Point(24, 372);
-            this.btnPending.Name = "btnPending";
-            this.btnPending.Size = new System.Drawing.Size(94, 57);
-            this.btnPending.TabIndex = 31;
-            this.btnPending.Text = "Pending requests";
-            this.btnPending.UseVisualStyleBackColor = true;
-            this.btnPending.Click += new System.EventHandler(this.btnPending_Click);
-            // 
             // btnDmdReqs
             // 
             this.btnDmdReqs.Location = new System.Drawing.Point(602, 32);
@@ -310,7 +300,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 563);
             this.Controls.Add(this.btnDmdReqs);
-            this.Controls.Add(this.btnPending);
             this.Controls.Add(this.btnResetDate);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox1);

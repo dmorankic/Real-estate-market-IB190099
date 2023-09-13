@@ -26,7 +26,7 @@ class _DemandState extends State<Demand> {
   DemandAdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'https://10.0.2.2:7006/';
+  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _DemandState extends State<Demand> {
                               height: 33,
                               margin: EdgeInsets.only(top: 15.0),
                               child: Image.asset(
-                                "assets/images/logo.png",
+                                "assets/images/logoReal.png",
                                 width: 40,
                                 height: 42,
                               ),
@@ -115,8 +115,9 @@ class _DemandState extends State<Demand> {
           child: TextField(
             controller: searchController,
             onSubmitted: (value) async {
-              var tmpData = await _advertiseProvider
-                  ?.get({'PropertyName': value}, "DemandAdvertise");
+              var tmpData = await _advertiseProvider?.get(
+                  {'PropertyName': value, 'Status': 'approved'},
+                  "DemandAdvertise");
 
               setState(() {
                 data = tmpData;
@@ -140,7 +141,8 @@ class _DemandState extends State<Demand> {
           icon: Icon(Icons.filter_list),
           onPressed: () async {
             var tmpData = await _advertiseProvider?.get(
-                {'PropertyName': searchController.text}, "DemandAdvertise");
+                {'PropertyName': searchController.text, 'Status': 'approved'},
+                "DemandAdvertise");
 
             setState(() {
               data = tmpData;

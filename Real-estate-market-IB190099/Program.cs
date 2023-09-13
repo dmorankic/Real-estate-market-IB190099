@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Real_estate_market_IB190099;
+using Real_estate_market_IB190099.DbHelper;
 using Real_estate_market_IB190099.Filters;
 using Real_estate_market_IB190099.Services;
 using Real_estate_market_IB190099.Services.Database;
@@ -87,10 +88,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
-//    dataContext.Database.Migrate();
-//}
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<Ib190099Context>();
+    new DbHelper().Init(dataContext);
+    if (dataContext.Roles.Count() < 1)
+    {
+        new DbHelper().InsertData(dataContext);
+    }
+}
 
 app.Run();

@@ -1,18 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Real_estate_market_IB190099.Model;
+﻿using Real_estate_market_IB190099.Model;
 using Real_estate_market_IB190099.Model.Requests;
-using Real_estate_market_IB190099.Services.Database;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 
 

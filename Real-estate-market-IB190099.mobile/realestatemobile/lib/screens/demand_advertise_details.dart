@@ -18,7 +18,7 @@ class DemandAdvertiseDetails extends StatefulWidget {
 }
 
 class _DemandAdvertiseDetailsState extends State<DemandAdvertiseDetails> {
-  final String _baseUrl = 'https://10.0.2.2:7006/';
+  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   TextEditingController messageController = TextEditingController();
   DemandAdvertiseProvider? _demandAdvertiseProvider = null;
@@ -352,6 +352,20 @@ class _DemandAdvertiseDetailsState extends State<DemandAdvertiseDetails> {
                 textAlign: TextAlign.center,
               ),
               onPressed: () {
+                if (Authorization.loggedUser == null) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: Text("Not logged in"),
+                            content: Text("Please log in for further actions"),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text("Ok"))
+                            ],
+                          ));
+                  return;
+                }
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => SimpleDialog(

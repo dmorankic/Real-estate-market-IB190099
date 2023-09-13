@@ -117,7 +117,7 @@ namespace Real_estate_market_IB190099.Services
             }
             if(!string.IsNullOrEmpty(search.Status))
             {
-                filteredQuery=filteredQuery.Where(x=>x.Status==search.Status);
+                filteredQuery=filteredQuery.Where(x=>x.Status.ToLower()==search.Status.ToLower());
             }
             return filteredQuery;
 
