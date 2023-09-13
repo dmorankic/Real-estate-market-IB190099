@@ -1,12 +1,13 @@
 Real estate market
-Credentials Desktop app
 
-Administrator
+Credentials Desktop app:
+
+Administrator:
 
 Username: admin             
 Password: admin                                      
 
-Employee
+Employee:
 
 Username: denis.tokic  
 Password: denist     
@@ -26,6 +27,7 @@ Running the app
 Open a terminal inside the solution folder and use following commands (API+DB):
 
 docker-compose build
+
 docker-compose up
 
 Mobile app: 
