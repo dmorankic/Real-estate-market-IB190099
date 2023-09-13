@@ -12,7 +12,7 @@ Employee:
 Username: denis.tokic  
 Password: denist     
 
-Mobile app
+
 
 User/Customer
 
