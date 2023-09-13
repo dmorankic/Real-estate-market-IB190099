@@ -9,7 +9,8 @@ Password: admin
 Employee
 
 Username: denis.tokic  
-Password: denist        
+Password: denist     
+
 Mobile app
 
 User/Customer
@@ -27,13 +28,20 @@ Open a terminal inside the solution folder and use following commands (API+DB):
 docker-compose build
 docker-compose up
 
-Mobile app:
+Mobile app: 
 
 flutter pub get
+
 flutter run
 
 Stripe test card number:
 
 4242 4242 4242 4242
+
+Valid thru : 12/34
+
+security code : 567
+
+
 
 Start the windows app inside visual studio IDE.
