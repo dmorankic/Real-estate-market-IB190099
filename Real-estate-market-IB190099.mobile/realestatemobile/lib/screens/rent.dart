@@ -27,7 +27,6 @@ class _RentState extends State<Rent> {
   AdvertiseProvider? _advertiseProvider = null;
   Future<List<Advertise>>? data;
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -255,7 +254,7 @@ class _RentState extends State<Rent> {
                                       ? Image.asset("assets/images/NoImage.png",
                                           fit: BoxFit.cover)
                                       : Image.network(
-                                          '$_baseUrl${x.property?.images![0]}',
+                                          '${GlobalVars.baseUrl}${x.property?.images![0]}',
                                           fit: BoxFit.cover),
                                 ),
                               ),

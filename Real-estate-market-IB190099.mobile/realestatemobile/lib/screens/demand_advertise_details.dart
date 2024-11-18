@@ -18,7 +18,6 @@ class DemandAdvertiseDetails extends StatefulWidget {
 }
 
 class _DemandAdvertiseDetailsState extends State<DemandAdvertiseDetails> {
-  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   TextEditingController messageController = TextEditingController();
   DemandAdvertiseProvider? _demandAdvertiseProvider = null;

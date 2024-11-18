@@ -16,14 +16,14 @@ import 'base_provider.dart';
 
 class AdvertiseProvider extends BaseProvider<Advertise> {
   AdvertiseProvider() : super("Advertise");
-  static String _baseUrl = "http://10.0.2.2:7006/";
+
   @override
   Advertise fromJson(data) {
     return Advertise.fromJson(data);
   }
 
   Future<List<Advertise>> getSaved(String endpoint) async {
-    var url = "$_baseUrl$endpoint";
+    var url = "${GlobalVars.baseUrl}$endpoint";
     Map<String, String> headers = createHeaders();
 
     var uri = Uri.parse(url);
@@ -39,7 +39,7 @@ class AdvertiseProvider extends BaseProvider<Advertise> {
   }
 
   Future<Response> removeFromSaved(String advertiseId, String endpoint) async {
-    var url = "$_baseUrl$endpoint";
+    var url = "${GlobalVars.baseUrl}$endpoint";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response = await http!.delete(uri,
@@ -57,7 +57,21 @@ class AdvertiseProvider extends BaseProvider<Advertise> {
   }
 
   Future<Response> createAdvertise(Map<String, dynamic> body) async {
-    var url = "${_baseUrl}Advertise";
+    var url = "${GlobalVars.baseUrl}Advertise";
+    Map<String, String> headers = createHeaders();
+    var uri = Uri.parse(url);
+    var response =
+        await http!.post(uri, headers: headers, body: jsonEncode(body));
+
+    if (isValidResponseCode(response)) {
+      return response;
+    } else {
+      throw Exception("Exception... handle this gracefully");
+    }
+  }
+
+    Future<Response> sponsor(Map<String, dynamic> body) async {
+    var url = "${GlobalVars.baseUrl}Advertise/Sponsor";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

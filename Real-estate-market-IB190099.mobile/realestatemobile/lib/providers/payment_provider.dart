@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:realestatemobile/utils/util.dart';
 import '../model/payment.dart';
 import 'base_provider.dart';
 
 class PaymentProvider extends BaseProvider<Payment> {
   PaymentProvider() : super("Payment");
-  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   Payment fromJson(data) {
@@ -13,7 +13,7 @@ class PaymentProvider extends BaseProvider<Payment> {
   }
 
   Future<Response> create(Map<String, dynamic> body) async {
-    var url = "${baseUrl}Payment";
+    var url = "${GlobalVars.baseUrl}Payment";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

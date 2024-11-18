@@ -21,7 +21,8 @@ Advertise _$AdvertiseFromJson(Map<String, dynamic> json) => Advertise()
   ..user = json['user'] == null
       ? null
       : User.fromJson(json['user'] as Map<String, dynamic>)
-  ..employeeId = json['employeeId'] as int?;
+  ..employeeId = json['employeeId'] as int?
+  ..sponsored= json['sponsored'] as bool?;
 
 Map<String, dynamic> _$AdvertiseToJson(Advertise instance) => <String, dynamic>{
       'id': instance.id,
@@ -33,4 +34,5 @@ Map<String, dynamic> _$AdvertiseToJson(Advertise instance) => <String, dynamic>{
       'property': instance.property,
       'user': instance.user,
       'employeeId': instance.employeeId,
+      'sponsored': instance.sponsored
     };

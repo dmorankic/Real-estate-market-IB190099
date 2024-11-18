@@ -31,6 +31,7 @@ namespace Real_estate_market_IB190099.Model
 
         public virtual ICollection<ImageModel> Images  { get; set; }=new List<ImageModel>();
 
+        public bool? Sponsored { get; set; }
 
     }
 }

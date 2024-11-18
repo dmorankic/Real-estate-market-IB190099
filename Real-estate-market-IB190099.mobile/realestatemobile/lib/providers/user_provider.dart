@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:realestatemobile/model/patch_object.dart';
+import 'package:realestatemobile/utils/util.dart';
 
 import '../model/user.dart';
 import 'base_provider.dart';
 
 class UserProvider extends BaseProvider<User> {
   UserProvider() : super("User");
-  static String baseUrl = "http://10.0.2.2:7006/";
 
   @override
   User fromJson(data) {
@@ -16,7 +16,7 @@ class UserProvider extends BaseProvider<User> {
   }
 
   Future<Response> register(Map<String, String> body) async {
-    var url = "${baseUrl}User";
+    var url = "${GlobalVars.baseUrl}}User";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =
@@ -30,7 +30,7 @@ class UserProvider extends BaseProvider<User> {
   }
 
   Future<Response> update(List<PatchObject> updateReq, int userId) async {
-    var url = "${baseUrl}User/${userId}";
+    var url = "${GlobalVars.baseUrl}User/${userId}";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =
@@ -44,7 +44,7 @@ class UserProvider extends BaseProvider<User> {
   }
 
   Future<Response> updateAddress(Map<String, String> body, int userId) async {
-    var url = "${baseUrl}User/${userId}";
+    var url = "${GlobalVars.baseUrl}User/${userId}";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

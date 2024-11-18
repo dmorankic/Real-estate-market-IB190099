@@ -128,7 +128,7 @@ class _PaymentListState extends State<PaymentList> {
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "Date : ${DateFormat().format(x.transactionDate)}",
+                            "Date : ${DateFormat('dd-MM-yyyy H:mm:ss').format(x.transactionDate)}",
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),

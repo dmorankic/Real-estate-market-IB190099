@@ -26,7 +26,6 @@ class _DemandState extends State<Demand> {
   DemandAdvertiseProvider? _advertiseProvider = null;
   dynamic data = {};
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {

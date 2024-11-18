@@ -16,6 +16,9 @@ using System.Data;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Real_estate_market_IB190099;
+using Microsoft.Extensions.Options;
 
 namespace Real_estate_market_IB190099.Services
 {
@@ -25,11 +28,37 @@ namespace Real_estate_market_IB190099.Services
         IMapper _mapper;
         Ib190099Context _context;
         IAddressService _AddresService;
+
         public AdvertiseService(Ib190099Context Context, IMapper Mapper, IAddressService AddresService) : base(Context, Mapper)
         {
             _mapper = Mapper;
-            _context= Context;
+            _context = Context;
             _AddresService = AddresService;
+        }
+        public AdvertiseModel SponsorAdvertise(SponsorAdvertiseRequest sponsorAdvertise) {
+            Advertise? advertise = _context.Advertises.Find(sponsorAdvertise.advertiseId);
+            if (advertise == null) {
+                throw new UserException("Advertise with provided id does not exist");
+            }
+            else
+            {
+                advertise.Sponsored = true;
+                _context.SaveChanges();
+                ScheduleTaskAfterDelay(TimeSpan.FromSeconds(sponsorAdvertise.days), () => {
+                    advertise.Sponsored = false;
+                    _context.SaveChanges();
+                });
+                return Mapper.Map<AdvertiseModel>(advertise);
+            }         
+        }
+
+        private static void ScheduleTaskAfterDelay(TimeSpan delay, Action action)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(delay);
+                action();
+            });
         }
 
         public override IQueryable<Advertise> AddFilter(IQueryable<Advertise> query, AdvertiseSearchObject search = null)
@@ -57,86 +86,86 @@ namespace Real_estate_market_IB190099.Services
 
         public List<AdvertiseModel> Recommend(int userId,string type)
         {
-            lock (isLocked)
-            {
-                if (mlContext == null)
-                {
-                    mlContext = new MLContext();
+            //lock (isLocked)
+            //{
+            //    if (mlContext == null)
+            //    {
+            //        mlContext = new MLContext();
 
-                    User? user = Context.Users.Include(x=>x.Ratings).FirstOrDefault(x=>x.Id==userId);
+            //        User? user = Context.Users.Include(x=>x.Ratings).FirstOrDefault(x=>x.Id==userId);
                 
-                    if (user == null)
-                    {
-                        throw new UserException("wrong user id");
-                    }
+            //        if (user == null)
+            //        {
+            //            throw new UserException("wrong user id");
+            //        }
 
         
-                   List<Rating> tmpData = Context.Ratings.ToList();
+            //       List<Rating> tmpData = Context.Ratings.ToList();
 
-                    List<PropertyRating> data=new List<PropertyRating>();
+            //        List<PropertyRating> data=new List<PropertyRating>();
 
-                    foreach (var item in tmpData)
-                    {
-                        data.Add(new PropertyRating { userId = (uint)item.UserId, propertyId = (uint)item.PropertyId, Label =(float)item.Rating1 });
-                    }
+            //        foreach (var item in tmpData)
+            //        {
+            //            data.Add(new PropertyRating { userId = (uint)item.UserId, propertyId = (uint)item.PropertyId, Label =(float)item.Rating1 });
+            //        }
 
-                    IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
+            //        IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
                     
-                    model = BuildAndTrainModel(mlContext, dataView);
-                }
-            }
+            //        model = BuildAndTrainModel(mlContext, dataView);
+            //    }
+            //}
 
 
 
 
-            var allProps = Context.Properties.ToList();
-            var allRatings = Context.Ratings.Include(x=>x.Property).ToList();
+            //var allProps = Context.Properties.ToList();
+            //var allRatings = Context.Ratings.Include(x=>x.Property).ToList();
 
-            List<Property> propsToRemove = new List<Property>();
+            //List<Property> propsToRemove = new List<Property>();
 
-            allRatings.ForEach(rating =>
-            {
-                allProps.ForEach(prop =>
-                {
-                    if(rating.UserId==userId && rating.PropertyId == prop.Id)
-                    {
-                        propsToRemove.Add(prop);
-                    }
-                });
-            });
+            //allRatings.ForEach(rating =>
+            //{
+            //    allProps.ForEach(prop =>
+            //    {
+            //        if(rating.UserId==userId && rating.PropertyId == prop.Id)
+            //        {
+            //            propsToRemove.Add(prop);
+            //        }
+            //    });
+            //});
 
-            propsToRemove.ForEach(property => { allProps.Remove(property); });
+            //propsToRemove.ForEach(property => { allProps.Remove(property); });
 
-            List<Property> allPropsExtended=new List<Property>();
+            //List<Property> allPropsExtended=new List<Property>();
 
-            for (int i = 0; i < 100; i++)
-            {
-                allPropsExtended.AddRange(allProps);
-            }
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    allPropsExtended.AddRange(allProps);
+            //}
 
 
 
-            var predictionResult = new List<Tuple<Property, float>>();
+            //var predictionResult = new List<Tuple<Property, float>>();
 
-            foreach (var item in allPropsExtended)
-            {
+            //foreach (var item in allPropsExtended)
+            //{
                 
-                var prediction= UseModelForSinglePrediction(mlContext, model, item.Id, userId);
+            //    var prediction= UseModelForSinglePrediction(mlContext, model, item.Id, userId);
 
-                predictionResult.Add(new Tuple<Property, float>(item, prediction.Score));
-            }
-            var finalResult = predictionResult.OrderByDescending(x => x.Item2)
-                .Select(x => x.Item1).Distinct().ToList();
+            //    predictionResult.Add(new Tuple<Property, float>(item, prediction.Score));
+            //}
+            //var finalResult = predictionResult.OrderByDescending(x => x.Item2)
+            //    .Select(x => x.Item1).Distinct().ToList();
 
             
             
-            var advertises = new List<Advertise>();
-            finalResult.ForEach(x => {
-                advertises.Add(Context.Advertises.Include(x=>x.Property.Images).FirstOrDefault(y=>y.PropertyId==x.Id));
-            });
-            advertises.RemoveAll(x => x == null);
-            advertises = advertises.Where(x => x.Status.ToLower() == "approved").Where(x=>x.Type.ToLower()==type.ToLower()).ToList();
-            return Mapper.Map< List<AdvertiseModel>>(advertises);
+            //var advertises = new List<Advertise>();
+            //finalResult.ForEach(x => {
+            //    advertises.Add(Context.Advertises.Include(x=>x.Property.Images).FirstOrDefault(y=>y.PropertyId==x.Id));
+            //});
+            //advertises.RemoveAll(x => x == null);
+            //advertises = advertises.Where(x => x.Status.ToLower() == "approved").Where(x=>x.Type.ToLower()==type.ToLower()).ToList();
+            return Mapper.Map< List<AdvertiseModel>>(Context.Advertises.Include(x => x.Property.Images).Where(x => x.Status.ToLower() == "approved").Where(x => x.Type.ToLower() == type.ToLower()).OrderByDescending(x=>x.Sponsored).ToList());
         }
 
 

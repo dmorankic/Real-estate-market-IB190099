@@ -39,7 +39,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
-
+builder.Services.AddDbContext<Ib190099Context>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Singleton,ServiceLifetime.Singleton);
 builder.Services.AddTransient<ICityService, CityService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
@@ -68,8 +69,7 @@ builder.Services.AddAutoMapper(typeof(ICityService));
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-builder.Services.AddDbContext<Ib190099Context>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 app.UseStaticFiles();

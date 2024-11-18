@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:realestatemobile/utils/util.dart';
 
 import '../model/rating.dart';
 import 'base_provider.dart';
 
 class RatingProvider extends BaseProvider<Rating> {
   RatingProvider() : super("Rating");
-  static String baseUrl = "http://10.0.2.2:7006/";
+
 
   @override
   Rating fromJson(data) {
@@ -15,7 +16,7 @@ class RatingProvider extends BaseProvider<Rating> {
   }
 
   Future<Response> rate(Map<String, dynamic> body) async {
-    var url = "${baseUrl}Rating";
+    var url = "${GlobalVars.baseUrl}Rating";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

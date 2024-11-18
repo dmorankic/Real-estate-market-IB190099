@@ -49,7 +49,7 @@ public partial class Ib190099Context : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost, 1433;Initial Catalog=IB190099; user=sa; Password=QWElkj132!; TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=localhost, 1434;Initial Catalog=IB190099; user=sa; Password=QWEdsa132!; TrustServerCertificate=True");
         }
     }
 

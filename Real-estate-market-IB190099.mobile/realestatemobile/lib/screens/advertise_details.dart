@@ -1,10 +1,16 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unnecessary_set_literal
+
+import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import 'package:number_editing_controller/number_editing_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:realestatemobile/model/advertise.dart';
 import 'package:realestatemobile/providers/message_provider.dart';
@@ -27,11 +33,13 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
     "assets/images/NoImage.png",
   ];
   List<String> images = [];
-  final String _baseUrl = 'http://10.0.2.2:7006/';
   final CarouselController _carouselController = CarouselController();
   TextEditingController messageController = TextEditingController();
   TextEditingController ratingController = TextEditingController();
+final sponsoredController = NumberEditingTextController.integer();
 
+final sponsoredNotifier =
+    ValueNotifier<int>(-5); 
   AdvertiseProvider? _advertiseProvider = null;
   RatingProvider? _ratingProvider = null;
 
@@ -85,8 +93,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 icon: BitmapDescriptor.defaultMarker,
               ));
             }
-
-            Authorization.loggedUser?.savedAdvertisesIds?.forEach((x) => {
+           Authorization.loggedUser?.savedAdvertisesIds?.forEach((x) => {
                   if (x == snapshot.data?.id) {saved = "Remove from saved"}
                 });
             child = SafeArea(
@@ -96,6 +103,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                   children: [
                     _buildNav(snapshot.data!.id.toString(),
                         snapshot.data!.property!.id.toString()),
+                       snapshot.data!.userId==Authorization.loggedUser!.id  ?  _buildSponsor(snapshot.data?.id,snapshot.data?.sponsored,snapshot.data!.employeeId!):SizedBox(),
                     _buildSlider(snapshot.data!),
                     Column(
                       children: [
@@ -345,7 +353,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               child: Image.network(
-                '$_baseUrl$imgLoc',
+                '${GlobalVars.baseUrl}$imgLoc',
                 fit: BoxFit.cover,
               ),
             );
@@ -369,6 +377,201 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
       }).toList();
     }
   }
+
+  Container _buildSponsor(int? advertiseId, bool? sponsored, int employeeId){
+    return Container(
+      margin: EdgeInsets.all(20),
+      child: Row(
+        children: [
+          OutlinedButton(
+            onPressed: sponsored==true? null: () {
+              if (Authorization.loggedUser == null) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: Text("Not logged in"),
+                          content: Text("Please log in for further actions"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Ok"))
+                          ],
+                        ));
+                return;
+              }
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => SimpleDialog(
+                  title: Text('Sponsor advertise - \$3 per day'),
+                  contentPadding: EdgeInsets.all(16),
+                  children: <Widget>[
+                    Form(
+                      key: _formKey,
+                      child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty || int.parse(value)==0) {
+                              return 'You did not insert number of days';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) => {
+                            setState(() {
+                            if(value==""){
+                              sponsoredNotifier.value=0;
+                            }else{
+                              sponsoredNotifier.value=int.parse(value);
+                            }
+                            
+                          })
+                          },
+                          controller: sponsoredController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Number of days to sponsor advertise")),
+                    ),
+                    ValueListenableBuilder(valueListenable: sponsoredNotifier, builder: (context, value, widget) {
+                           if(value>=0 && sponsoredController.number!=null){
+                            return Text(                       
+                    "Total cost: \$${value*3}"
+
+                  );}else {return SizedBox();}
+                 
+                },),                 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        
+                                        
+                        OutlinedButton(
+                            onPressed: () {
+                              sponsoredController.clear();
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue.shade900))),
+                        OutlinedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                try {
+                                    await Navigator.push(context,
+                  // ignore: unnecessary_set_literal
+   //"${StripePayment.routeName}/${sponsoredController.number}/$advertiseId/$employeeId")
+                                    MaterialPageRoute(builder: (context){
+                                      return StripePayment(
+                      totalPrice: sponsoredController.number?.toDouble(),
+                      advertiseId: advertiseId,
+                      employeeId: employeeId);
+                                    })).then((value)async {
+                                      
+                                   var response = await sponsor(advertiseId);
+                                   if (response.statusCode == 200) {
+                                    loadData();
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: Text("Sponsoring successfull"),
+                                              content: Text(
+                                                  "This advertise will be sponsored until ${DateFormat('dd-MM-yyyy H:mm:ss').format(DateTime.now().add( Duration(days: int.parse(sponsoredController.number.toString()))))}."),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () => {
+                                                       sponsoredController.clear(),
+                                                          Navigator.pop(
+                                                              context),
+                                                          Navigator.pop(
+                                                              context),
+                                                        },
+                                                    child: Text("Ok"))
+                                              ],
+                                            ));                                                                      
+                                  }
+                                    } );
+
+                                } on Exception catch (e) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Text("No action done"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text("Ok"))
+                                            ],
+                                          ));
+                                }
+                              }
+                            },
+                            child: Text(
+                              "Sponsor",
+                              style: TextStyle(color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue.shade900)))
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+            child: Text(
+             sponsored!? "Sponsored" : "Sponsor this advertise",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.blue.shade900)),
+          ),
+          
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+    );
+  }
+
+  FutureOr<void> afterPayment(int? advertiseId) async{
+                                  var response = await sponsor(advertiseId);
+                                   if (response.statusCode == 200) {
+                                    loadData();
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: Text("Sponsoring successfull"),
+                                              content: Text(
+                                                  "This advertise will be sponsored until ${DateFormat('dd-MM-yyyy H:mm:ss').format(DateTime.now().add( Duration(days: int.parse(sponsoredController.number.toString()))))}."),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () => {
+                                                       sponsoredController.clear(),
+                                                          Navigator.pop(
+                                                              context),
+                                                          Navigator.pop(
+                                                              context),
+                                                        },
+                                                    child: Text("Ok"))
+                                              ],
+                                            ));
+                                         
+                              
+                                  }
+                                  return null;
+                                  } 
 
   Container _buildNav(String advertiseId, String propertyId) {
     return Container(
@@ -751,7 +954,7 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
                 return;
               }
               Navigator.pushNamed(context,
-                  "${StripePayment.routeName}/$price/$advertiseId/$employeeId");
+                  "${StripePayment.routeName}/${price!/5}/$advertiseId/$employeeId");
             },
             style: ButtonStyle(
                 backgroundColor:
@@ -786,6 +989,16 @@ class _AdvertiseDetailsState extends State<AdvertiseDetails> {
 
     ratingController.text = "";
     var response = await _ratingProvider!.rate(body);
+    return response;
+  }
+
+    Future<Response> sponsor(int? advertiseId) async {
+    Map<String, dynamic> body = {
+      "days": sponsoredController.number,
+      "advertiseId": advertiseId
+    };
+
+    var response = await _advertiseProvider!.sponsor(body);
     return response;
   }
 }

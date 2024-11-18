@@ -17,14 +17,13 @@ import 'base_provider.dart';
 
 class DemandAdvertiseProvider extends BaseProvider<DemandAdvertise> {
   DemandAdvertiseProvider() : super("DemandAdvertise");
-  static String _baseUrl = "http://10.0.2.2:7006/";
   @override
   DemandAdvertise fromJson(data) {
     return DemandAdvertise.fromJson(data);
   }
 
   Future<List<DemandAdvertise>> getSaved(String endpoint) async {
-    var url = "$_baseUrl$endpoint";
+    var url = "${GlobalVars.baseUrl}$endpoint";
     Map<String, String> headers = createHeaders();
 
     var uri = Uri.parse(url);
@@ -40,7 +39,7 @@ class DemandAdvertiseProvider extends BaseProvider<DemandAdvertise> {
   }
 
   Future<Response> removeFromSaved(String advertiseId, String endpoint) async {
-    var url = "$_baseUrl$endpoint";
+    var url = "${GlobalVars.baseUrl}$endpoint";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response = await http!.delete(uri,
@@ -58,7 +57,7 @@ class DemandAdvertiseProvider extends BaseProvider<DemandAdvertise> {
   }
 
   Future<Response> createAdvertise(Map<String, dynamic> body) async {
-    var url = "${_baseUrl}DemandAdvertise";
+    var url = "${GlobalVars.baseUrl}DemandAdvertise";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

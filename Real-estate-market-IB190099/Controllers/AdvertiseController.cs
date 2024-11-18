@@ -107,5 +107,13 @@ namespace Real_estate_market_IB190099.Controllers
             return Ok(updatedAd);
         }
 
+        [HttpPost]
+        [Route("Sponsor")]
+        [AllowAnonymous]
+        public AdvertiseModel SponsorAdvertise([FromBody] SponsorAdvertiseRequest sponsorAdvertise)
+        {
+            return _service.SponsorAdvertise(sponsorAdvertise);
+        }
+
     }
 }

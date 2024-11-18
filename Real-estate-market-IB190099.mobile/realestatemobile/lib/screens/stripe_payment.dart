@@ -78,7 +78,7 @@ class _StripePaymentState extends State<StripePayment> {
                 ),
                 Column(children: [
                   Text(
-                    "To pay \$" + (widget.totalPrice! / 5).toString(),
+                    "To pay \$" + (widget.totalPrice!).toString(),
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -88,7 +88,8 @@ class _StripePaymentState extends State<StripePayment> {
                     width: 300,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await makePayment(widget.totalPrice! / 5);
+                        await makePayment(widget.totalPrice!);
+                        //Navigator.pop(context);
                       },
                       child: Text("Pay"),
                     ),
@@ -144,6 +145,7 @@ class _StripePaymentState extends State<StripePayment> {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Payment successful")));
       savePaymentInfo(amount);
+      Navigator.pop(context);
     } on Exception catch (e) {
       showDialog(
           context: context,

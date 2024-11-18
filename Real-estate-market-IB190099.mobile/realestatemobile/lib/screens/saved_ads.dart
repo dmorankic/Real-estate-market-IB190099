@@ -31,7 +31,6 @@ class _SavedAdsState extends State<SavedAds> {
   dynamic demandData = {};
 
   TextEditingController searchController = TextEditingController();
-  final String _baseUrl = 'http://10.0.2.2:7006/';
 
   @override
   void initState() {
@@ -219,7 +218,7 @@ class _SavedAdsState extends State<SavedAds> {
                                             "assets/images/NoImage.png",
                                             fit: BoxFit.cover)
                                         : Image.network(
-                                            '$_baseUrl${x.property?.images[0]}',
+                                            '${GlobalVars.baseUrl}${x.property?.images[0]}',
                                             fit: BoxFit.cover)),
                               ),
                             ),

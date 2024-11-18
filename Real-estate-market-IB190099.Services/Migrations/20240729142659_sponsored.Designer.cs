@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Real_estate_market_IB190099.Services.Database;
 
@@ -11,9 +12,11 @@ using Real_estate_market_IB190099.Services.Database;
 namespace Real_estate_market_IB190099.Services.Migrations
 {
     [DbContext(typeof(Ib190099Context))]
-    partial class Ib190099ContextModelSnapshot : ModelSnapshot
+    [Migration("20240729142659_sponsored")]
+    partial class sponsored
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

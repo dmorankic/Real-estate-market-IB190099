@@ -21,6 +21,8 @@ public partial class Advertise
 
     public virtual User? Employee { get; set; }
 
+    public bool? Sponsored { get; set; }
+
     public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();

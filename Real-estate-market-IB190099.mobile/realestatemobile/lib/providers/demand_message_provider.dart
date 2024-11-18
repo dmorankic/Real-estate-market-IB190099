@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:realestatemobile/utils/util.dart';
 
 import '../model/demand_message.dart';
 import 'base_provider.dart';
 
 class DemandMessageProvider extends BaseProvider<DemandMessage> {
   DemandMessageProvider() : super("DemandMessage");
-  static String baseUrl = "http://10.0.2.2:7006/";
+ 
 
   @override
   DemandMessage fromJson(data) {
@@ -15,7 +16,7 @@ class DemandMessageProvider extends BaseProvider<DemandMessage> {
   }
 
   Future<Response> send(Map<String, String> body) async {
-    var url = "${baseUrl}DemandMessage";
+    var url = "${GlobalVars.baseUrl}DemandMessage";
     Map<String, String> headers = createHeaders();
     var uri = Uri.parse(url);
     var response =

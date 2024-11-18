@@ -20,6 +20,7 @@ class Advertise {
   Property? property;
   User? user;
   int? employeeId;
+  bool? sponsored;
 
   factory Advertise.fromJson(Map<String, dynamic> json) =>
       _$AdvertiseFromJson(json);
