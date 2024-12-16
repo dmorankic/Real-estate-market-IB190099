@@ -219,9 +219,31 @@ class _RentState extends State<Rent> {
     List<Widget> list = data
         .map(
           (x) => GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(
-                  context, "${AdvertiseDetails.routeName}/${x.id}");
+            onTap: ()async {
+                 try {
+                  await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                  return AdvertiseDetails(
+                      id:x.id.toString()
+                  );
+                                    })).then((value)async {
+                                      loadData();
+                                    });
+              } on Exception catch (e) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: Text("No action done"),
+                                            content: Text(e.toString()),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text("Ok"))
+                                            ],
+                                          ));
+                                }
             },
             child: Container(
               decoration: BoxDecoration(

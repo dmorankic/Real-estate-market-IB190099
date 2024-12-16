@@ -15,7 +15,7 @@ namespace Real_estate_market_IB190099.Services
 {
     public class PaymentService : BaseCRUDService<Payment, PaymentModel, IdSearchObject, PaymentUpsertRequest, PaymentUpsertRequest>, IPaymentService
     {
-        public PaymentService(Ib190099Context Context, IMapper Mapper) : base(Context, Mapper)
+        public PaymentService(SpecialContext Context, IMapper Mapper) : base(Context, Mapper)
         {
            
         }
@@ -34,7 +34,7 @@ namespace Real_estate_market_IB190099.Services
         public override IQueryable<Payment> AddInclude(IQueryable<Payment> query, IdSearchObject search = null)
         {
 
-            query = query.Include(x => x.Advertise).Include(x=>x.Employee);
+            query = query.Include(x => x.Advertise).Include(x=>x.Employee).OrderByDescending(x=>x.TransactionDate);
             return query;
         }
 

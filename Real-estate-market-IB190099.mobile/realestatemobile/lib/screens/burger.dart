@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:realestatemobile/screens/inbox.dart';
+import 'package:realestatemobile/screens/login_screen.dart';
 import 'package:realestatemobile/screens/my_profile.dart';
 import 'package:realestatemobile/screens/payment_list.dart';
 import 'package:realestatemobile/screens/saved_ads.dart';
 import 'package:realestatemobile/screens/search_ads.dart';
+import 'package:realestatemobile/utils/util.dart';
 
 class BurgerMenu extends StatefulWidget {
   const BurgerMenu({super.key});
@@ -263,6 +265,54 @@ class _BurgerMenuState extends State<BurgerMenu> {
                       children: <Widget>[
                         Text(
                           "Saved ads",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+            GestureDetector(
+        onTap: () {
+          Authorization.loggedUser=null;
+          Authorization.username=null;
+          Authorization.password=null;
+          Navigator.pushNamed(context, Login.routeName);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              border: Border.all(color: Colors.black)),
+          margin: EdgeInsets.only(bottom: 10),
+          child: Card(
+            child: Container(
+              width: 300,
+              height: 45,
+              margin: EdgeInsets.all(6.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        size: 45,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 70),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Log out",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,

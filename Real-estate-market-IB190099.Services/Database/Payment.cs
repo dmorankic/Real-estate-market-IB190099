@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Real_estate_market_IB190099.Services.Database;
 
@@ -18,7 +19,7 @@ public partial class Payment
     public int? EmployeeId { get; set; }
 
     public virtual Advertise? Advertise { get; set; }
-
+    [NotMapped]
     public virtual User? Employee { get; set; }
 
     public virtual User? User { get; set; }

@@ -28,23 +28,28 @@ namespace Real_estate_market_IB190099.Services
         IMapper _mapper;
         Ib190099Context _context;
         IAddressService _AddresService;
+        IPaymentService _PaymentService;
 
-        public AdvertiseService(Ib190099Context Context, IMapper Mapper, IAddressService AddresService) : base(Context, Mapper)
+        public AdvertiseService(Ib190099Context Context, IMapper Mapper, IAddressService AddresService,IPaymentService paymentService) : base(Context, Mapper)
         {
             _mapper = Mapper;
             _context = Context;
             _AddresService = AddresService;
+            _PaymentService = paymentService;
         }
         public AdvertiseModel SponsorAdvertise(SponsorAdvertiseRequest sponsorAdvertise) {
             Advertise? advertise = _context.Advertises.Find(sponsorAdvertise.advertiseId);
-            if (advertise == null) {
-                throw new UserException("Advertise with provided id does not exist");
+            if (advertise == null)
+            {
+                throw new UserException("Advertise for provided id does not exist!");
             }
             else
             {
                 advertise.Sponsored = true;
+                _PaymentService.Insert(new PaymentUpsertRequest(sponsorAdvertise.days * 3, advertise.UserId, advertise.EmployeeId, advertise.Id, DateTime.Now));
                 _context.SaveChanges();
-                ScheduleTaskAfterDelay(TimeSpan.FromSeconds(sponsorAdvertise.days), () => {
+                ScheduleTaskAfterDelay(TimeSpan.FromSeconds(sponsorAdvertise.days), () =>
+                {
                     advertise.Sponsored = false;
                     _context.SaveChanges();
                 });

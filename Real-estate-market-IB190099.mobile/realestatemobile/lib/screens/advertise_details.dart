@@ -463,13 +463,12 @@ final sponsoredNotifier =
                               if (_formKey.currentState!.validate()) {
                                 try {
                                     await Navigator.push(context,
-                  // ignore: unnecessary_set_literal
-   //"${StripePayment.routeName}/${sponsoredController.number}/$advertiseId/$employeeId")
                                     MaterialPageRoute(builder: (context){
                                       return StripePayment(
-                      totalPrice: sponsoredController.number?.toDouble(),
+                      totalPrice: sponsoredController.number!.toDouble()*3,
                       advertiseId: advertiseId,
-                      employeeId: employeeId);
+                      employeeId: employeeId,
+                      saveInfo: false,);
                                     })).then((value)async {
                                       
                                    var response = await sponsor(advertiseId);
@@ -543,35 +542,6 @@ final sponsoredNotifier =
       ),
     );
   }
-
-  FutureOr<void> afterPayment(int? advertiseId) async{
-                                  var response = await sponsor(advertiseId);
-                                   if (response.statusCode == 200) {
-                                    loadData();
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: Text("Sponsoring successfull"),
-                                              content: Text(
-                                                  "This advertise will be sponsored until ${DateFormat('dd-MM-yyyy H:mm:ss').format(DateTime.now().add( Duration(days: int.parse(sponsoredController.number.toString()))))}."),
-                                              actions: [
-                                                ElevatedButton(
-                                                    onPressed: () => {
-                                                       sponsoredController.clear(),
-                                                          Navigator.pop(
-                                                              context),
-                                                          Navigator.pop(
-                                                              context),
-                                                        },
-                                                    child: Text("Ok"))
-                                              ],
-                                            ));
-                                         
-                              
-                                  }
-                                  return null;
-                                  } 
 
   Container _buildNav(String advertiseId, String propertyId) {
     return Container(

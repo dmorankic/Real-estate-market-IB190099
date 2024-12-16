@@ -11,10 +11,11 @@ import '../utils/util.dart';
 
 class StripePayment extends StatefulWidget {
   StripePayment(
-      {this.totalPrice, this.advertiseId, this.employeeId, super.key});
+      {this.totalPrice, this.advertiseId, this.employeeId, this.saveInfo=true, super.key});
   double? totalPrice;
   int? advertiseId;
   int? employeeId;
+  bool saveInfo;
 
   static const String routeName = "/stripe-payment";
 
@@ -87,9 +88,8 @@ class _StripePaymentState extends State<StripePayment> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await makePayment(widget.totalPrice!);
-                        //Navigator.pop(context);
+                      onPressed: ()  {
+                         makePayment(widget.totalPrice!);
                       },
                       child: Text("Pay"),
                     ),
@@ -144,7 +144,9 @@ class _StripePaymentState extends State<StripePayment> {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Payment successful")));
-      savePaymentInfo(amount);
+      if(widget.saveInfo) {
+        savePaymentInfo(amount);
+      }
       Navigator.pop(context);
     } on Exception catch (e) {
       showDialog(

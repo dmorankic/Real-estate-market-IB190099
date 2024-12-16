@@ -37,10 +37,11 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
-
 builder.Services.AddDbContext<Ib190099Context>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Singleton,ServiceLifetime.Singleton);
+builder.Services.AddDbContext<SpecialContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddTransient<ICityService, CityService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUserService, UserService>();
